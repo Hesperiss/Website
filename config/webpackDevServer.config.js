@@ -9,10 +9,6 @@ const paths = require('./paths');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
-const certPath = './letsencrypt/live/www.kwili.fr/cert.pem';
-const keyPath = './letsencrypt/live/www.kwili.fr/privkey.pem';
-//const certPath = './letsencrypt/live/www.epicare.fr/cert.pem';
-//const keyPath = './letsencrypt/live/www.epicare.fr/privkey.pem';
 
 module.exports = function(proxy, allowedHost) {
   return {
@@ -77,8 +73,6 @@ module.exports = function(proxy, allowedHost) {
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === 'https',
-    cert: fs.readFileSync(certPath, 'utf8'),
-    key:  fs.readFileSync(keyPath, 'utf8'),
     host: host,
     overlay: false,
     historyApiFallback: {
