@@ -8,4 +8,4 @@ WORKDIR Website
 
 COPY . .
 
-CMD git pull && yarn install && yarn start
+CMD git pull && yarn install && npm run start
