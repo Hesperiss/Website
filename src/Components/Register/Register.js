@@ -37,7 +37,8 @@ class Login extends Component {
 		const password = document.getElementById('password-input').value;
 		const password_bis = document.getElementById('password-input-confirmation').value;
 		const date = document.getElementById('date-input').value;
-		const type = document.getElementById('type-input').value;
+		// const type = document.getElementById('type-input').value;
+    const type = 'patient';
 		if (name === '' || last_name === '' || email === '' || password === '' || password_bis === '' || type === '' || date === '') {
 			this.errorMsg = "Erreur: un ou plusieurs champs n'ont pas été remplis.";
 			this.setState({ show: true });
@@ -102,10 +103,12 @@ class Login extends Component {
               <label>Confirmez votre mot de passe</label>
               <input type="password" className="form-control" id="password-input-confirmation" placeholder="COnfirmation du mot de passe" />
             </div>
-            <div className="form-group">
-              <label>Type de compte</label>
-              <input type="name" className="form-control" id="type-input" placeholder="patient / doctor ?" />
-            </div>
+            {
+              // <div className="form-group">
+              //   <label>Type de compte</label>
+              //   <input type="name" className="form-control" id="type-input" placeholder="patient / doctor ?" />
+              // </div>
+            }
             <button type="button" className="btn btn-block btn-primary" onClick={this.tryRegister}>S'inscrire</button>
             <button className={`btn btn-block btn-secondary ${classes.btnSpace}`} onClick={this.toLogin}>
               Déjà inscrit ?
