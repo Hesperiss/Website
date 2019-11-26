@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Login from './Components/Login/Login';
 import LandingPage from './Components/Landing/LandingPage';
-// import Register from './Views/Register';
+import Register from './Components/Register/Register';
 import Chat from './Components/Chat/View';
 import Profile from './Components/Profile/Profile';
 import Prescription from './Components/Prescription/View';
@@ -19,6 +19,7 @@ class App extends Component {
                   <Switch>
                     <Route exact={true} path='/' component={LandingPage}/>
                     <Route exact={true} path='/login' component={Login}/>
+                    <Route exact={true} path='/register' component={Register}/>
                     <Route exact={true} path='/chat' component={Chat}/>
                     <Route exact={true} path='/map' component={Map}/>
                     <Route exact={true} path='/profile' component={Profile}/>

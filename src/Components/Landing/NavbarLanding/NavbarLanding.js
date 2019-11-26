@@ -6,12 +6,7 @@ export function navbarLanding() {
 
 	return (
 		<div className={classes.Navbar}>
-			<Link to={{
-  			pathname: '/login',
-  			state: {
-    			isLogin: true
-				}
-			}}>
+			<Link to='/login'>
 				<input
 					type="submit"
 					value="Connexion"
@@ -20,11 +15,11 @@ export function navbarLanding() {
 				/>
 			</Link>
 
-			<Link to='/login'>
+			<Link to='/register'>
 				<input
 					type="submit"
 					value="Inscription"
-					href="/login"
+					href="/register"
 					className={classes.navbarLink}
 				/>
 			</Link>
