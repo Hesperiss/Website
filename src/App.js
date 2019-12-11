@@ -11,6 +11,8 @@ import Settings from './Components/Settings/Settings';
 import Map from './Components/Map/Map';
 import NotFound from './Components/Shared/404/NotFound';
 
+import Test from './Components/Test.js';
+
 class App extends Component {
     render() {
         return (
@@ -25,6 +27,7 @@ class App extends Component {
                     <Route exact={true} path='/profile' component={Profile}/>
                     <Route exact={true} path='/prescription' component={Prescription}/>
                     <Route exact={true} path='/profile/settings' component={Settings}/>
+                    <Route exact={true} path='/test' component={Test}/>
                     <Route component={NotFound} />
                   </Switch>
                 </div>

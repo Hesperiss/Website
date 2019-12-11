@@ -7,11 +7,19 @@ export function navbarLanding() {
 	if (KwiliApi.getLogin() === true) {
 		return (
 			<div className={classes.Navbar}>
-				<Link to='/prescription'>
+				<Link to='/test'>
 					<input
 						type="submit"
-						value="Ordonnances"
-						href="/prescription"
+						value="Mon compte"
+						href="/test"
+						className={classes.navbarLink}
+					/>
+				</Link>
+				<Link to='/map'>
+					<input
+						type="submit"
+						value="Carte"
+						href="/map"
 						className={classes.navbarLink}
 					/>
 				</Link>

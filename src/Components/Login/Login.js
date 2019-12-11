@@ -19,11 +19,21 @@ class Login extends Component {
 		this.handleClose = this.handleClose.bind(this);
 		this.toRegister = this.toRegister.bind(this);
 	}
+
+	componentDidMount() {
+		if (this.props.location.state !== undefined && this.props.location.state !== '') {
+			if (this.props.location.state.errorMsg !== undefined && this.props.location.state.errorMsg !== '') {
+				this.errorMsg = this.props.location.state.errorMsg;
+				this.setState({ show: true })
+			}	
+		}
+	}
+
 	redirectPrescription(loginResponse) {
 		console.log(loginResponse);
 		//TEMP FIX : REMOVE LATER
 		KwiliApi.setLogin();
-		this.props.history.push('/prescription');
+		this.props.history.push('/test');
 		if (loginResponse != null) {
 			KwiliApi.setSessionToken(loginResponse.data.access_token);
 			this.props.history.push('/prescription');
