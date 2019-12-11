@@ -21,6 +21,9 @@ class Login extends Component {
 	}
 	redirectPrescription(loginResponse) {
 		console.log(loginResponse);
+		//TEMP FIX : REMOVE LATER
+		KwiliApi.setLogin();
+		this.props.history.push('/prescription');
 		if (loginResponse != null) {
 			KwiliApi.setSessionToken(loginResponse.data.access_token);
 			this.props.history.push('/prescription');

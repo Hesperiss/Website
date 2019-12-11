@@ -16,7 +16,8 @@ export default class KwiliApi  {
     }
 
     static tryRequest(usedMethod, data, npath) {
-        return this.request(usedMethod, data, 'https://www.kwili.fr:8080/' + npath);
+        //return this.request(usedMethod, data, 'https://www.kwili.fr:8080/' + npath);
+        return this.request(usedMethod, data, 'https://localhost:8080/' + npath);
     }
 
     static tryQuery(method, query, npath) {
@@ -92,6 +93,17 @@ export default class KwiliApi  {
         if (item === "undefined" || item == null || item.length === 0)
             return false;
         return true;
+    }
+
+    static getLogin() {
+      var item = sessionStorage.getItem('toto');
+      if (item === "undefined" || item == null || item.length === 0)
+          return false;
+      return true;
+    }
+
+    static setLogin() {
+          sessionStorage.setItem('toto', true);
     }
 
     static getSessionToken() {

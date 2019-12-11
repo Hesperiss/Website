@@ -117,8 +117,9 @@ export default class Prescription extends React.Component {
 
 
     render() {
-        if (!KwiliApi.isConnected())
-            return (<NotLogged/>);
+      // A REMOVE PLUS TARD
+        // if (!KwiliApi.isConnected())
+        //     return (<NotLogged/>);
         const items = [];
         for (const [index, value] of this.state.files.entries()) {
             items.push(
