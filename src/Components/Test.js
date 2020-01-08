@@ -1,7 +1,7 @@
 // import '../../Styles.scss'
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
-import { Button, Modal } from 'react-bootstrap';
+//import { Button, Modal } from 'react-bootstrap';
 import KwiliApi from './Shared/Api/api';
 
 
