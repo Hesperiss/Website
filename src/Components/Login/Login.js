@@ -29,7 +29,8 @@ class Login extends Component {
 			this.setState({ show: true });
 		}
 	}
-	tryLogin() {
+	tryLogin(event) {
+		event.preventDefault();
 		const login = document.getElementById('email-input').value;
 		const password = document.getElementById('password-input').value;
 		if (login === '') {
@@ -66,9 +67,9 @@ class Login extends Component {
 						<small id="emailHelp" className="form-text text-muted">Si vous n'avez pas de compte, vous pouvez vous en créer un en cliquant sur S'inscrire</small>
 					</div>
 					<div className="form-group">
-						<input type="password" className="form-control" id="password-input" placeholder="Mot de passe" />
+						<input type="password" className="form-control" id="password-input" placeholder="Mot de passe" onSubmit={this.tryLogin} />
 					</div>
-					<button type="button" className={`btn btn-block btn-success ${classes.btnSpace}`} onClick={this.tryLogin}>Connexion</button>
+					<button className={`btn btn-block btn-success ${classes.btnSpace}`} onClick={this.tryLogin}>Connexion</button>
 					<button className={`btn btn-block btn-secondary ${classes.btnSpace}`} onClick={this.toRegister}>
 						S'inscrire
 					</button>

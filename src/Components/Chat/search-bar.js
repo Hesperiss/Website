@@ -3,9 +3,10 @@ import KwiliApi from '../Shared/Api/api';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import styles from '../Chat/Chat.css';
+import styles from '../Chat/Chat.scss';
 
 function getSuggestionValue(suggestion) {
+	console.log("get suggestion value");
 	return `${suggestion.name} ${suggestion.last_name}`;
 }
 
@@ -34,26 +35,26 @@ function renderSuggestion(suggestion, { query }) {
 export default class Search extends Component {
 	constructor() {
 		super();
-
 		this.state = {
 			value: '',
-			suggestions: []
+			suggestions: [],
+			loading: false,
 		};
 	}
 
 	onRequest = (data) => {
 		if (data == null) {
 			data = {
-				data: [
-					{
-						name: "Leandre",
-						last_name: "Blanchard",
-						email: "placeholder@no",
-					},
-				],
-			}
+				data: [],
+			};
+		} else {
+			this.setState({
+				loading: false,
+			})
 		}
-		this.setState({ suggestions: data.data })
+		this.setState({
+			suggestions: data.data,
+		});
 	}
 
 	getSuggestions = (value) => {
@@ -64,16 +65,33 @@ export default class Search extends Component {
 		this.setState({
 			value: newValue
 		});
+		if (this.state.value.length === 0) {
+			this.setState({
+				loading: false,
+			});
+		}
 	};
 
 	onSuggestionsFetchRequested = ({ value }) => {
+		this.setState({
+			loading: true,
+		});
 		this.getSuggestions(value);
 	};
 
 	onSuggestionsClearRequested = () => {
 		this.setState({
-			suggestions: []
+			suggestions: [],
 		});
+	};
+
+	spinner = () => {
+		if (this.state.loading === false)
+			return <div></div>;
+		return (
+			<div className="spinner-grow text-info" role="status">
+				<span className="sr-only">Loading...</span>
+			</div>);
 	};
 
 	render() {
@@ -84,14 +102,18 @@ export default class Search extends Component {
 			onChange: this.onChange
 		};
 		return (
-			<Autosuggest
-				suggestions={suggestions}
-				onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-				onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-				getSuggestionValue={getSuggestionValue}
-				renderSuggestion={renderSuggestion}
-				theme={styles}
-				inputProps={inputProps} />
+			<div className={styles.container}>
+				<Autosuggest id={this.props.id}
+					suggestions={suggestions}
+					onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+					onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+					getSuggestionValue={getSuggestionValue}
+					renderSuggestion={renderSuggestion}
+					theme={styles}
+					inputProps={inputProps} />
+				<this.spinner />
+			</div>
+
 		);
 	}
 }

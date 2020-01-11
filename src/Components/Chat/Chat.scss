@@ -1,5 +1,8 @@
 .container {
+    display: flex;
     position: relative;
+    justify-content: center;
+    justify-items: center;
 }
 
 .input {
@@ -28,7 +31,7 @@
     border-bottom-right-radius: 0;
 }
 
-.suggestionsContainer {
+.suggestionContainer {
     display: none;
 }
 
@@ -52,11 +55,26 @@
     list-style-type: none;
 }
 
-.suggestion {
+
+.suggestions {
     cursor: pointer;
     padding: 10px 20px;
 }
 
 .suggestionHighlighted {
     background-color: #ddd;
+}
+
+.highlight {
+    color: #ee0000;
+    font-weight: bold;
+}
+
+.name {
+    margin-left: 68px;
+    line-height: 45px;
+}
+
+.suggestionFocused {
+    color: #120000;
 }
