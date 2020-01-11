@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import KwiliApi from '../Shared/Api/api';
+import KwiliChat from './Api';
 import { Widget, addResponseMessage } from 'react-chat-widget';
 
-import 'react-chat-widget/lib/styles.css';
+import '../Chat/ChatBotWidget.css'
 
 export default class BotCard extends Component {
 	constructor() {
@@ -11,14 +11,17 @@ export default class BotCard extends Component {
 		};
 	}
 
+	messageReceived = (msg) => {
+		addResponseMessage(msg);
+	}
+
 	componentDidMount() {
+		this.chat = new KwiliChat(this.messageReceived);
 		addResponseMessage("Welcome Kwili chat-bot !");
 	}
 
 	handleNewUserMessage = (newMessage) => {
-		console.log(`New message incoming! ${newMessage}`);
-		// Now send the message throught the backend API
-		addResponseMessage("beep boop");
+		this.chat.send(newMessage);
 	}
 
 	render() {

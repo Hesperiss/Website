@@ -1,0 +1,8 @@
+.rcw-conversation-container>.rcw-header {
+    background-color: red;
+}
+
+.rcw-message>.rcw-response {
+    background-color: black;
+    color: white;
+}
