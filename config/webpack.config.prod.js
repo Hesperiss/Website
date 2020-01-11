@@ -56,7 +56,7 @@ module.exports = {
     minimize: true //Update this to true or false
   },
   // Hide size warnings
-  performance: { hints: false },
+  // performance: { hints: false },
   // Don't attempt to continue if there are any errors.
   bail: true,
   mode: 'production',
