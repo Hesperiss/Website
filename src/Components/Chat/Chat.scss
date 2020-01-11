@@ -1,33 +1,80 @@
-.chat {
-    padding-top: 0px;
+.container {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    justify-items: center;
 }
 
-.chatCardTitle {
-    color: darkslategray;
-    font-size: 150%;
-};
+.input {
+    width: 240px;
+    height: 30px;
+    padding: 10px 20px;
+    font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
 
-.chatCardMsg {
-    color: darkgrey;
-    font-style: italic;
-};
+.suggestionContent {
+    display: flex;
+    align-items: center;
+    background-repeat: no-repeat;
+}
 
-.chatImg {
-    padding-left: 10px;
+.inputFocused {
+    outline: none;
+}
+
+.inputOpen {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.suggestionContainer {
+    display: none;
+}
+
+.suggestionsContainerOpen {
     display: block;
-    max-width: 100px;
-    max-height: 100px;
-    width: auto;
-    height: auto;
-    margin-top: auto;
-    margin-bottom: auto;
-};
+    position: absolute;
+    top: 51px;
+    width: 280px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    border-radius: 0 0 4px 4px;
+    z-index: 2;
+}
 
-.chatBox {
-	background-color: lightgrey;
-	position: absolute;
-};
+.suggestionsList {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
 
-.chatText {
-	list-style-type: none;
-};
+
+.suggestions {
+    cursor: pointer;
+    padding: 10px 20px;
+}
+
+.suggestionHighlighted {
+    background-color: #ddd;
+}
+
+.highlight {
+    color: #ee0000;
+    font-weight: bold;
+}
+
+.name {
+    margin-left: 68px;
+    line-height: 45px;
+}
+
+.suggestionFocused {
+    color: #120000;
+}

@@ -1,103 +1,73 @@
 import React, { Component } from 'react';
-import KwiliApi from '../Shared/Api/api';
-import KwiliCommon from '../Shared/LogHandling/common';
-import classes from '../Chat/Chat.scss';
-import CareChat from './Api';
+import Search from './search-bar';
+import KwiliApi from '../Shared/Api/api.js';
+import NotLogged from '../Shared/LogHandling/NotLogged';
+import ChatBotWidget from './ChatBotWidget';
+import Navbar from '../Shared/Navbar';
+import { ChatList } from 'react-chat-elements';
+
+import 'react-chat-elements/dist/main.css';
 
 export default class Login extends Component {
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 		this.state = {
-			users: [],
-			chat: new CareChat(KwiliApi.getSessionToken(), this.onMessage),
-			data: [],
-		};
-		this.onMessage = (response) => {
-			console.log("message: " + response);
-			if (response != null) {
-				this.setState({
-				});
-			}
-		};
-		this.refreshInfo = (response) => {
-			console.log(response);
-			if (response != null) {
-				this.setState({
-					users: response.data,
-				});
-				console.log(this.state.users);
-			}
+			list: []
 		};
 	}
-
-	componentWillMount() {
-		KwiliApi.searchUser('').then(this.refreshInfo);
+	addButton = (event, target) => {
+		this.addChatCard("Leandre");
 	}
 
-	handleChange(e) {
-		this.setState({ input: e.target.value });
+	addChatCard = (name) => {
+		this.state.list.push({
+			avatar: "https://scontent-gmp1-1.xx.fbcdn.net/v/t1.0-1/p240x240/71642826_2457574447611373_88435137561231360_o.jpg?_nc_cat=109&_nc_ohc=nFSmcShAWu4AQmNLKYFk6mvGyYEpfsOVT9zfxya5IQROFcCD0k_ZQAovQ&_nc_ht=scontent-gmp1-1.xx&_nc_tp=1&oh=7a1be41cad254c6ebc893c8fc2bdf8b6&oe=5E99C95F",
+			alt: name,
+			title: name,
+			subtitle: "Viens manger des chips",
+			date: new Date(),
+			unread: 0
+		});
+		this.setState({
+			list: this.state.list
+		});
 	}
 
-	msgBox(msg) {
+	chatList = () => {
 		return (
-			<li key={msg.msg}>
-				{msg.name} : {msg.msg} ({msg.date})
-			</li>
-		)
-	}
-
-	messagesDisplayer(msgs) {
-		//var arr = msgs.map(item => this.msgBox(item));
-		//return arr;
-	}
-
-	cardItem(img, name) {
-		return (
-			<div className="row" key={name}>
-				<div className="card col-3">
-					<div className="card-header row btn-link" id={`${name}Card`} data-toggle="collapse" data-target={`#collapse${name}`} aria-expanded="false" aria-controls={`collapse${name}`}>
-						<img src={img} className={`card-img ${classes.chatImg}`} alt={name} />
-						<div className="btn btn-link" data-toggle="collapse" data-target={`#collapse${name}`} aria-expanded="false" aria-controls={`collapse${name}`}>
-							<h6 className={`card-title ${classes.chatCardTitle}`}>{name}</h6>
-							<p className={`card-text ${classes.chatCardMsg}`}>last message</p>
-							<p className={`card-text`}>
-								<small className="text-muted">4 minutes ago</small>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div id={`collapse${name}`} className={`collapse col-6 ${classes.chatBox}`} aria-labelledby={`${name}Card`} data-parent="#chatCards">
-					<div className="card-body mx-sm-3 md-2">
-						<ul className={` ${classes.chatText}`}>
-							{this.messagesDisplayer(this.state.users[name])}
-						</ul>
-					</div>
-					<form className="card-body form-inline">
-						<div className="form-group mx-sm-3 md-2">
-							<input type="text" className="form-control" id={`MessageInput${name}`} placeholder="Écriver un message ..." />
-						</div>
-					</form>
-				</div>
-			</div>
-		)
-	}
-
-	loadChats(datas) {
-		console.log(datas);
-		var arr = datas.map(item => this.cardItem('https://intra.epitech.eu/file/userprofil/profilview/maxence.fourrier.jpg', item.name));
-		return arr;
+			<ChatList
+				className={"chat-list"}
+				dataSource={this.state.list}
+			/>
+		);
 	}
 
 	render() {
-		if (KwiliApi.isConnected() === false)
-			return KwiliCommon.notLoggedPage();
-		this.state.chat.start("5d9a527f46906778e730c047");
+		if (!KwiliApi.isConnected())
+			return <NotLogged />;
 		return (
 			<div>
-				<div className={`accordion ${classes.chat}`} id="chatCards">
-					{this.loadChats(this.state.users)}
+				<div>
+					<Navbar />
+					<div className="jumbotron jumbotron-fluid">
+						<div className="container">
+							<h5 className="display-4">Kwili Chat</h5>
+							<p className="lead">You can directly use our ChatBot or search for a doctor.</p>
+							<hr className="my-4"></hr>
+							<div className="btn-toolbar" role="toolbar">
+								<div className="input-group">
+									<div className="input-group-prepend">
+										<Search id="search-bar" />
+									</div>
+								</div>
+								<button type="button" className="btn btn-primary" onClick={this.addButton}>chat</button>
+							</div>
+							{this.chatList()}
+						</div>
+					</div>
+					<ChatBotWidget />
 				</div>
-			</div>
+			</div >
 		);
 	}
 }
