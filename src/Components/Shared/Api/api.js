@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const userdataToken = 'Kwili-login-data';
 
+const userEndpoint = 'api.kwili.fr';
+
 export default class KwiliApi {
 	static async request(method, data, path, headers) {
 		if (data === undefined)
@@ -20,7 +22,7 @@ export default class KwiliApi {
 
 	static tryRequest(usedMethod, npath, data) {
 		return this.request(usedMethod, data.data,
-			'http://localhost:8080/' + npath,
+			userEndpoint + ':8080/' + npath,
 			data.headers);
 	}
 
