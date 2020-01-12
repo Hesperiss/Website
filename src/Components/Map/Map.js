@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {GoogleMap, Marker, Autocomplete } from '@react-google-maps/api'
+import {GoogleMap, Marker, Autocomplete, InfoWindow} from '@react-google-maps/api'
 import {mapOptions} from "./MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
 
@@ -7,11 +7,30 @@ function Map() {
 
     const [center] = useState({ lat: 48.8566, lng: 2.3522});
     //const [mapRef, setMapRef] = useState(null);
+    const [markerMap, setMarkerMap] = useState({});
     const [userPos] = useState({ lat: 48.8566, lng: 2.3522});
     const [searchRadius] = useState(1500);
     const [zoom] = useState(15);
     const [hospitals, setHospitals] = useState([]);
     const [hospitalMarkers, setHospitalMarkers] = useState(null);
+    const [selectedPlace, setSelectedPlace] = useState(null);
+    const [infoOpen, setInfoOpen] = useState(false);
+
+    const onMarkerClick = (event, place) => {
+        setSelectedPlace(place);
+        // Required so clicking a 2nd marker works as expected
+        if (infoOpen) {
+            setInfoOpen(false);
+        }
+        setInfoOpen(true);
+    };
+
+    const onMarkerLoad = (marker, place) => {
+        return setMarkerMap(prevState => {
+            return { ...prevState, [place.id]: marker };
+        });
+    };
+
 
     const findNearestHospitals = map => {
         let service = new window.google.maps.places.PlacesService(map);
@@ -29,8 +48,11 @@ function Map() {
                 for (let i = 0; i < results.length; i++) {
                     markerList.push(<Marker
                         // label={results[i].name}
+                        key={results[i].id}
                         position={results[i].geometry.location}
                         icon={hospitalIcon}
+                        onLoad={marker => onMarkerLoad(marker, results[i])}
+                        onClick={event => onMarkerClick(event, results[i])}
                     />);
                 }
                 setHospitalMarkers(markerList);
@@ -80,6 +102,17 @@ function Map() {
                         }}
                     />
                 </Autocomplete>
+            {infoOpen && selectedPlace && (
+                <InfoWindow
+                    anchor={markerMap[selectedPlace.id]}
+                    onCloseClick={() => setInfoOpen(false)}
+                >
+                    <div>
+                        <h3>{selectedPlace.id}</h3>
+                        <div>A propos de cet Hôpital:</div>
+                    </div>
+                </InfoWindow>
+            )}
             {hospitalMarkers}
         </GoogleMap>
     };
