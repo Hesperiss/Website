@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 import Search from './search-bar';
 import KwiliApi from '../Shared/Api/api.js';
-import NotLogged from '../Shared/LogHandling/NotLogged';
 import ChatBotWidget from './ChatBotWidget';
 import Navbar from '../Shared/Navbar';
 import { ChatList } from 'react-chat-elements';
@@ -43,8 +43,9 @@ export default class Login extends Component {
 	}
 
 	render() {
-		if (!KwiliApi.isConnected())
-			return <NotLogged />;
+		if (KwiliApi.isConnected() !== true) {
+      return <Redirect to={{pathname: '/login', state: {errorMsg: "Erreur: vous devez être connecté pour pouvoir accéder à cette page."}}} />
+    }
 		return (
 			<div>
 				<div>

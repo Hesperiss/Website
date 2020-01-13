@@ -35,7 +35,7 @@ class Login extends Component {
 		// KwiliApi.setLogin();
 		if (loginResponse != null) {
 			KwiliApi.setSessionToken(loginResponse.data.access_token);
-			this.props.history.push('/test');
+			this.props.history.push('/profile');
 			//this.props.history.push('/prescription');
 		} else {
 			this.errorMsg = 'Erreur : email et/ou mot de passe invalide.'
