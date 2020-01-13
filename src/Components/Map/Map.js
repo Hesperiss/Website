@@ -5,6 +5,7 @@ import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
 import styles from "./Map.scss"
 import {FaWalking, FaCar, FaBusAlt} from "react-icons/all";
+import Slider from '@material-ui/core/Slider';
 
 function Map() {
 
@@ -13,7 +14,7 @@ function Map() {
     const [mapRef, setMapRef] = useState(null);
     const [markerMap, setMarkerMap] = useState({});
     const [userPos, setUserPos] = useState({ lat: 48.8566, lng: 2.3522});
-    const [searchRadius] = useState(1500);
+    const [searchRadius, setRadius] = useState(1500);
     const [zoom] = useState(15);
     const [hospitalMarkers, setHospitalMarkers] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
@@ -83,14 +84,16 @@ function Map() {
         })
     };
 
-    //initialize hospital markers with google places API id
+    // initialize hospital markers with google places API id
     const onMarkerLoad = (marker, place) => {
         return setMarkerMap(prevState => {
             return { ...prevState, [place.id]: marker };
         });
     };
 
-    //fetch nerast hospitals
+    // fetch nearest hospitals
+    // Only the 20 nearest hospitals are used in results
+    // so using a very big radius is essentially useless
     const findNearestHospitals = (map, position) => {
         let request = {
             location: position,
@@ -103,7 +106,7 @@ function Map() {
             if (status === window.google.maps.places.PlacesServiceStatus.OK) {
                 let markerList = [];
                 for (let i = 0; i < results.length; i++) {
-                        markerList.push(<Marker
+                    markerList.push(<Marker
                         key={results[i].id}
                         position={results[i].geometry.location}
                         icon={hospitalIcon}
@@ -135,15 +138,21 @@ function Map() {
 
         let sidePanel = <div className={styles.directionsPanel}> </div>;
 
-        return <GoogleMap
-            options={mapOptions}
-            zoom={zoom}
-            center={center}
-            mapContainerStyle={{
-                height: "100vh",
-                width: "100vwh"
-            }}
-            onLoad={map => loadHandler(map)}>
+        return <React.Fragment>
+            <GoogleMap
+                options={mapOptions}
+                zoom={zoom}
+                center={center}
+                mapContainerStyle={{
+                    height: "100vh",
+                    width: "100vwh",
+                    display: "flex",
+                    alignItems: "center",
+                    alignContent: "center",
+                    justifyContent: "center",
+                    justifyItems: "center",
+                }}
+                onLoad={map => loadHandler(map)}>
 
                 <Marker
                     position={userPos}
@@ -162,13 +171,13 @@ function Map() {
                         onCloseClick={() => setInfoOpen(false)}>
                         <div>
                             {placeDetails ?
-                            <div>
-                                <h3 className={styles.hospitalName}>{placeDetails.name}</h3>
-                                <p><b>Addresse :</b> {placeDetails.address_components[0].short_name + ' ' + placeDetails.address_components[1].short_name }</p>
-                                <p><b>Téléphone :</b> {placeDetails.formatted_phone_number}</p>
-                                <p><b>Notation :</b> {placeDetails.rating ? placeDetails.rating : "inconnue"}</p>
-                                {placeDetails.opening_hours && placeDetails.opening_hours.isOpen() ?<p><b>Actuellement ouvert</b></p> : null}
-                            </div> : <div>Chargement...</div>}
+                                <div>
+                                    <h3 className={styles.hospitalName}>{placeDetails.name}</h3>
+                                    <p><b>Addresse :</b> {placeDetails.address_components[0].short_name + ' ' + placeDetails.address_components[1].short_name }</p>
+                                    <p><b>Téléphone :</b> {placeDetails.formatted_phone_number}</p>
+                                    <p><b>Notation :</b> {placeDetails.rating ? placeDetails.rating : "inconnue"}</p>
+                                    {placeDetails.opening_hours && placeDetails.opening_hours.isOpen() ?<p><b>Actuellement ouvert</b></p> : null}
+                                </div> : <div>Chargement...</div>}
                         </div>
                     </InfoWindow>
                 )}
@@ -213,10 +222,27 @@ function Map() {
                         <FaCar className={styles.travelModeIcon}/>
                     </div>
                 </div>
+                <div className={styles.sliderWrapper}>
+                    <h5 className={styles.sliderTitle}>
+                        {`Rayon de la recherche: ${searchRadius / 100} km`}
+                    </h5>
+                    <div className={styles.sliderBox}>
+                        <Slider
+                            defaultValue={15}
+                            aria-labelledby="discrete-slider"
+                            valueLabelDisplay="auto"
+                            step={5}
+                            onChange={(e, val) => setRadius(val * 100)}
+                            min={10}
+                            max={50}
+                            className={styles.slider}
+                        />
+                    </div>
+                </div>
+                )}
 
-            )}
-
-        </GoogleMap>
+            </GoogleMap>
+        </React.Fragment>
     };
 
     return renderMap();
