@@ -13,7 +13,7 @@ class Test extends Component {
 	}
 
 	render() {
-    if (KwiliApi.getLogin() !== true) {
+    if (KwiliApi.isConnected() !== true) {
       return <Redirect to={{pathname: '/login', state: {errorMsg: "Erreur: vous devez être connecté pour pouvoir accéder à cette page."}}} />
     }
 		return (

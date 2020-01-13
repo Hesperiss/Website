@@ -25,18 +25,18 @@ class Login extends Component {
 			if (this.props.location.state.errorMsg !== undefined && this.props.location.state.errorMsg !== '') {
 				this.errorMsg = this.props.location.state.errorMsg;
 				this.setState({ show: true })
-			}	
+			}
 		}
 	}
 
 	redirectPrescription(loginResponse) {
 		console.log(loginResponse);
-		//TEMP FIX : REMOVE LATER
-		KwiliApi.setLogin();
-		this.props.history.push('/test');
+		// //TEMP FIX : REMOVE LATER
+		// KwiliApi.setLogin();
 		if (loginResponse != null) {
 			KwiliApi.setSessionToken(loginResponse.data.access_token);
-			this.props.history.push('/prescription');
+			this.props.history.push('/test');
+			//this.props.history.push('/prescription');
 		} else {
 			this.errorMsg = 'Erreur : email et/ou mot de passe invalide.'
 			this.setState({ show: true });

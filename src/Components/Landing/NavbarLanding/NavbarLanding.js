@@ -4,7 +4,7 @@ import KwiliApi from '../../Shared/Api/api';
 import { Link } from 'react-router-dom'
 
 export function navbarLanding() {
-	if (KwiliApi.getLogin() === true) {
+	if (KwiliApi.isConnected() === true) {
 		return (
 			<div className={classes.Navbar}>
 				<Link to='/test'>
