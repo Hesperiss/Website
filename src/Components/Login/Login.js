@@ -1,4 +1,3 @@
-// import '../../Styles.scss'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
@@ -53,8 +52,7 @@ class Login extends Component {
 			this.errorMsg = 'Erreur : mot de passe manquant. Veuillez entrer votre mot de passe.';
 			this.setState({ show: true })
 		} else {
-			var promise = KwiliApi.login(login, password);
-			promise.then(this.redirectProfile);
+			KwiliApi.login(login, password).then(this.redirectProfile);
 		}
 	}
 
@@ -82,8 +80,8 @@ class Login extends Component {
 					<div className="form-group">
 						<input type="password" className="form-control" id="password-input" placeholder="Mot de passe" onSubmit={this.tryLogin} />
 					</div>
-					<button className={`btn btn-block btn-success ${classes.btnSpace}`} onClick={this.tryLogin}>Connexion</button>
-					<button className={`btn btn-block btn-secondary ${classes.btnSpace}`} onClick={this.toRegister}>
+					<button type="button" className={`btn btn-block btn-success ${classes.btnSpace}`} onClick={this.tryLogin}>Connexion</button>
+					<button type="button" className={`btn btn-block btn-secondary ${classes.btnSpace}`} onClick={this.toRegister}>
 						S'inscrire
 					</button>
 				</form>
