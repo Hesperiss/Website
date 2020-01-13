@@ -13,7 +13,7 @@ function Map() {
     const [markerMap, setMarkerMap] = useState({});
     const [userPos, setUserPos] = useState({ lat: 48.8566, lng: 2.3522});
     const [searchRadius] = useState(1500);
-    const [zoom] = useState(13);
+    const [zoom] = useState(15);
     const [hospitalMarkers, setHospitalMarkers] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoOpen, setInfoOpen] = useState(false);
@@ -34,6 +34,9 @@ function Map() {
             mapRef.setCenter(newCenter);
             setUserPos(newCenter);
             userMarker.setPosition(newCenter);
+
+            //reset destination or the directiosn update themselves
+            setDestination(null);
 
             //delete old markers and update hospitals nearby
             setInfoOpen(false);
@@ -185,7 +188,9 @@ function Map() {
                     options={{
                         directions: directionsResponse,
                         polylineOptions: {
-                            strokeColor: "#952929"
+                            strokeColor: "#ff4d4d",
+                            strokeOpacity: 0.8,
+                            strokeWeight: 7
                         },
                         suppressMarkers: true,
                     }}/>)}
