@@ -30,29 +30,6 @@ export const mapOptions = {
             ]
         },
         {
-            featureType: 'poi.medical',
-            stylers: [
-                {
-                    visibility: 'on',
-                }]
-        },
-        {
-            featureType: 'poi.medical',
-            elementType: "labels.text.fill",
-            stylers: [
-                {
-                    color: "#EBEBEB",
-                }]
-        },
-        {
-            featureType: 'poi.medical',
-            elementType: "labels.text.stroke",
-            stylers: [
-                {
-                    visibility: "off",
-                }]
-        },
-        {
             featureType: 'road',
             elementType: 'labels',
             stylers: [
