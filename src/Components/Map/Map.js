@@ -122,6 +122,18 @@ function Map() {
     //store map reference in state and display hospitals near initial position
     const loadHandler = (map) => {
         setMapRef(map);
+        //use geolocation if user allows it and set user position to geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                let pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                map.setCenter(pos);
+                setUserPos(pos);
+            }, function() {
+            });
+        }
         findNearestHospitals(map, userPos);
     };
 

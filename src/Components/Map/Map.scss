@@ -2,28 +2,6 @@ $theme-light: #58a5f0;
 $theme-medium: #0277bd;
 $theme-dark: #004c8c;
 
-.hospitalIcon {
-  color: #c42f2f;
-  font-size: 4vh;
-  background-color: white;
-  border-width: 2px;
-  border-color: #b8b8b8;
-  border-radius: 100%;
-  border-style: solid;
-  padding: 4px;
-}
-
-.userIcon {
-  color: #86b356;
-  font-size: 4vh;
-  background-color: white;
-  border-width: 2px;
-  border-color: #b8b8b8;
-  border-radius: 100%;
-  border-style: solid;
-  padding: 4px;
-}
-
 .hospitalPopup {
   position: fixed;
   display: flex;
