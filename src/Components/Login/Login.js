@@ -14,7 +14,7 @@ class Login extends Component {
 			isLogin: this.props.location.state,
 			show: false,
 		};
-		this.redirectPrescription = this.redirectPrescription.bind(this);
+		this.redirectProfile = this.redirectProfile.bind(this);
 		this.tryLogin = this.tryLogin.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.toRegister = this.toRegister.bind(this);
@@ -29,7 +29,7 @@ class Login extends Component {
 		}
 	}
 
-	redirectPrescription(loginResponse) {
+	redirectProfile(loginResponse) {
 		console.log(loginResponse);
 		// //TEMP FIX : REMOVE LATER
 		// KwiliApi.setLogin();
@@ -54,7 +54,7 @@ class Login extends Component {
 			this.setState({ show: true })
 		} else {
 			var promise = KwiliApi.login(login, password);
-			promise.then(this.redirectPrescription);
+			promise.then(this.redirectProfile);
 		}
 	}
 
