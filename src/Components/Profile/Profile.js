@@ -1,9 +1,9 @@
 import classes from '../../Styles.scss';
 import KwiliCommon from '../Shared/LogHandling/common'
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom'
 import KwiliApi from '../Shared/Api/api';
-import NotLogged from "../Shared/LogHandling/NotLogged";
 import Navbar from "../Shared/Navbar";
 
 export default class Login extends Component {
@@ -26,8 +26,9 @@ export default class Login extends Component {
 			KwiliApi.getProfileInfo().then(this.refreshInfo);
 	}
 	render() {
-		if (!KwiliApi.isConnected())
-			return <NotLogged />;
+		if (KwiliApi.isConnected() !== true) {
+      return <Redirect to={{pathname: '/login', state: {errorMsg: "Erreur: vous devez être connecté pour pouvoir accéder à cette page."}}} />
+    }
 		if (!this.state.user)
 			return KwiliCommon.loadingScreenPage();
 		return (

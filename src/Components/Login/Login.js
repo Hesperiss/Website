@@ -14,16 +14,29 @@ class Login extends Component {
 			isLogin: this.props.location.state,
 			show: false,
 		};
-		this.redirectPrescription = this.redirectPrescription.bind(this);
+		this.redirectProfile = this.redirectProfile.bind(this);
 		this.tryLogin = this.tryLogin.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.toRegister = this.toRegister.bind(this);
 	}
-	redirectPrescription(loginResponse) {
+
+	componentDidMount() {
+		if (this.props.location.state !== undefined && this.props.location.state !== '') {
+			if (this.props.location.state.errorMsg !== undefined && this.props.location.state.errorMsg !== '') {
+				this.errorMsg = this.props.location.state.errorMsg;
+				this.setState({ show: true })
+			}
+		}
+	}
+
+	redirectProfile(loginResponse) {
 		console.log(loginResponse);
+		// //TEMP FIX : REMOVE LATER
+		// KwiliApi.setLogin();
 		if (loginResponse != null) {
 			KwiliApi.setSessionToken(loginResponse.data.access_token);
-			this.props.history.push('/prescription');
+			this.props.history.push('/profile');
+			//this.props.history.push('/prescription');
 		} else {
 			this.errorMsg = 'Erreur : email et/ou mot de passe invalide.'
 			this.setState({ show: true });
@@ -41,7 +54,7 @@ class Login extends Component {
 			this.setState({ show: true })
 		} else {
 			var promise = KwiliApi.login(login, password);
-			promise.then(this.redirectPrescription);
+			promise.then(this.redirectProfile);
 		}
 	}
 
