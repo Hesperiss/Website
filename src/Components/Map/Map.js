@@ -4,6 +4,7 @@ import {mapOptions} from "./Shared/MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
 import styles from "./Map.scss"
+import {FaWalking, FaCar, FaBusAlt} from "react-icons/all";
 
 function Map() {
 
@@ -194,6 +195,25 @@ function Map() {
                         },
                         suppressMarkers: true,
                     }}/>)}
+
+                <div className={styles.travelModeButtonsWrapper}>
+                    <div
+                        className={userTravelMode === 'TRANSIT' ? styles.activeTravelModeButton : styles.travelModeButton}
+                        onClick={() => setTravelMode('TRANSIT')}>
+                        <FaBusAlt className={styles.travelModeIcon}/>
+                    </div>
+                    <div
+                        className={userTravelMode === 'WALKING' ? styles.activeTravelModeButton : styles.travelModeButton}
+                        onClick={() => setTravelMode('WALKING')}>
+                        <FaWalking className={styles.travelModeIcon}/>
+                    </div>
+                    <div
+                        className={userTravelMode === 'DRIVING' ? styles.activeTravelModeButton : styles.travelModeButton}
+                        onClick={() => setTravelMode('DRIVING')}>
+                        <FaCar className={styles.travelModeIcon}/>
+                    </div>
+                </div>
+
             )}
 
         </GoogleMap>
