@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {GoogleMap, Marker, Autocomplete, InfoWindow, DirectionsService} from '@react-google-maps/api'
-import {mapOptions} from "./MapOptions";
+import {GoogleMap, Marker, Autocomplete, InfoWindow, DirectionsService, DirectionsRenderer} from '@react-google-maps/api'
+import {mapOptions} from "./Shared/MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
 import styles from "./Map.scss"
@@ -13,27 +13,33 @@ function Map() {
     const [markerMap, setMarkerMap] = useState({});
     const [userPos, setUserPos] = useState({ lat: 48.8566, lng: 2.3522});
     const [searchRadius] = useState(1500);
-    const [zoom] = useState(15);
+    const [zoom] = useState(13);
     const [hospitalMarkers, setHospitalMarkers] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoOpen, setInfoOpen] = useState(false);
     const [placeDetails, setPlaceDetails] = useState(null);
     const [autocomplete, setAutocomplete] = useState(null);
     const [userMarker, setUserMarker] = useState(null);
+    const [userTravelMode, setTravelMode] = useState('DRIVING');
+    const [directionsResponse, setDirectionsResponse] = useState(null);
+    const [userDestination, setDestination] = useState(null);
 
     //set center and user position to searched address when using search bar
     const onPlaceSearched = () => {
 
         if (autocomplete !== null) {
+
             //set new map center and user position
             let newCenter = autocomplete.getPlace().geometry.location;
             mapRef.setCenter(newCenter);
             setUserPos(newCenter);
             userMarker.setPosition(newCenter);
-            //delete markers and update hospitals nearby
+
+            //delete old markers and update hospitals nearby
             setInfoOpen(false);
             setHospitalMarkers(null);
             findNearestHospitals(mapRef, newCenter);
+
         } else {
             console.log('Autocomplete is not loaded yet!')
         }
@@ -50,6 +56,9 @@ function Map() {
         setInfoOpen(false);
         requestHospitaldetails(id, map);
         setSelectedPlace(place);
+        if (!userDestination || userDestination !== place.geometry.location) {
+            setDestination(place.geometry.location);
+        }
         setInfoOpen(true);
 
     };
@@ -70,6 +79,7 @@ function Map() {
         })
     };
 
+    //initialize hospital markers with google places API id
     const onMarkerLoad = (marker, place) => {
         return setMarkerMap(prevState => {
             return { ...prevState, [place.id]: marker };
@@ -102,15 +112,24 @@ function Map() {
         })
     };
 
-    const loadHandler = map => {
-        //Store a reference to the google map instance in state
+    //store map reference in state and display hospitals near initial position
+    const loadHandler = (map) => {
         setMapRef(map);
-        console.log(mapRef);
-        //fetch nearest hospitals
         findNearestHospitals(map, userPos);
     };
 
+    //get directions to selected hospital
+    const directionsCallback = (response) => {
+        if (response !== null) {
+            if (response.status === 'OK') {
+                setDirectionsResponse(response);
+            }
+        }
+    };
+
     const renderMap = () => {
+
+        let sidePanel = <div className={styles.directionsPanel}> </div>;
 
         return <GoogleMap
             options={mapOptions}
@@ -130,7 +149,7 @@ function Map() {
                 <Autocomplete
                     onLoad={(searchBar) => onLoadAutocomplete(searchBar)}
                     onPlaceChanged={() => onPlaceSearched()}>
-                    <input type="text" placeholder="Rechercher une adresse..." className={styles.mapInfoBox}                  />
+                    <input type="text" placeholder="Rechercher une adresse..." className={styles.mapSearchBar}                  />
                 </Autocomplete>
 
                 {infoOpen && selectedPlace && (
@@ -149,7 +168,29 @@ function Map() {
                         </div>
                     </InfoWindow>
                 )}
+
                 {hospitalMarkers}
+
+                {userDestination && < DirectionsService
+                    options={{
+                        destination: userDestination,
+                        origin: userPos,
+                        travelMode: userTravelMode,
+                    }}
+                    callback={(response) => directionsCallback(response)}
+                    panel={sidePanel}
+                /> }
+
+                {directionsResponse && userDestination && (<DirectionsRenderer
+                    options={{
+                        directions: directionsResponse,
+                        polylineOptions: {
+                            strokeColor: "#952929"
+                        },
+                        suppressMarkers: true,
+                    }}/>)}
+            )}
+
         </GoogleMap>
     };
 
