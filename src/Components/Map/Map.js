@@ -1,28 +1,47 @@
 import React, {useState} from 'react';
-import {GoogleMap, Marker, Autocomplete, InfoWindow} from '@react-google-maps/api'
+import {GoogleMap, Marker, Autocomplete, InfoWindow, DirectionsService} from '@react-google-maps/api'
 import {mapOptions} from "./MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
+import styles from "./Map.scss"
 
 function Map() {
 
+    //state declaration and management
     const [center] = useState({ lat: 48.8566, lng: 2.3522});
-    //const [mapRef, setMapRef] = useState(null);
+    const [mapRef, setMapRef] = useState(null);
     const [markerMap, setMarkerMap] = useState({});
     const [userPos] = useState({ lat: 48.8566, lng: 2.3522});
     const [searchRadius] = useState(1500);
     const [zoom] = useState(15);
-    const [hospitals, setHospitals] = useState([]);
     const [hospitalMarkers, setHospitalMarkers] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoOpen, setInfoOpen] = useState(false);
+    const [placeDetails, setPlaceDetails] = useState(null);
 
-    const onMarkerClick = (event, place) => {
+    //open corresponding info box (with hospital details) on marker click
+    const onMarkerClick = (event, place, id, map) => {
+
+        setInfoOpen(false);
+        requestHospitaldetails(id, map);
         setSelectedPlace(place);
-        // Required so clicking a 2nd marker works as expected
-        if (infoOpen) {
-            setInfoOpen(false);
-        }
         setInfoOpen(true);
+
+    };
+
+    //fetch hospital information
+    const requestHospitaldetails = (id, map) => {
+        console.log(id);
+        let request = {
+            placeId: id,
+            fields: ['name', 'address_component', 'formatted_phone_number', 'geometry', 'rating', 'opening_hours']
+        };
+        let service = new window.google.maps.places.PlacesService(map);
+        service.getDetails(request, (results, status) => {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                setPlaceDetails(results);
+            }
+            else setPlaceDetails(null);
+        })
     };
 
     const onMarkerLoad = (marker, place) => {
@@ -31,28 +50,25 @@ function Map() {
         });
     };
 
-
-    const findNearestHospitals = map => {
-        let service = new window.google.maps.places.PlacesService(map);
-        let pos = new window.google.maps.LatLng(userPos.lat, userPos.lng);
-        var request = {
-            location: pos,
+    //fetch nerast hospitals
+    const findNearestHospitals = (map) => {
+        let request = {
+            location: userPos,
             radius: searchRadius,
-            type: 'hospital'
+            types: ["hospital", "health", "point_of_interest"],
+            keyword: "(emergency) AND ((medical centre) OR hospital)"
         };
+        let service = new window.google.maps.places.PlacesService(map);
         service.nearbySearch(request, (results, status) => {
             if (status === window.google.maps.places.PlacesServiceStatus.OK) {
                 let markerList = [];
-                setHospitals(results);
-                console.log(hospitals);
                 for (let i = 0; i < results.length; i++) {
-                    markerList.push(<Marker
-                        // label={results[i].name}
+                        markerList.push(<Marker
                         key={results[i].id}
                         position={results[i].geometry.location}
                         icon={hospitalIcon}
                         onLoad={marker => onMarkerLoad(marker, results[i])}
-                        onClick={event => onMarkerClick(event, results[i])}
+                        onClick={event => onMarkerClick(event, results[i], results[i].place_id, map)}
                     />);
                 }
                 setHospitalMarkers(markerList);
@@ -61,13 +77,11 @@ function Map() {
     };
 
     const loadHandler = map => {
-
         //Store a reference to the google map instance in state
-        //setMapRef(map);
-
+        setMapRef(map);
+        console.log(mapRef);
         //fetch nearest hospitals
         findNearestHospitals(map);
-
     };
 
     const renderMap = () => {
@@ -85,21 +99,8 @@ function Map() {
                 <Autocomplete>
                     <input
                         type="text"
-                        placeholder="Rechercher une adresse"
-                        style={{
-                            boxSizing: `border-box`,
-                            border: `1px solid transparent`,
-                            width: `240px`,
-                            height: `32px`,
-                            padding: `0 12px`,
-                            borderRadius: `10px`,
-                            boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-                            fontSize: `14px`,
-                            outline: `none`,
-                            textOverflow: `ellipses`,
-                            position: "fixed",
-                            margin: "30px"
-                        }}
+                        placeholder="Rechercher une adresse..."
+                        className={styles.mapInfoBox}
                     />
                 </Autocomplete>
             {infoOpen && selectedPlace && (
@@ -108,8 +109,15 @@ function Map() {
                     onCloseClick={() => setInfoOpen(false)}
                 >
                     <div>
-                        <h3>{selectedPlace.id}</h3>
-                        <div>A propos de cet Hôpital:</div>
+                        {placeDetails ?
+                        <div>
+                            <h3 className={styles.hospitalName}>{placeDetails.name}</h3>
+                            <p><b>Addresse :</b> {placeDetails.address_components[0].short_name + ' ' + placeDetails.address_components[1].short_name }</p>
+                            <p><b>Téléphone :</b> {placeDetails.formatted_phone_number}</p>
+                            <p><b>Notation :</b> {placeDetails.rating ? placeDetails.rating : "inconnue"}</p>
+                            {placeDetails.opening_hours && placeDetails.opening_hours.isOpen() ?<p><b>Actuellement ouvert</b></p> : null}
+                        </div>
+                        : <div>Chargement...</div>}
                     </div>
                 </InfoWindow>
             )}
