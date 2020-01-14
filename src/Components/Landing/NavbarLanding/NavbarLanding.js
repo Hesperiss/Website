@@ -11,7 +11,7 @@ export function navbarLanding() {
 					<input
 						type="submit"
 						value="Mon compte"
-						href="/test"
+						href="/profile"
 						className={classes.navbarLink}
 					/>
 				</Link>
