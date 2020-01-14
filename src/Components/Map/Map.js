@@ -1,170 +1,267 @@
-import React, { Component } from 'react';
-import {
-    Map, TileLayer, ZoomControl, Marker
-} from 'react-leaflet';
-import MapRouting from "./MapRouting";
-import LocateControl from './Shared/LocateUser';
-import DiscreteSlider from './Shared/Slider';
-import HospitalPopup from "./Shared/HospitalPopup"
-import Search from './Shared/Search';
-import { FaAmbulance } from 'react-icons/fa';
-import { renderToStaticMarkup } from 'react-dom/server';
-import { divIcon } from 'leaflet';
-import classes from "./Map.scss"
+import React, {useState} from 'react';
+import {GoogleMap, Marker, Autocomplete, InfoWindow, DirectionsService, DirectionsRenderer} from '@react-google-maps/api'
+import {mapOptions} from "./Shared/MapOptions";
+import hospitalIcon from "../../Images/map_marker.png"
+import userIcon from "../../Images/user_marker.png"
+import styles from "./Map.scss"
+import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
+import Slider from '@material-ui/core/Slider';
 
-class LeafletMap extends Component {
+function Map() {
 
-    constructor(props) {
-        super(props);
-        this.mapRef = React.createRef();
-        this.state = {
-            //default lat and lng are Paris coordinates
-            lat: 48.8566,
-            lng: 2.3522,
-            markerLat: 0,
-            markerLng: 0,
-            zoom: 5,
-            radius: 0.03,
-            isMapInit: false,
-            hospitalSelected: false,
-            //list of hospitals
-            nearestHospitals: [],
-            hospitalMarkers: [],
-            userPos: null,
-            //in case userPos != route start pos
-            routeFrom: [46.5, 2.618787],
-            routeTo: [48.85412, 2.4065929]
+    //state declaration and management
+    const [center] = useState({ lat: 48.8566, lng: 2.3522});
+    const [mapRef, setMapRef] = useState(null);
+    const [markerMap, setMarkerMap] = useState({});
+    const [userPos, setUserPos] = useState({ lat: 48.8566, lng: 2.3522});
+    const [searchRadius, setRadius] = useState(1500);
+    const [zoom] = useState(15);
+    const [hospitalMarkers, setHospitalMarkers] = useState(null);
+    const [selectedPlace, setSelectedPlace] = useState(null);
+    const [infoOpen, setInfoOpen] = useState(false);
+    const [placeDetails, setPlaceDetails] = useState(null);
+    const [autocomplete, setAutocomplete] = useState(null);
+    const [userMarker, setUserMarker] = useState(null);
+    const [userTravelMode, setTravelMode] = useState('DRIVING');
+    const [directionsResponse, setDirectionsResponse] = useState(null);
+    const [userDestination, setDestination] = useState(null);
+
+    //set center and user position to searched address when using search bar
+    const onPlaceSearched = () => {
+
+        if (autocomplete !== null) {
+
+            //set new map center and user position
+            let newCenter = autocomplete.getPlace().geometry.location;
+            mapRef.setCenter(newCenter);
+            setUserPos(newCenter);
+            userMarker.setPosition(newCenter);
+
+            //reset destination or the directiosn update themselves
+            setDestination(null);
+
+            //delete old markers and update hospitals nearby
+            setInfoOpen(false);
+            setHospitalMarkers(null);
+            findNearestHospitals(mapRef, newCenter);
+
+        } else {
+            console.log('Autocomplete is not loaded yet!')
+        }
+    };
+
+    //set reference to autocomplete search bar
+    const onLoadAutocomplete = (searchBar) => {
+        setAutocomplete(searchBar);
+    };
+
+    //open corresponding info box (with hospital details) on marker click
+    const onMarkerClick = (event, place, id, map) => {
+
+        setInfoOpen(false);
+        requestHospitaldetails(id, map);
+        setSelectedPlace(place);
+        if (!userDestination || userDestination !== place.geometry.location) {
+            setDestination(place.geometry.location);
+        }
+        setInfoOpen(true);
+
+    };
+
+    //fetch hospital information
+    const requestHospitaldetails = (id, map) => {
+        console.log(id);
+        let request = {
+            placeId: id,
+            fields: ['name', 'address_component', 'formatted_phone_number', 'geometry', 'rating', 'opening_hours']
         };
-        this.addMarker = this.addMarker.bind(this);
-    }
+        let service = new window.google.maps.places.PlacesService(map);
+        service.getDetails(request, (results, status) => {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                setPlaceDetails(results);
+            }
+            else setPlaceDetails(null);
+        })
+    };
 
-    getNearestHospitals() {
-        this.setState({ stop: true })
-        let url = this.state.userPos ? "https://www.kwili.fr:8080/urgences?radius=" + this.state.radius + "&lat=" + this.state.userPos.lat
-                + "&long=" + this.state.userPos.lng : "https://www.kwili.fr:8080/urgences?radius=" + this.state.radius + "&lat=" + this.state.lat
-                + "&long=" + this.state.lng;
-        fetch(url)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({nearestHospitals: result.msg});
-                    if (result.msg !== undefined && result.msg[0] !== undefined && result.msg[0].geo !== undefined) {
-                        this.createHospitalMarkers();
-                        this.setState({routeTo: [result.msg[0].geo[1], result.msg[0].geo[0]]});
-                        this.setState({selectedHospital: true});
-                    }
-                },
-                (error) => {
-                    this.setState({error});
+    // initialize hospital markers with google places API id
+    const onMarkerLoad = (marker, place) => {
+        return setMarkerMap(prevState => {
+            return { ...prevState, [place.id]: marker };
+        });
+    };
+
+    // fetch nearest hospitals
+    // Only the 20 nearest hospitals are used in results
+    // so using a very big radius is essentially useless
+    const findNearestHospitals = (map, position) => {
+        let request = {
+            location: position,
+            radius: searchRadius,
+            types: ["hospital", "health", "point_of_interest"],
+            keyword: "(emergency) AND ((medical centre) OR hospital)"
+        };
+        let service = new window.google.maps.places.PlacesService(map);
+        service.nearbySearch(request, (results, status) => {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                let markerList = [];
+                for (let i = 0; i < results.length; i++) {
+                    markerList.push(<Marker
+                        key={results[i].id}
+                        position={results[i].geometry.location}
+                        icon={hospitalIcon}
+                        onLoad={marker => onMarkerLoad(marker, results[i])}
+                        onClick={event => onMarkerClick(event, results[i], results[i].place_id, map)}
+                    />);
                 }
-            )
-    }
-
-    componentDidMount() {
-        document.title = 'Kwili | Urgences à proximité';
-        if (this.state.isMapInit === false) {
-            this.setState({
-                isMapInit: true,
-                stop: false
-            });
-            this.getNearestHospitals();
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if ((this.state.userPos !== prevState.userPos)) {
-            this.getNearestHospitals();
-        } else if ((this.state.radius !== prevState.radius)) {
-            this.getNearestHospitals();
-        }
-    }
-
-    updateUserPosition(pos) {
-        this.setState({userPos: pos});
-    }
-
-    addMarker(x, y) {
-        this.setState({ markerLat: x, markerLng: y });
-    }
-
-    saveMap = (map) => {
-        this.map = map;
+                setHospitalMarkers(markerList);
+            }
+        })
     };
 
-    onClick = (pos) => {
-        this.child.updateHospital(pos);// do stuff
+    //store map reference in state and display hospitals near initial position
+    const loadHandler = (map) => {
+        setMapRef(map);
+        //use geolocation if user allows it and set user position to geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                let pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                map.setCenter(pos);
+                setUserPos(pos);
+            }, function() {
+            });
+        }
+        findNearestHospitals(map, userPos);
     };
 
-    setRadius(val) {
-        this.setState({radius: val});
-    }
-
-    createHospitalMarkers() {
-        if (this.state.nearestHospitals !== []) {
-            let markers = [];
-            let self = this;
-            const iconMarkup = renderToStaticMarkup(<FaAmbulance className={classes.hospitalIcon}/>);
-            const customIcon = divIcon({
-                html: iconMarkup,
-                className: 'hospitalIcon'
-            });
-
-            this.state.nearestHospitals.forEach(function (hospital) {
-                markers.push(
-                    <Marker position={[hospital.geo[1], hospital.geo[0]]} key={hospital.id} icon={customIcon}
-                            onClick={() => self.onClick([hospital.geo[1], hospital.geo[0]])}>
-                        <HospitalPopup name={hospital.n}/>
-                    </Marker>
-                );
-            });
-            this.setState({hospitalSelected: true, hospitalMarkers: markers});
+    //get directions to selected hospital
+    const directionsCallback = (response) => {
+        if (response !== null) {
+            if (response.status === 'OK') {
+                setDirectionsResponse(response);
+            }
         }
-    }
+    };
 
-    render() {
-        const position = [this.state.lat, this.state.lng];
-        return (
-            <div>
-                <Map
-                    zoomControl={false}
-                    center={position}
-                    zoom={this.state.zoom}
-                    style={{ height: '90vh' }}
-                    minZoom={2}
-                    max Zoom={19}
-                    ref={this.saveMap}
-                    onLocationFound={event => {this.updateUserPosition(event.latlng)}}
-                    onLocationError={() => this.setState({userPos: position})}
-                >
-                    <TileLayer
-                        attribution='&amp;copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &amp;copy <a href="https://carto.com/attributions">CARTO</a>'
-                        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-                    />
-                    {(this.state.markerLat !== 0 && this.state.markerLng !== 0) ?
-                        (
-                            <Marker position={[this.state.markerLat, this.state.markerLng]} />
-                        ) : null
-                    }
-                    <ZoomControl position="bottomleft" />
-                    <Search />
-                    <LocateControl startDirectly/>
-                    {
-                        //only display routing when user is geolocated and an hospital is clicked
-                        //or use default coordinates if user refused geolocation
-                        this.state.isMapInit && this.state.userPos && this.state.selectedHospital && <MapRouting
-                            routeFrom={this.state.userPos}
-                            routeTo={this.state.routeTo}
-                            map={this.map}
-                            updateUserPos={(pos) => this.setState({userPos: pos})}
-                            onRef={ref => (this.child = ref)}
+    const renderMap = () => {
+
+        let sidePanel = <div className={styles.directionsPanel}> </div>;
+
+        return <React.Fragment>
+            <GoogleMap
+                options={mapOptions}
+                zoom={zoom}
+                center={center}
+                mapContainerStyle={{
+                    height: "100vh",
+                    width: "100vwh",
+                    display: "flex",
+                    alignItems: "center",
+                    alignContent: "center",
+                    justifyContent: "center",
+                    justifyItems: "center",
+                }}
+                onLoad={map => loadHandler(map)}>
+
+                <Marker
+                    position={userPos}
+                    icon={userIcon}
+                    onLoad={(marker) => setUserMarker(marker)} />
+
+                <Autocomplete
+                    onLoad={(searchBar) => onLoadAutocomplete(searchBar)}
+                    onPlaceChanged={() => onPlaceSearched()}>
+                    <input type="text" placeholder="Rechercher une adresse..." className={styles.mapSearchBar}                  />
+                </Autocomplete>
+
+                <a href={"/"} className={styles.homeButton}>
+                    <FaHome className={styles.homeIcon}/>
+                </a>
+
+                {infoOpen && selectedPlace && (
+                    <InfoWindow
+                        anchor={markerMap[selectedPlace.id]}
+                        onCloseClick={() => setInfoOpen(false)}>
+                        <div>
+                            {placeDetails ?
+                                <div>
+                                    <h3 className={styles.hospitalName}>{placeDetails.name}</h3>
+                                    <p><b>Addresse :</b> {placeDetails.address_components[0].short_name + ' ' + placeDetails.address_components[1].short_name }</p>
+                                    <p><b>Téléphone :</b> {placeDetails.formatted_phone_number}</p>
+                                    <p><b>Notation :</b> {placeDetails.rating ? placeDetails.rating : "inconnue"}</p>
+                                    {placeDetails.opening_hours && placeDetails.opening_hours.isOpen() ?<p><b>Actuellement ouvert</b></p> : null}
+                                </div> : <div>Chargement...</div>}
+                        </div>
+                    </InfoWindow>
+                )}
+
+                {hospitalMarkers}
+
+                {userDestination && < DirectionsService
+                    options={{
+                        destination: userDestination,
+                        origin: userPos,
+                        travelMode: userTravelMode,
+                    }}
+                    callback={(response) => directionsCallback(response)}
+                    panel={sidePanel}
+                /> }
+
+                {directionsResponse && userDestination && (<DirectionsRenderer
+                    options={{
+                        directions: directionsResponse,
+                        polylineOptions: {
+                            strokeColor: "#ff4d4d",
+                            strokeOpacity: 0.8,
+                            strokeWeight: 7
+                        },
+                        suppressMarkers: true,
+                    }}/>)}
+
+                <div className={styles.travelModeButtonsWrapper}>
+                    <div
+                        className={userTravelMode === 'TRANSIT' ? styles.activeTravelModeButton : styles.travelModeButton}
+                        onClick={() => setTravelMode('TRANSIT')}>
+                        <FaBusAlt className={styles.travelModeIcon}/>
+                    </div>
+                    <div
+                        className={userTravelMode === 'WALKING' ? styles.activeTravelModeButton : styles.travelModeButton}
+                        onClick={() => setTravelMode('WALKING')}>
+                        <FaWalking className={styles.travelModeIcon}/>
+                    </div>
+                    <div
+                        className={userTravelMode === 'DRIVING' ? styles.activeTravelModeButton : styles.travelModeButton}
+                        onClick={() => setTravelMode('DRIVING')}>
+                        <FaCar className={styles.travelModeIcon}/>
+                    </div>
+                </div>
+                <div className={styles.sliderWrapper}>
+                    <h5 className={styles.sliderTitle}>
+                        {`Rayon de la recherche: ${searchRadius / 100} km`}
+                    </h5>
+                    <div className={styles.sliderBox}>
+                        <Slider
+                            defaultValue={15}
+                            aria-labelledby="discrete-slider"
+                            valueLabelDisplay="auto"
+                            step={5}
+                            onChange={(e, val) => setRadius(val * 100)}
+                            min={10}
+                            max={50}
+                            className={styles.slider}
                         />
-                    }
-                    {this.state.hospitalMarkers}
-                </Map>
-                <DiscreteSlider setRadius={(val) => this.setState({radius: val})}/>
-            </div>
-        );
-    }
+                    </div>
+                </div>
+                )}
+
+            </GoogleMap>
+        </React.Fragment>
+    };
+
+    return renderMap();
 }
 
-export default LeafletMap;
+export default Map;
