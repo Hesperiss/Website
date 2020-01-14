@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const userdataToken = 'Kwili-login-data';
 
-const userEndpoint = 'api.kwili.fr';
+const userEndpoint = 'http://51.83.79.250:8080/';
 
 export default class KwiliApi {
 	static async request(method, data, path, headers) {
@@ -22,7 +22,7 @@ export default class KwiliApi {
 
 	static tryRequest(usedMethod, npath, data) {
 		return this.request(usedMethod, data.data,
-			userEndpoint + ':8080/' + npath,
+			userEndpoint + npath,
 			data.headers);
 	}
 
@@ -51,15 +51,9 @@ export default class KwiliApi {
 		return content;
 	}
 
-	static register(name, lastName, email, passwd, type) {
+	static register(form) {
 		const data = {
-			"data": {
-				"name": name,
-				"last_name": lastName,
-				"email": email,
-				"password": passwd,
-				"type": type,
-			},
+			"data": form,
 			"headers": {
 				"Content-Type": "application/json",
 			},

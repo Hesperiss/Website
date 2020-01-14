@@ -4,4 +4,4 @@ services:
         image: react:latest
         build: .
         ports:
-            - "443:443"
+            - "80:80"
