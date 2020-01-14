@@ -100,26 +100,26 @@ $theme-dark: #004c8c;
   color: white !important;
   height: 8px !important;
   .thumb {
-    height: 24px !important;
-    width: 24px !important;
-    background-color: #fff !important;
-    border: 2px solid $theme-medium !important;
-    margin-top: -8 !important;
-    margin-left: -12 !important;
+    height: 24px;
+    width: 24px;
+    background-color: #fff;
+    border: 2px solid $theme-medium;
+    margin-top: -8;
+    margin-left: -12;
     &:focus:hover:active {
-      box-shadow: inherit !important;
+      box-shadow: inherit;
     }
   };
   .valueLabel {
-    left: calc(-50% + 4px) !important;
+    left: calc(-50% + 4px);
   };
   .track {
-    height: 8px !important;
-    border-radius: 4px !important;
+    height: 8px;
+    border-radius: 4px;
   };
   .rail {
-    height: 8px !important;
-    border-radius: 4px !important;
+    height: 8px;
+    border-radius: 4px;
   };
 }
 
@@ -151,4 +151,33 @@ $theme-dark: #004c8c;
 
 .sliderBox {
   width: 80vw;
+}
+
+.homeButton {
+  display: flex;
+  position: fixed;
+  top: 80px;
+  left: 30px;
+  border-radius: 100%;
+  background-color: white;
+  color: $theme-dark;
+  border-width: 2.5px;
+  border-color: $theme-medium;
+  border-style: solid;
+  height: 58px;
+  width: 58px;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+  &:hover {
+    box-shadow: 0px 0px 12px 2.5px white;
+  }
+}
+
+.homeIcon {
+  margin: auto;
+  align-self: center;
+  justify-self: center;
+  font-size: 35px;
 }

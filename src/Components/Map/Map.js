@@ -4,7 +4,7 @@ import {mapOptions} from "./Shared/MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
 import styles from "./Map.scss"
-import {FaWalking, FaCar, FaBusAlt} from "react-icons/all";
+import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
 
 function Map() {
@@ -176,6 +176,10 @@ function Map() {
                     onPlaceChanged={() => onPlaceSearched()}>
                     <input type="text" placeholder="Rechercher une adresse..." className={styles.mapSearchBar}                  />
                 </Autocomplete>
+
+                <a href={"/"} className={styles.homeButton}>
+                    <FaHome className={styles.homeIcon}/>
+                </a>
 
                 {infoOpen && selectedPlace && (
                     <InfoWindow
