@@ -7,7 +7,7 @@ export function navbarLanding() {
 	if (KwiliApi.isConnected() === true) {
 		return (
 			<div className={classes.Navbar}>
-				<Link to='/test'>
+				<Link to='/profile'>
 					<input
 						type="submit"
 						value="Mon compte"
