@@ -1,18 +1,18 @@
 import React from 'react';
-import classes from './Styles.scss';
+import './Styles.scss';
 import KwiliApi from '../../Shared/Api/api';
 import { Link } from 'react-router-dom'
 
 export function navbarLanding() {
 	if (KwiliApi.isConnected() === true) {
 		return (
-			<div className={classes.Navbar}>
+			<div className="Navbar">
 				<Link to='/profile'>
 					<input
 						type="submit"
 						value="Mon compte"
 						href="/profile"
-						className={classes.navbarLink}
+						className="navbarLink"
 					/>
 				</Link>
 				<Link to='/map'>
@@ -20,7 +20,7 @@ export function navbarLanding() {
 						type="submit"
 						value="Carte"
 						href="/map"
-						className={classes.navbarLink}
+						className="navbarLink"
 					/>
 				</Link>
 				<Link to='/'>
@@ -28,7 +28,7 @@ export function navbarLanding() {
 						type="submit"
 						value="Déconnexion"
 						href="/"
-						className={classes.navbarLink}
+						className="navbarLink"
 						onClick={() => KwiliApi.logout()}
 					/>
 				</Link>
@@ -36,13 +36,13 @@ export function navbarLanding() {
 		);
 	} else {
 		return (
-			<div className={classes.Navbar}>
+			<div className="Navbar">
 				<Link to='/login'>
 					<input
 						type="submit"
 						value="Connexion"
 						href="/login"
-						className={classes.navbarLink}
+						className="navbarLink"
 					/>
 				</Link>
 
@@ -51,7 +51,7 @@ export function navbarLanding() {
 						type="submit"
 						value="Inscription"
 						href="/register"
-						className={classes.navbarLink}
+						className="navbarLink"
 					/>
 				</Link>
 				<Link to='/map'>
@@ -59,7 +59,7 @@ export function navbarLanding() {
 						type="submit"
 						value="Carte"
 						href="/map"
-						className={classes.navbarLink}
+						className="navbarLink"
 					/>
 				</Link>
 

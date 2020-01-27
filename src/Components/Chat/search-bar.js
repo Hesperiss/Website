@@ -3,7 +3,7 @@ import KwiliApi from '../Shared/Api/api';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import styles from '../Chat/Chat.scss';
+import styles from './Chat.scss';
 
 function getSuggestionValue(suggestion) {
 	console.log("get suggestion value");
@@ -95,6 +95,7 @@ export default class Search extends Component {
 	};
 
 	render() {
+		console.log(styles);
 		const { value, suggestions } = this.state;
 		const inputProps = {
 			placeholder: "Search ...",

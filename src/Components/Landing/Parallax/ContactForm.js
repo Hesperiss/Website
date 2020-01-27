@@ -6,7 +6,7 @@ import {
 	FaComment,
  } from "react-icons/fa";
 
-import classes from './ContactForm.scss';
+import './ContactForm.scss';
 import doctorPicture from "../../../Images/doctor.jpg";
 
 function isEmailValid(name, email, message) {
@@ -71,28 +71,28 @@ export function displayContactForm() {
 	let subject = "Objet"
 
 	return (
-		<div id={classes.ContactForm} style={{ backgroundImage: `url(${doctorPicture})` }}>
-			<h3 className={classes.sectionTitle}>Nous Contacter</h3>
+		<div id="ContactForm" style={{ backgroundImage: `url(${doctorPicture})` }}>
+			<h3 className="sectionTitle">Nous Contacter</h3>
 			<form>
-				<div className={classes.userInfoSection}>
-					<div className={classes.formSection}>
-						<FaUser className={classes.icon}/>
+				<div className="userInfoSection">
+					<div className="formSection">
+						<FaUser className="icon"/>
 						<input
 							type="text"
 							placeholder={name}
 							onChange={(event) => {name = event.target.value}}/>
 					</div>
 
-					<div className={classes.formSection}>
-						<FaEnvelope className={classes.icon}/>
+					<div className="formSection">
+						<FaEnvelope className="icon"/>
 						<input
 							type="email"
 							placeholder={email}
 							onChange={(event) => {email = event.target.value}}/>
 					</div>
 
-					<div className={classes.formSection}>
-						<FaComment className={classes.icon}/>
+					<div className="formSection">
+						<FaComment className="icon"/>
 						<input
 							type="text"
 							placeholder={subject}
@@ -102,7 +102,7 @@ export function displayContactForm() {
 
 				<textarea
 					placeholder={message}
-					className={classes.message}
+					className="message"
 					onChange={(event) => {message = event.target.value}}>
 				</textarea>
 
@@ -111,7 +111,7 @@ export function displayContactForm() {
 			<input
 				type="submit"
 				value="Envoyer"
-				className={classes.submitButton}
+				className="submitButton"
 				onClick={() => sendEmail(name, email, subject, message)}/>
 		</div>
 	);
