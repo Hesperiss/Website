@@ -30,7 +30,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"test": "react-scripts test",
+		"test": "react-scripts test --passWithNoTests",
 		"eject": "react-scripts eject"
 	},
 	"eslintConfig": {
@@ -51,7 +51,6 @@
 	"babel": {
 		"presets": [
 			"es2015",
-			"stage-1",
 			"react"
 		],
 		"plugins": [
@@ -59,7 +58,6 @@
 		]
 	},
 	"devDependencies": {
-		"@babel/plugin-proposal-export-default-from": "^7.8.3",
-		"babel-preset-stage-1": "^6.24.1"
+		"@babel/plugin-proposal-export-default-from": "^7.8.3"
 	}
 }
