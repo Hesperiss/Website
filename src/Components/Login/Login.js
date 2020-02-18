@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import KwiliApi from '../Shared/Api/api';
 
-import classes from '../../Styles.scss';
+import '../../Styles.scss';
 
 class Login extends Component {
 	constructor(props) {
@@ -71,8 +71,8 @@ class Login extends Component {
 	render() {
 
 		return (
-			<div className={classes.centerScreen}>
-				<form className={classes.box}>
+			<div className='center-screen'>
+				<form className='box'>
 					<div className="form-group">
 						<input type="email" className="form-control" id="email-input" aria-describedby="emailHelp" placeholder="Courriel" />
 						<small id="emailHelp" className="form-text text-muted">Si vous n'avez pas de compte, vous pouvez vous en créer un en cliquant sur S'inscrire</small>
@@ -80,8 +80,8 @@ class Login extends Component {
 					<div className="form-group">
 						<input type="password" className="form-control" id="password-input" placeholder="Mot de passe" onSubmit={this.tryLogin} />
 					</div>
-					<button type="button" className={`btn btn-block btn-success ${classes.btnSpace}`} onClick={this.tryLogin}>Connexion</button>
-					<button type="button" className={`btn btn-block btn-secondary ${classes.btnSpace}`} onClick={this.toRegister}>
+					<button type="button" className='btn btn-block btn-success btnSpace' onClick={this.tryLogin}>Connexion</button>
+					<button type="button" className='btn btn-block btn-secondary btnSpace' onClick={this.toRegister}>
 						S'inscrire
 					</button>
 				</form>

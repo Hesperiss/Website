@@ -3,7 +3,8 @@ import KwiliApi from '../Shared/Api/api';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import styles from './Chat.scss';
+import './Chat.scss';
+import './SearchBar.css';
 
 function getSuggestionValue(suggestion) {
 	console.log("get suggestion value");
@@ -16,11 +17,11 @@ function renderSuggestion(suggestion, { query }) {
 	const parts = parse(suggestionText, matches);
 
 	return (
-		<span className={styles.suggestionContent}>
-			<span className={styles.name}>
+		<span className='suggestionContent'>
+			<span className='name'>
 				{
 					parts.map((part, index) => {
-						const className = part.highlight ? styles.highlight : null;
+						const className = part.highlight ? 'highlight' : null;
 
 						return (
 							<span className={className} key={index}>{part.text}</span>
@@ -95,7 +96,6 @@ export default class Search extends Component {
 	};
 
 	render() {
-		console.log(styles);
 		const { value, suggestions } = this.state;
 		const inputProps = {
 			placeholder: "Search ...",
@@ -103,14 +103,13 @@ export default class Search extends Component {
 			onChange: this.onChange
 		};
 		return (
-			<div className={styles.container}>
+			<div className='sbcontainer'>
 				<Autosuggest id={this.props.id}
 					suggestions={suggestions}
 					onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
 					onSuggestionsClearRequested={this.onSuggestionsClearRequested}
 					getSuggestionValue={getSuggestionValue}
 					renderSuggestion={renderSuggestion}
-					theme={styles}
 					inputProps={inputProps} />
 				<this.spinner />
 			</div>

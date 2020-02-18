@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import KwiliApi from '../Shared/Api/api';
 import Navbar from "../Shared/Navbar";
 
-import styles from './Profile.scss'
+import './Profile.scss'
 
 export default class Login extends Component {
 	constructor(props) {
@@ -37,7 +37,7 @@ export default class Login extends Component {
 				<Navbar />
 
 				<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-					<img alt="avatar" className={styles.zone} src="https://scontent-gmp1-1.xx.fbcdn.net/v/t1.0-1/p240x240/71642826_2457574447611373_88435137561231360_o.jpg?_nc_cat=109&_nc_ohc=nFSmcShAWu4AQmNLKYFk6mvGyYEpfsOVT9zfxya5IQROFcCD0k_ZQAovQ&_nc_ht=scontent-gmp1-1.xx&_nc_tp=1&oh=7a1be41cad254c6ebc893c8fc2bdf8b6&oe=5E99C95F" />
+					<img alt="avatar" className='zone' src="https://scontent-gmp1-1.xx.fbcdn.net/v/t1.0-1/p240x240/71642826_2457574447611373_88435137561231360_o.jpg?_nc_cat=109&_nc_ohc=nFSmcShAWu4AQmNLKYFk6mvGyYEpfsOVT9zfxya5IQROFcCD0k_ZQAovQ&_nc_ht=scontent-gmp1-1.xx&_nc_tp=1&oh=7a1be41cad254c6ebc893c8fc2bdf8b6&oe=5E99C95F" />
 				</div>
 				<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 					<h1 className="display-4" style={{ color: "white" }} >{this.state.user.name} {this.state.user.last_name}</h1>
@@ -48,8 +48,8 @@ export default class Login extends Component {
 
 				<p>{this.state.user.type}</p>
 				<div className="jumbotron" style={{ backgroundColor: "#58a5ef", display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
-					<Link className={styles.button} style={{ textAlign: "center" }} to="/profile/settings">Paramètres</Link>
-					<Link className={styles.button} to="/" onClick={KwiliApi.logout}>Déconnexion</Link>
+					<Link className='pbutton' style={{ textAlign: "center" }} to="/profile/settings">Paramètres</Link>
+					<Link className='pbutton' to="/" onClick={KwiliApi.logout}>Déconnexion</Link>
 				</div>
 			</div>
 		);

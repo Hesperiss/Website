@@ -2,7 +2,8 @@ import axios from 'axios';
 
 const userdataToken = 'Kwili-login-data';
 
-const userEndpoint = 'http://51.83.79.250:8080/';
+//const userEndpoint = 'http://51.83.79.250:8080/';
+const userEndpoint = 'http://localhost:8080/';
 
 export default class KwiliApi {
 	static async request(method, data, path, headers) {
