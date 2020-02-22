@@ -1,7 +1,6 @@
 import React from 'react';
-import { navbarLanding } from './NavbarLanding/NavbarLanding';
-import { displayParallax } from './Parallax/Parallax';
-import './Fonts.css';
+import NavBar from "./Components/Navbar";
+import BlueCurve from "./Images/blue_curve.svg"
 
 class LandingPage extends React.Component {
 
@@ -16,8 +15,9 @@ class LandingPage extends React.Component {
 	render () {
 
 		return (
-			<div>
-
+			<div className={"root"}>
+				<NavBar />
+				<img src={BlueCurve} alt={"blue background"} className={"blueCurve"}/>
 			</div>
 		);
 	}
