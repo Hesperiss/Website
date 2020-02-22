@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -13,26 +15,27 @@ import NotFound from './Components/Shared/404/NotFound';
 
 import CheckLogin from './Components/CheckLogin.js';
 
+
 class App extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <div>
-          <Switch>
-            <Route exact={true} path='/' component={LandingPage} />
-            <Route exact={true} path='/login' component={Login} />
-            <Route exact={true} path='/register' component={Register} />
-            <Route exact={true} path='/chat' component={Chat} />
-            <Route exact={true} path='/map' component={Map} />
-            <Route exact={true} path='/profile' component={Profile} />
-            <Route exact={true} path='/profile/settings' component={Settings} />
-            <Route exact={true} path='/test' component={() => <CheckLogin path='/login'/>}/>
-            <Route component={NotFound} />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    );
-  }
+	render() {
+		return (
+			<BrowserRouter>
+				<div>
+					<Switch>
+						<Route exact={true} path='/' component={LandingPage} />
+						<Route exact={true} path='/login' component={Login} />
+						<Route exact={true} path='/register' component={Register} />
+						<Route exact={true} path='/chat' component={Chat} />
+						<Route exact={true} path='/map' component={Map} />
+						<Route exact={true} path='/profile' component={Profile} />
+						<Route exact={true} path='/profile/settings' component={Settings} />
+						<Route exact={true} path='/test' component={() => <CheckLogin path='/login' />} />
+						<Route component={NotFound} />
+					</Switch>
+				</div>
+			</BrowserRouter>
+		);
+	}
 }
 
 export default App;
