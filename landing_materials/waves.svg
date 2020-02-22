@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1938" height="1317.999" viewBox="0 0 1938 1317.999">
+  <defs>
+    <filter id="Shape_1_copy" x="0" y="0" width="1938" height="1314.987" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="fond_vagues" data-name="fond vagues" transform="translate(7 -1837.995)">
+    <path id="Shape_1" data-name="Shape 1" d="M2,3023.009s233.832-201.773,527.156,51.3c81.192,50.564,120.177,63.623,248.19,5.514,53.119-16.515,143.6-56.3,353.423-5.514,34.431,7.721,229.5,80.4,284.922,81.339,34.906,3.7,112.518-21.012,234.292-129.875,26.469-24.3,142.962-105.291,272.016,0V1844H2Z" fill="#0277bd"/>
+    <g transform="matrix(1, 0, 0, 1, -7, 1838)" filter="url(#Shape_1_copy)">
+      <path id="Shape_1_copy-2" data-name="Shape 1 copy" d="M2,3009.634s233.832-199.306,527.156,50.672c81.192,49.946,120.177,62.845,248.19,5.447,53.119-16.314,143.6-55.607,353.423-5.447,34.431,7.626,229.5,79.417,284.922,80.344,34.906,3.651,112.518-21.8,234.292-129.331,26.469-24.007,142.962-104,272.016,0V1844H2Z" transform="translate(7 -1838)" fill="#0277bd"/>
+    </g>
+  </g>
+</svg>
