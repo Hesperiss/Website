@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import KwiliApi from '../Shared/Api/api';
 
-import classes from '../../Styles.scss';
+import '../../Styles.scss';
 
 class Login extends Component {
 	constructor(props) {
@@ -95,8 +95,8 @@ class Login extends Component {
 
 	render() {
 		return (
-			<div className={classes.centerScreen}>
-				<div className={classes.box}>
+			<div className='centerScreen'>
+				<div className='box'>
 					<form>
 						<div className="form-group">
 							<label>Prénom</label>
@@ -130,7 +130,7 @@ class Login extends Component {
 							// </div>
 						}
 						<button type="button" className="btn btn-block btn-primary" onClick={this.tryRegister}>S'inscrire</button>
-						<button type="button" className={`btn btn-block btn-secondary ${classes.btnSpace}`} onClick={this.toLogin}>
+						<button type="button" className='btn btn-block btn-secondary btnSpace' onClick={this.toLogin}>
 							Déjà inscrit ?
             </button>
 					</form>

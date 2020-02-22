@@ -1,6 +1,8 @@
 import io from 'socket.io-client';
+import 'dialogflow';
 
 const chatEndpoint = 'http://51.83.79.250';
+//const chatEndpoint = 'http://localhost';
 
 export default class KwiliChat {
 	constructor(onMessageCallback) {
