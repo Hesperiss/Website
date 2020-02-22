@@ -17,8 +17,7 @@ class LandingPage extends React.Component {
 
 		return (
 			<div>
-				{navbarLanding()}
-				{displayParallax()}
+
 			</div>
 		);
 	}
