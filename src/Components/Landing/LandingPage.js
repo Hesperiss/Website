@@ -1,8 +1,7 @@
 import React from 'react';
 import NavBar from "./Components/Navbar";
-import BlueCurve from "./Images/blue_curve.svg"
-import background from "./Images/Background.png"
-import phoneDemo from "./Images/phone_section1.png"
+import background from "../../Images/Background.png"
+import phoneDemo from "../../Images/phone_section1.png"
 
 class LandingPage extends React.Component {
 
@@ -30,8 +29,15 @@ class LandingPage extends React.Component {
 					</div>
 				</div>
 
-				<img src={background} alt={"doctor office"} className={"background"}/>
-				<img src={BlueCurve} alt={"blue background"} className={"blueCurve"}/>
+				<div className={"blueCurveWrapper"} >
+					<svg viewBox="0 0 500 150" className={"blueCurve"} preserveAspectRatio="none">
+						<path d="M-92.83,-15.28 C328.72,179.11 425.22,145.55 507.62,22.20 L500.00,0.00 L27.93,-63.64 Z"></path>
+					</svg>
+				</div>
+
+				<div className={"backgroundImageWrapper"}>
+					<img src={background} alt={"doctor office"} className={"backgroundImage"}/>
+				</div>
 			</div>
 		);
 	}
