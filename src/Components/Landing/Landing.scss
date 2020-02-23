@@ -37,6 +37,7 @@ $very-light-gray: #eeeeee;
 h2, .sectionTitle {
   margin-bottom: 60px;
   font-family: Montserrat, Arial, sans-serif;
+  font-weight: bold;
   text-transform: uppercase;
   font-size: 36px;
   text-align: center;
@@ -45,6 +46,12 @@ h2, .sectionTitle {
 .sectionSubtitle {
   font-family: Poppins, Arial, sans-serif;
   font-size: 20px;
+}
+
+hr {
+  background: $theme-medium;
+  height: 4px;
+  width: 15%;
 }
 
 .kwiliLogo {
@@ -282,10 +289,13 @@ h2, .sectionTitle {
 }
 
 .previewSection {
+  z-index: 50 !important;
   padding: 100px;
   display: flex;
   flex-flow: column;
-  background-color: $theme-medium;
+  background: url("../../Images/waves.png") bottom;
+  background-size: cover;
+  background-color: $theme-gray;
   color: white;
   text-align: center;
   place-items: center;
@@ -296,13 +306,13 @@ h2, .sectionTitle {
 }
 
 .previewContents {
-
   max-width: 80%;
   display: flex;
   flex-flow: row wrap;
   place-items: center;
   place-content: center;
   border: none;
+  padding-bottom: 300px;
 
   .demo {
     max-width: 50%;
@@ -438,4 +448,143 @@ h2, .sectionTitle {
       }
     }
   }
+}
+
+.contactFormSection {
+  z-index: 5;
+  background-color: $theme-gray;
+  padding: 100px 50px 30px 50px;
+  display: flex;
+  flex-flow: column;
+  color: white;
+  text-align: center;
+  place-items: center;
+  place-content: center;
+  margin: 0;
+
+  h2 {
+    color: $theme-light;
+    margin-bottom: 10px;
+  }
+
+  .sectionSubtitle {
+    margin-bottom: 50px;
+  }
+
+  .phoneEmail {
+    padding: 5px;
+    display: flex;
+    flex-flow: row;
+    text-align: center;
+    place-items: center;
+    place-content: center;
+    border-radius: 200px;
+    background: $theme-light;
+    color: $theme-gray;
+    .icon {
+      color: $theme-dark;
+      font-size: 30px;
+    }
+    div {
+      align-self: center;
+      justify-self: center;
+    }
+    p {
+      margin: auto 10px;
+    }
+  }
+
+  form {
+    width: 50%;
+    display: flex;
+    flex-grow: 1;
+    flex-flow: row;
+    align-self: center;
+    place-content: stretch;
+    place-items: stretch;
+    margin: 30px 0;
+    .messageField, .formField {
+      margin: 10px;
+      padding: 10px;
+      border: solid 2px $theme-light;
+      &:focus {
+        outline: none; //no ugly square outline on click
+      }
+    }
+    .formField {
+      border-radius: 50px;
+    }
+    .messageField {
+      display: flex;
+      flex-grow: 1;
+      border-radius: 20px;
+      resize: none;
+      overflow-y: auto;
+    }
+    .userInfo {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+    }
+  }
+
+  .sendButton {
+    width: 15%;
+    padding: 15px 0;
+    display: flex;
+    align-self: center;
+    place-content: center;
+    place-items: center;
+    border-style: none;
+    border-radius: 100px;
+    color: white;
+    background: $theme-medium;
+    font-family: Montserrat, Poppins, Arial, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    background-size: 200% 100%;
+    background-image: linear-gradient(to right,  $theme-medium 50%, $theme-light 50%);
+    transition: background-position 0.5s;
+    &:hover {
+      background-position: -100% 0%;
+      transition: all 0.5s ease-in;
+      box-shadow: inset 0 0 0 3px white;
+    }
+  }
+
+  .socialMedia {
+    margin-top: 70px;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    place-content: center;
+    place-items: center;
+    .buttonsWrapper {
+      display: flex;
+      flex-direction: row;
+    }
+    .socialMediaButton {
+      margin: 15px;
+      background-color: $theme-medium;
+      color: white;
+      width: 60px;
+      height: 60px;
+      font-size: 40px;
+      border-radius: 100px;
+      place-content: center;
+      place-items: center;
+      overflow: hidden;
+      &:hover {
+        transition: all 0.1s ease-in;
+        background-color: $theme-light;
+        box-shadow: 0px 0px 12px 5px rgba(0, 0, 0,.7);
+      }
+    }
+    p {
+      font-size: 12px;
+    }
+  }
+
 }
