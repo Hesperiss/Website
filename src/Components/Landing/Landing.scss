@@ -15,8 +15,22 @@ $very-light-gray: #eeeeee;
   flex-grow: 1;
   display: flex;
   flex-flow: column;
-  font-family: 'Poppins', 'Arial', 'SansSerif';
+  font-family: Poppins, Arial, sans-serif;
   background-color: $very-light-gray;
+}
+
+//section title (description, preview, contact) styles
+h2, .sectionTitle {
+  margin: 60px;
+  font-family: Montserrat, Arial, sans-serif;
+  text-transform: uppercase;
+  font-size: 36px;
+  text-align: center;
+}
+
+.sectionSubtitle {
+  font-family: Poppins, Arial, sans-serif;
+  font-size: 20px;
 }
 
 .kwiliLogo {
@@ -25,7 +39,7 @@ $very-light-gray: #eeeeee;
 }
 
 .kwiliTagNavBar {
-  font-family: 'Montserrat', 'Arial', 'SansSerif';
+  font-family: Montserrat, Arial, sans-serif;
   padding: 0;
   margin-right: 30px;
   margin-left: 50px;
@@ -78,7 +92,7 @@ $very-light-gray: #eeeeee;
   text-align: right;
   color: white;
   h1 {
-    font-family: 'Montserrat', 'Arial', 'SansSerif';
+    font-family: Montserrat, Arial, sans-serif;
     font-weight: bolder;
     font-size: 72px;
     margin-bottom: 20px;
@@ -152,3 +166,102 @@ $very-light-gray: #eeeeee;
   width: 100vw;
   min-height: 100vh;
 }
+
+.descriptionSection {
+  z-index: 10;
+  margin-top: 50px;
+  background-color: $very-light-gray;
+  color: $theme-gray;
+  align-self: center;
+  place-content: center;
+  place-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 100%;
+  text-align: center !important;
+
+  h3 {
+    margin: 20px;
+    font-family: Poppins, sans-serif;
+    color: $theme-medium;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .textWrapper {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .descBoxWrapper {
+    width: 75%;
+    place-items: center;
+    place-content: center;
+    margin: 50px 0;
+    align-self: center;
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+
+  .descBox {
+    width: 25%;
+    margin: 30px;
+    padding: 25px;
+    justify-self: stretch;
+    align-self: stretch;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0px 0px 12px 3px rgba(0, 0, 0,.3);
+    overflow-x: auto;
+
+    &:hover {
+      transition: all 0.1s ease-in;
+      background-color: $theme-light;
+      box-shadow: 0px 0px 12px 3px rgba(0, 0, 0,.5);
+      p {
+        color: $theme-gray;
+      }
+      h3 {
+        color: $theme-dark;
+      }
+      .rhombus, .rhombusWrapper {
+        background-color: white;
+      }
+    }
+
+    p {
+      color: #696969;
+      text-align: center;
+      font-size: 16px;
+    }
+  }
+}
+
+.rhombus {
+  background-color: $theme-light;
+  margin: 10px auto;
+  transform-origin: 50% 50%;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  color: $theme-gray !important;
+  font-size: 26px;
+  .icon {
+    z-index: 200
+  }
+  transform: rotate(45deg);
+}
+
+.rhombusContents {
+  transform: rotate(-45deg) translateX(-5px);
+  margin: auto;
+  place-items: center;
+  align-items: center;
+}
+

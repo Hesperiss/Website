@@ -1,5 +1,6 @@
 import React from 'react';
 import NavBar from "./Components/Navbar";
+import FeaturesDescription from "./Components/FeaturesDescription";
 import background from "../../Images/Background.png"
 import phoneDemo from "../../Images/phone_section1.png"
 
@@ -38,6 +39,8 @@ class LandingPage extends React.Component {
 				<div className={"backgroundImageWrapper"}>
 					<img src={background} alt={"doctor office"} className={"backgroundImage"}/>
 				</div>
+
+				<FeaturesDescription />
 			</div>
 		);
 	}
