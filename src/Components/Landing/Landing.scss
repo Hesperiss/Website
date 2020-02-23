@@ -48,6 +48,7 @@ $very-light-gray: #eeeeee;
 }
 
 .navBar {
+  min-width: 60%;
   padding-right: 20px;
   z-index: 500;
   display: flex;
@@ -64,8 +65,65 @@ $very-light-gray: #eeeeee;
   margin-top: 40px;
 }
 
-.blueCurve {
+.background {
+  z-index: -1;
+  width: 100vw;
   position: absolute;
-  top: -5;
+  top: 0;
   right: 0;
+}
+
+.introText {
+  margin-left: 60px;
+  text-align: right;
+  color: white;
+  h1 {
+    font-weight: bolder;
+    font-size: 72px;
+    margin-bottom: 20px;
+  }
+  p {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  input {
+    box-sizing: border-box;
+    margin-top: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 20px 70px;
+    border-style: none;
+    border-radius: 200px;
+    background-size: 200% 100%;
+    background-image: linear-gradient(to left, $theme-light 50%, $theme-gray 50%);
+    transition: background-position 0.5s;
+    &:hover {
+      background-position: 100% 0%;
+      transition: all 0.5s ease-in-out;
+      box-shadow: inset 0 0 0 3px white;
+    }
+  }
+}
+
+//wrapper for the intro section
+.introSection {
+  margin: 50px;
+  width: 80%;
+  display: flex;
+  flex-flow: row;
+  place-items: center;
+  place-content: center;
+  align-self: center;
+  img {
+    height: 60vh;
+  }
+}
+
+.blueCurve {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  position: -5% -5%;
 }
