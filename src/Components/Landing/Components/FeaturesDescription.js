@@ -25,21 +25,18 @@ function descriptionBox(title, text, icon) {
 
     return (
         <div className="descBox">
-
             <div className="rhombus">
                 <div className="rhombusContents">
                     {icon}
                 </div>
             </div>
-
             <h3>{title}</h3>
             <p>{text}</p>
-
         </div>
     );
 }
 
-function displayFeaturesDescriptionBoxes(props) {
+function displayFeaturesDescriptionBoxes() {
 
     return (
 

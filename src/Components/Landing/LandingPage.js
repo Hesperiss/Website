@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from "./Components/Navbar";
 import FeaturesDescription from "./Components/FeaturesDescription";
+import PreviewSection from "./Components/PreviewSection";
 import background from "../../Images/Background.png"
 import phoneDemo from "../../Images/phone_section1.png"
 
@@ -43,6 +44,7 @@ class LandingPage extends React.Component {
 				</div>
 
 				<FeaturesDescription />
+				<PreviewSection />
 			</div>
 		);
 	}

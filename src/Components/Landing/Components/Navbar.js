@@ -3,7 +3,7 @@ import '../Landing.scss';
 import { Link } from 'react-router-dom'
 import KwiliLogo from "../../../Images/logo_kwili.png"
 
-function NavBarLanding(props) {
+function NavBarLanding() {
     return (
         <React.Fragment>
         <div className="navBar">
@@ -18,7 +18,7 @@ function NavBarLanding(props) {
                     type="submit"
                     value="Trouver des urgences"
                     href="/map"
-                    className="navBarSlider"
+                    className="navBarButton"
 
                 />
             </Link>
@@ -28,7 +28,7 @@ function NavBarLanding(props) {
                     type="submit"
                     value="Aidez-moi !"
                     href="/chat"
-                    className="navBarSlider"
+                    className="navBarButton"
                 />
             </Link>
             <Link to='/'>
@@ -36,7 +36,7 @@ function NavBarLanding(props) {
                     type="submit"
                     value="Qui sommes-nous ?"
                     href="/"
-                    className="navBarSlider"
+                    className="navBarButton"
                 />
             </Link>
             <Link to='/download'>
@@ -44,7 +44,7 @@ function NavBarLanding(props) {
                     type="submit"
                     value="Application"
                     href="/download"
-                    className="navBarSlider"
+                    className="navBarButton"
                 />
             </Link>
 
