@@ -19,9 +19,18 @@ $very-light-gray: #eeeeee;
   background-color: $very-light-gray;
 }
 
+.sectionWrapper {
+  z-index: 0;
+  width: 100%;
+  height: 100vh;
+  place-items: center;
+  place-content: center;
+  align-self: center;
+}
+
 //section title (description, preview, contact) styles
 h2, .sectionTitle {
-  margin: 60px;
+  margin-bottom: 60px;
   font-family: Montserrat, Arial, sans-serif;
   text-transform: uppercase;
   font-size: 36px;
@@ -124,13 +133,14 @@ h2, .sectionTitle {
 .introSection {
   z-index: 10;
   margin: 50px;
-  width: 80%;
   display: flex;
   flex-flow: row;
   place-items: center;
   place-content: center;
-  align-self: center;
+  align-self: center !important;
+  justify-self: center;
   img {
+    z-index: 10;
     height: 60vh;
   }
 }
@@ -141,6 +151,7 @@ h2, .sectionTitle {
 }
 
 .blueCurve {
+  z-index: 2;
   position: absolute;
   top: 0;
   right: 0;
@@ -169,7 +180,6 @@ h2, .sectionTitle {
 
 .descriptionSection {
   z-index: 10;
-  margin-top: 50px;
   background-color: $very-light-gray;
   color: $theme-gray;
   align-self: center;
@@ -206,7 +216,6 @@ h2, .sectionTitle {
     display: flex;
     flex-flow: row wrap;
   }
-
 
   .descBox {
     width: 25%;
