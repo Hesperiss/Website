@@ -73,8 +73,11 @@ hr {
 }
 
 .navBarButton {
+  @media only screen and (min-width: 768px) {
+    padding: 15px 20px;
+  }
+  padding: 15px 5px;
   margin: 0 3px;
-  padding: 15px 20px;
   border-style: none;
   border-radius: 100px;
   color: white;
@@ -93,10 +96,11 @@ hr {
 
 .navBar {
   min-width: 60%;
+  max-width: 100%;
   padding-right: 20px;
   z-index: 500;
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
   place-items: center;
   place-content: center;
   align-self: center;
@@ -105,31 +109,40 @@ hr {
   box-shadow: -0px -0px 8px 2px rgba(0, 0, 0,.6);
   padding-top: 10px;
   padding-bottom: 10px;
-  border-radius: 500px;
+  border-radius: 50px;
   margin-top: 40px;
 }
 
 .introText {
+  @media only screen and (min-width: 768px) {
+    margin-left: 60px;
+  }
   z-index: 10;
-  margin-left: 60px;
+  margin-left: 30px;
   text-align: right;
   color: white;
   h1 {
+    @media only screen and (min-width: 768px) {
+      font-size: 72px;
+    }
     font-family: Montserrat, Arial, sans-serif;
     font-weight: bolder;
-    font-size: 72px;
+    font-size: 50px;
     margin-bottom: 20px;
   }
   p {
     font-size: 18px;
   }
   input {
+    @media only screen and (min-width: 768px) {
+      padding: 20px 70px;
+    }
     box-sizing: border-box;
     margin-top: 20px;
     color: white;
     font-weight: bold;
     font-size: 20px;
-    padding: 20px 70px;
+    padding: 20px 30px;
     border-style: none;
     border-radius: 200px;
     background-size: 200% 100%;
@@ -155,7 +168,10 @@ hr {
   justify-self: center;
   img {
     z-index: 10;
-    height: 60vh;
+    @media only screen and (min-width: 768px) {
+      height: 60vh;
+    }
+    height: 40vh;
   }
 }
 
@@ -169,7 +185,6 @@ hr {
   position: absolute;
   top: 0;
   right: 0;
-  position: -5% -5%;
   stroke: none;
   fill: $theme-medium;
   width: 100%;
@@ -222,18 +237,29 @@ hr {
   }
 
   .descBoxWrapper {
-    width: 75%;
+    @media only screen and (min-width: 768px) {
+      flex-flow: row wrap;
+      width: 75%;
+    }
+    flex-flow: column;
+    width: 80%;
     place-items: center;
     place-content: center;
     margin: 50px 0;
     align-self: center;
     display: flex;
-    flex-flow: row wrap;
+
   }
 
   .descBox {
-    width: 25%;
-    margin: 30px;
+    @media only screen and (min-width: 768px) {
+      flex-flow: row wrap;
+      width: 25%;
+      margin: 30px;
+    }
+    min-width: 200px;
+    width: auto;
+    margin: 30px 0;
     padding: 25px;
     justify-self: stretch;
     align-self: stretch;
@@ -289,8 +315,11 @@ hr {
 }
 
 .previewSection {
-  z-index: 50 !important;
-  padding: 100px;
+  z-index: 50;
+  @media only screen and (min-width: 900px) {
+    padding: 100px 50px;
+  }
+  padding: 50px;
   display: flex;
   flex-flow: column;
   background: url("../../Images/waves.png") bottom;
@@ -306,19 +335,27 @@ hr {
 }
 
 .previewContents {
+  @media only screen and (min-width: 1200px) {
+    flex-flow: row;
+  }
   max-width: 80%;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
   place-items: center;
   place-content: center;
   border: none;
   padding-bottom: 300px;
-
   .demo {
-    max-width: 50%;
+    @media only screen and (min-width: 900px) {
+      max-width: 50%;
+    }
   }
 
   .slideShow {
+    @media only screen and (min-width: 900px) {
+      margin-bottom: 0;
+    }
+    margin-bottom: 30px;
     display: grid; //grid display used for img overlap
     //images have to be on same row for this to work
     grid-template-columns: repeat(12, 1fr);
@@ -347,7 +384,10 @@ hr {
     flex-flow: row;
     place-items: center;
     place-content: center;
-
+    @media only screen and (min-width: 1200px) {
+      margin-bottom: 0;
+    }
+    margin-bottom: 30px;
     .arrowButton {
       box-shadow: 0px 0px 10px 3px rgba(0, 0, 0,.3);
       display: flex;
@@ -369,11 +409,14 @@ hr {
   }
 
   .text {
-    max-width: 50%;
+    @media only screen and (min-width: 1200px) {
+      max-width: 60%;
+      text-align: left;
+    }
+    margin-bottom: 30px;
     display: flex;
     flex-flow: column;
-    text-align: left;
-
+    text-align: justify;
     h3 {
       font-family: Montserrat, Arial, sans-serif;
       text-transform: uppercase;
@@ -387,12 +430,17 @@ hr {
       display: flex;
       flex-flow: row;
       .icon {
-        margin: 5px 20px;
+        @media only screen and (min-width: 900px) {
+          margin: 5px 20px;
+          font-size: 36px;
+          padding: 15px;
+        }
+        margin: 5px;
         align-self: flex-start;
-        padding: 15px;
+        padding: 10px;
         background-color: white;
         color: $theme-dark;
-        font-size: 36px;
+        font-size: 26px;
         display: flex;
         flex-shrink: 1;
         border-radius: 100%;
@@ -419,7 +467,7 @@ hr {
       font-weight: bold;
       font-size: 12px;
       text-align: center;
-      margin: 20px;
+      margin: 15px;
       padding: 15px 50px;
       color: white;
       background-size: 200% 100%;
@@ -495,14 +543,22 @@ hr {
   }
 
   form {
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-grow: 1;
-    flex-flow: row;
+    flex-flow: column;
     align-self: center;
     place-content: stretch;
     place-items: stretch;
     margin: 30px 0;
+    @media only screen and (min-width: 768px) {
+      flex-direction: row;
+      width: 80%;
+    }
+    @media only screen and (min-width: 900px) {
+      flex-direction: row;
+      width: 50%;
+    }
     .messageField, .formField {
       margin: 10px;
       padding: 10px;
@@ -525,12 +581,21 @@ hr {
       display: flex;
       flex-grow: 1;
       flex-direction: column;
+      @media only screen and (min-width: 768px) {
+        max-width: 50%;
+      }
     }
   }
 
   .sendButton {
-    width: 15%;
-    padding: 15px 0;
+    @media only screen and (min-width: 600px) {
+      width: 50%;
+    }
+    @media only screen and (min-width: 768px) {
+      width: 15%;
+    }
+    width: 60%;
+    padding: 15px;
     display: flex;
     align-self: center;
     place-content: center;
