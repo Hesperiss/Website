@@ -88,7 +88,7 @@ export default class Search extends Component {
 
 	spinner = () => {
 		if (this.state.loading === false)
-			return <div></div>;
+			return (<div />);
 		return (
 			<div className="spinner-grow text-info" role="status">
 				<span className="sr-only">Loading...</span>
@@ -113,7 +113,6 @@ export default class Search extends Component {
 					inputProps={inputProps} />
 				<this.spinner />
 			</div>
-
 		);
 	}
 }
