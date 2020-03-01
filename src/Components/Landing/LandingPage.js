@@ -16,7 +16,7 @@ class LandingPage extends React.Component {
 	}
 
 	slideToAnchorLink() {
-		let scrollTo = document.getElementById('knowMore');
+		let scrollTo = document.getElementById('#knowMore');
 		scrollTo.scrollIntoView();
 	};
 
@@ -49,7 +49,8 @@ class LandingPage extends React.Component {
 				</div>
 
 				<FeaturesDescription />
-				<a id={"knowMore"}><PreviewSection /></a>
+				<a href={"#knowMore"} id={"#knowMore"}> </a>
+				<PreviewSection />
 				<ContactForm />
 			</div>
 		);
