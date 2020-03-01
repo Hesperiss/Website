@@ -15,6 +15,10 @@ class LandingPage extends React.Component {
 		};
 	}
 
+	slideToAnchorLink() {
+		let scrollTo = document.getElementById('knowMore');
+		scrollTo.scrollIntoView();
+	};
 
 	render () {
 
@@ -29,7 +33,7 @@ class LandingPage extends React.Component {
 							<h1>KWILI</h1>
 							<p>Un moyen simple et rapide pour accéder aux urgences.<br/>
 							Une première prise en charge en ligne.</p>
-							<input type="submit" value="En savoir plus"/>
+							<input type="submit" value="En savoir plus" onClick={() => this.slideToAnchorLink()}/>
 						</div>
 					</div>
 
@@ -45,7 +49,7 @@ class LandingPage extends React.Component {
 				</div>
 
 				<FeaturesDescription />
-				<PreviewSection />
+				<a id={"knowMore"}><PreviewSection /></a>
 				<ContactForm />
 			</div>
 		);
