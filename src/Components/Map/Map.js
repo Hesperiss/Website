@@ -3,7 +3,7 @@ import {GoogleMap, Marker, Autocomplete, InfoWindow, DirectionsService, Directio
 import {mapOptions} from "./Shared/MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
-import styles from "./Map.scss"
+import "./Map.scss"
 import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
 
@@ -148,7 +148,7 @@ function Map() {
 
     const renderMap = () => {
 
-        let sidePanel = <div className={styles.directionsPanel}> </div>;
+        let sidePanel = <div className={"directionsPanel"}> </div>;
 
         return <React.Fragment>
             <GoogleMap
@@ -174,11 +174,11 @@ function Map() {
                 <Autocomplete
                     onLoad={(searchBar) => onLoadAutocomplete(searchBar)}
                     onPlaceChanged={() => onPlaceSearched()}>
-                    <input type="text" placeholder="Rechercher une adresse..." className={styles.mapSearchBar}                  />
+                    <input type="text" placeholder="Rechercher une adresse..." className={"mapSearchBar"}                  />
                 </Autocomplete>
 
-                <a href={"/"} className={styles.homeButton}>
-                    <FaHome className={styles.homeIcon}/>
+                <a href={"/"} className={"homeButton"}>
+                    <FaHome className={"homeIcon"}/>
                 </a>
 
                 {infoOpen && selectedPlace && (
@@ -188,7 +188,7 @@ function Map() {
                         <div>
                             {placeDetails ?
                                 <div>
-                                    <h3 className={styles.hospitalName}>{placeDetails.name}</h3>
+                                    <h3 className={"hospitalName"}>{placeDetails.name}</h3>
                                     <p><b>Addresse :</b> {placeDetails.address_components[0].short_name + ' ' + placeDetails.address_components[1].short_name }</p>
                                     <p><b>Téléphone :</b> {placeDetails.formatted_phone_number}</p>
                                     <p><b>Notation :</b> {placeDetails.rating ? placeDetails.rating : "inconnue"}</p>
@@ -221,28 +221,28 @@ function Map() {
                         suppressMarkers: true,
                     }}/>)}
 
-                <div className={styles.travelModeButtonsWrapper}>
+                <div className={"travelModeButtonsWrapper"}>
                     <div
-                        className={userTravelMode === 'TRANSIT' ? styles.activeTravelModeButton : styles.travelModeButton}
+                        className={userTravelMode === 'TRANSIT' ? "activeTravelModeButton" : "travelModeButton"}
                         onClick={() => setTravelMode('TRANSIT')}>
-                        <FaBusAlt className={styles.travelModeIcon}/>
+                        <FaBusAlt className={"travelModeIcon"}/>
                     </div>
                     <div
-                        className={userTravelMode === 'WALKING' ? styles.activeTravelModeButton : styles.travelModeButton}
+                        className={userTravelMode === 'WALKING' ? "activeTravelModeButton" : "travelModeButton"}
                         onClick={() => setTravelMode('WALKING')}>
-                        <FaWalking className={styles.travelModeIcon}/>
+                        <FaWalking className={"travelModeIcon"}/>
                     </div>
                     <div
-                        className={userTravelMode === 'DRIVING' ? styles.activeTravelModeButton : styles.travelModeButton}
+                        className={userTravelMode === 'DRIVING' ? "activeTravelModeButton" : "travelModeButton"}
                         onClick={() => setTravelMode('DRIVING')}>
-                        <FaCar className={styles.travelModeIcon}/>
+                        <FaCar className={"travelModeIcon"}/>
                     </div>
                 </div>
-                <div className={styles.sliderWrapper}>
-                    <h5 className={styles.sliderTitle}>
+                <div className={"sliderWrapper"}>
+                    <h5 className={"sliderTitle"}>
                         {`Rayon de la recherche: ${searchRadius / 100} km`}
                     </h5>
-                    <div className={styles.sliderBox}>
+                    <div className={"sliderBox"}>
                         <Slider
                             defaultValue={15}
                             aria-labelledby="discrete-slider"
@@ -251,7 +251,7 @@ function Map() {
                             onChange={(e, val) => setRadius(val * 100)}
                             min={10}
                             max={50}
-                            className={styles.slider}
+                            className={"slider"}
                         />
                     </div>
                 </div>
