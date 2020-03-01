@@ -37,7 +37,7 @@ function Map() {
             setUserPos(newCenter);
             userMarker.setPosition(newCenter);
 
-            //reset destination or the directiosn update themselves
+            //reset destination or the directions update themselves
             setDestination(null);
 
             //delete old markers and update hospitals nearby
