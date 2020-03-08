@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { navbarLanding } from '../../Landing/NavbarLanding/NavbarLanding';
+import NavBarLanding from '../../Landing/Components/Navbar';
 
 import classes from './css/style.css';
 
 const Error = () => {
   return (
     <div style={{ backgroundColor: 'white'}}>
-      { navbarLanding() }
+      <NavBarLanding/>
       <div id={classes.notfound}>
         <div class={classes.notfound}>
           <div class={classes.notfound404}>
