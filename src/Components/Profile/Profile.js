@@ -4,6 +4,7 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom'
 import KwiliApi from '../Shared/Api/api';
 import Navbar from "../Shared/Navbar";
+import ChatBotWidget from '../Chat/ChatBotWidget';
 
 import './Profile.scss'
 
@@ -51,6 +52,7 @@ export default class Login extends Component {
 					<Link className='pbutton' style={{ textAlign: "center" }} to="/profile/settings">Paramètres</Link>
 					<Link className='pbutton' to="/" onClick={KwiliApi.logout}>Déconnexion</Link>
 				</div>
+				<ChatBotWidget />
 			</div>
 		);
 	}

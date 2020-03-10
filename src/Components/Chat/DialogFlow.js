@@ -1,33 +1,47 @@
-// import dialogflow
-// import os
-// from google.api_core.exceptions import InvalidArgument
+import axios from 'axios'
+import { KJUR } from 'jsrsasign'
+import { dialogflowConfig } from '../Chat/env';
 
-const DIALOGFLOW_PROJECT_ID = 'kwili-chatbot-hlonvo'
-const DIALOGFLOW_LANGUAGE_CODE = 'fr-FR'
-const SESSION_ID = 'current-user-id'
-
-// os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'key.json'
-
-// session_client = dialogflow.SessionsClient()
-// session = session_client.session_path(DIALOGFLOW_PROJECT_ID, SESSION_ID)
-
-// def send_query(user_text):
-// 	text_input = dialogflow.types.TextInput(text=user_text, language_code=DIALOGFLOW_LANGUAGE_CODE)
-// 	query_input = dialogflow.types.QueryInput(text=text_input)
-// 	try:
-// 		response = session_client.detect_intent(session=session, query_input=query_input)
-// 		return response.query_result.fulfillment_messages
-// 	except InvalidArgument:
-// 		raise
-
-export default class DialogFlow extends Component {
+export default class DialogFlow {
 	constructor() {
-		super();
-		this.state = {
-			list: []
-		};
+		this.tokenInterval = setInterval(this.generateToken, 3600000);
+		this.generateToken();
 	}
-	render() {
 
+	generateToken = () => {
+		const header = {
+			alg: 'RS256',
+			typ: 'JWT',
+			kid: dialogflowConfig.private_key
+		}
+
+		// Payload
+		const payload = {
+			iss: dialogflowConfig.client_email,
+			sub: dialogflowConfig.client_email,
+			iat: KJUR.jws.IntDate.get('now'),
+			exp: KJUR.jws.IntDate.get('now + 1hour'),
+			aud: 'https://dialogflow.googleapis.com/google.cloud.dialogflow.v2.Sessions'
+		}
+
+		const stringHeader = JSON.stringify(header)
+		const stringPayload = JSON.stringify(payload)
+		this.token = KJUR.jws.JWS.sign('RS256', stringHeader, stringPayload, dialogflowConfig.private_key)
 	}
+
+	sendMessage = (text, onTextReceivedCallback = () => { }, languageCode = 'en-US') => {
+		const session = 'projects/mychatbot/agent/sessions/some-session-id';
+		axios.defaults.baseURL = 'https://dialogflow.googleapis.com';
+		axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+		axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+		axios.post(`/v2beta1/${session}:detectIntent`, {
+			queryInput: {
+				text: {
+					text,
+					languageCode
+				}
+			}
+		}).then(onTextReceivedCallback).catch(error => console.log(error))
+	};
 }

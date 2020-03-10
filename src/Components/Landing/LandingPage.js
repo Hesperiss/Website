@@ -5,6 +5,7 @@ import PreviewSection from "./Components/PreviewSection";
 import ContactForm from "./Components/ContactForm"
 import background from "../../Images/Background.png"
 import phoneDemo from "../../Images/phone_section1.png"
+import ChatBotWidget from '../Chat/ChatBotWidget';
 
 class LandingPage extends React.Component {
 
@@ -20,7 +21,7 @@ class LandingPage extends React.Component {
 		scrollTo.scrollIntoView();
 	};
 
-	render () {
+	render() {
 
 		return (
 			<div className={"root"}>
@@ -28,12 +29,12 @@ class LandingPage extends React.Component {
 
 				<div className={"sectionWrapper"}>
 					<div className={"introSection"}>
-						<img src={phoneDemo} alt={"kwili webApp demo"}/>
+						<img src={phoneDemo} alt={"kwili webApp demo"} />
 						<div className={"introText"}>
 							<h1>KWILI</h1>
-							<p>Un moyen simple et rapide pour accéder aux urgences.<br/>
-							Une première prise en charge en ligne.</p>
-							<input type="submit" value="En savoir plus" onClick={() => this.slideToAnchorLink()}/>
+							<p>Un moyen simple et rapide pour accéder aux urgences.<br />
+								Une première prise en charge en ligne.</p>
+							<input type="submit" value="En savoir plus" onClick={() => this.slideToAnchorLink()} />
 						</div>
 					</div>
 
@@ -44,7 +45,7 @@ class LandingPage extends React.Component {
 					</div>
 
 					<div className={"backgroundImageWrapper"}>
-						<img src={background} alt={"doctor office"} className={"backgroundImage"}/>
+						<img src={background} alt={"doctor office"} className={"backgroundImage"} />
 					</div>
 				</div>
 
@@ -52,6 +53,7 @@ class LandingPage extends React.Component {
 				<a href={"#knowMore"} id={"#knowMore"}> </a>
 				<PreviewSection />
 				<ContactForm />
+				<ChatBotWidget />
 			</div>
 		);
 	}
