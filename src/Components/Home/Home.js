@@ -1,7 +1,7 @@
 import React from 'react';
-import '../Landing/Landing.scss'
+import './home.scss'
 import {FaCommentMedical, FaMapMarkedAlt, FaUserLock} from "react-icons/all";
-import displayFeaturesDescriptionBoxes from "../Landing/Components/FeaturesDescription";
+import {Button} from 'react-bootstrap'
 
 
 
@@ -11,19 +11,21 @@ export default class HomePage extends React.Component {
             title: "Chat en ligne",
             text: "Ce chat entre l'urgentiste et le patient, permet d'être pris en charge avant même d'être physiquement à l'hôpital.",
             icon: <FaCommentMedical className ="icon"/>,
+            path: "/chat",
         },
         {
-            title: "Carte des urgences",
+            title: "Carte des hopitaux",
             text: "Grace à notre carte des hopitaux, nous vous trouvons automatiquement le meilleur itinéraire pour l'hôpital le plus proche, tout en bénéfiçiant d'informations en temps réel.",
             icon: <FaMapMarkedAlt className ="icon"/>,
+            path: "/map",
         },
     ];
 
 
-    descriptionBox(title, text, icon) {
+    descriptionBox(title, text, icon, path) {
 
         return (
-            <div className="descBox">
+            <Button className="descBox" href={path}>
                 <div className="rhombus">
                     <div className="rhombusContents">
                         {icon}
@@ -31,7 +33,7 @@ export default class HomePage extends React.Component {
                 </div>
                 <h3>{title}</h3>
                 <p>{text}</p>
-            </div>
+            </Button>
         );
     }
 
