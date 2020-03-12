@@ -49,8 +49,8 @@ export default class HomePage extends React.Component {
                 </div>
 
                 <div className={"descBoxWrapper"}>
-                    {this.descriptionBox(this.descBoxes[0].title, this.descBoxes[0].text, this.descBoxes[0].icon)}
-                    {this.descriptionBox(this.descBoxes[1].title, this.descBoxes[1].text, this.descBoxes[1].icon)}
+                    {this.descriptionBox(this.descBoxes[0].title, this.descBoxes[0].text, this.descBoxes[0].icon, this.descBoxes[0].path)}
+                    {this.descriptionBox(this.descBoxes[1].title, this.descBoxes[1].text, this.descBoxes[1].icon, this.descBoxes[1].path)}
                 </div>
             </div>
 
