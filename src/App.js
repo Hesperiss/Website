@@ -9,6 +9,7 @@ import Register from './Components/Register/Register';
 import Profile from './Components/Profile/Profile';
 import Settings from './Components/Settings/Settings';
 import Map from './Components/Map/Map';
+import Home from './Components/Home/Home'
 import NotFound from './Components/Shared/404/NotFound';
 
 import CheckLogin from './Components/CheckLogin.js';
@@ -27,6 +28,7 @@ class App extends Component {
 						<Route exact={true} path='/profile' component={Profile} />
 						<Route exact={true} path='/profile/settings' component={Settings} />
 						<Route exact={true} path='/test' component={() => <CheckLogin path='/login' />} />
+						<Route exact={true} path='/home' component={Home} />
 						<Route component={NotFound} />
 					</Switch>
 				</div>
