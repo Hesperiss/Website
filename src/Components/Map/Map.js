@@ -4,10 +4,9 @@ import {mapOptions} from "./Shared/MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
 import "./Map.scss"
-import {FaWalking, FaCar, FaBusAlt, FaHome, FaUber} from "react-icons/all";
+import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
-
-const CLIENT_ID = "eaBurjKEN1ZffsS0teZ88VPllFkPZb03";
+import UberRidePopup from "./Shared/RequestUberPopup";
 
 function Map() {
 
@@ -63,21 +62,13 @@ function Map() {
         setInfoOpen(false);
         requestHospitaldetails(id, map);
         setSelectedPlace(place);
+
         if (!userDestination || userDestination !== place.geometry.location) {
-            setDestination(place.geometry.location);
+            setDestination({
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng()
+            });
         }
-        setInfoOpen(true);
-
-    };
-
-    const requestUberRide = () => {
-
-        setTravelMode('UBER');
-        var rideRequestLink = 'https://m.uber.com/ul?client_id=' + CLIENT_ID + '&action=setPickup&pickup=' +
-            userPos.lat + '&pickup=' + userPos.lng + '&dropoff=' +
-            selectedPlace.geometry.location.lat + '&dropoff=' + selectedPlace.geometry.location.lat;
-        console.log(rideRequestLink);
-
     };
 
     //fetch hospital information
@@ -161,7 +152,6 @@ function Map() {
     const renderMap = () => {
 
         let sidePanel = <div className={"directionsPanel"}> </div>;
-        let activeTravelMode = userTravelMode == "UBER" ? "DRIVING" : userTravelMode;
 
         return <React.Fragment>
             <GoogleMap
@@ -216,7 +206,7 @@ function Map() {
                     options={{
                         destination: userDestination,
                         origin: userPos,
-                        travelMode: activeTravelMode,
+                        travelMode: userTravelMode,
                     }}
                     callback={(response) => directionsCallback(response)}
                     panel={sidePanel}
@@ -249,11 +239,7 @@ function Map() {
                         onClick={() => setTravelMode('DRIVING')}>
                         <FaCar className={"travelModeIcon"}/>
                     </div>
-                    <div
-                        className={userTravelMode === 'UBER' ? "activeTravelModeButton" : "travelModeButton"}
-                        onClick={() => requestUberRide()}>
-                        <FaUber className={"travelModeIcon"}/>
-                    </div>
+                    {selectedPlace && <UberRidePopup userPos={userPos} destination={userDestination}/>}
                 </div>
                 <div className={"sliderWrapper"}>
                     <h5 className={"sliderTitle"}>
@@ -272,6 +258,7 @@ function Map() {
                         />
                     </div>
                 </div>
+
                 )}
 
             </GoogleMap>
