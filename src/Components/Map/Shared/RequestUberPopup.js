@@ -30,7 +30,7 @@ export default function RequestUberPopup(props) {
         }
 
         //m.uber.com is the web app (designed mainly as a mobile web app)
-        let rideRequestLink = 'https://m.uber.com/ul?client_id=' + CLIENT_ID + '&action=setPickup&pickup=' +
+        let rideRequestLink = 'https://m.uber.com?action=setPickup&client_id=' + CLIENT_ID + 'pickup=' +
             props.userPos.lat + '&pickup=' + props.userPos.lng + '&dropoff=' +
             props.destination.lat + '&dropoff=' + props.destination.lng;
         console.log(rideRequestLink);
