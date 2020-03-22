@@ -13,8 +13,13 @@ const CLIENT_ID = "eaBurjKEN1ZffsS0teZ88VPllFkPZb03";
 export default function RequestUberPopup(props) {
 
     const [open, setOpen] = useState(false);
+    const [startAddress, setStartAddress] = useState("Moi");
+    const [dropOffAddress, setDropOffAddress] = useState("Hôpital");
 
     const handleClickOpen = () => {
+        //get formatted addresses required by API
+        reverseGeocode(props.userPos, true);
+        reverseGeocode(props.destination, false);
         setOpen(true);
     };
 
@@ -30,16 +35,37 @@ export default function RequestUberPopup(props) {
         }
 
         //m.uber.com is the web app (designed mainly as a mobile web app)
-        let rideRequestLink = 'https://m.uber.com?action=setPickup&client_id=' + CLIENT_ID + 'pickup=' +
-            props.userPos.lat + '&pickup=' + props.userPos.lng + '&dropoff=' +
-            props.destination.lat + '&dropoff=' + props.destination.lng;
-        console.log(rideRequestLink);
+        let rideRequestLink = 'https://m.uber.com?action=setPickup&client_id=' + CLIENT_ID +
+            '&pickup[formatted_address]=' + startAddress + '&pickup[latitude]=' + props.userPos.lat +
+            '&pickup[longitude]=' + props.userPos.lng + '&dropoff[formatted_address]=' + dropOffAddress +
+            '&dropoff[latitude]=' + props.destination.lat + '&dropoff[longitude]=' + props.destination.lng;
 
-        //open link in new tab
+        //open link in new tab and close popup
         window.open(rideRequestLink, '_blank');
-
         handleClose();
     };
+
+    //reverse geocode location
+    //because formatted addresses are required for uber ride request
+    const reverseGeocode = (pos, isStart) => {
+        let geocoder = new window.google.maps.Geocoder();
+        geocoder.geocode({'location': pos}, function(results, status) {
+            if (status === 'OK') {
+                if (results[0]) {
+                    if (isStart) {
+                        setStartAddress(results[0].formatted_address);
+                    } else {
+                        setDropOffAddress(results[0].formatted_address);
+                    }
+                } else {
+                    window.alert('No results found');
+                }
+            } else {
+                window.alert('Geocoder failed due to: ' + status);
+            }
+        });
+    };
+
 
     return (
         <div>

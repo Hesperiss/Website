@@ -59,15 +59,12 @@ function Map() {
     //open corresponding info box (with hospital details) on marker click
     const onMarkerClick = (event, place, id, map) => {
 
-        setInfoOpen(false);
+        setInfoOpen(true);
         requestHospitaldetails(id, map);
         setSelectedPlace(place);
 
         if (!userDestination || userDestination !== place.geometry.location) {
-            setDestination({
-                lat: place.geometry.location.lat(),
-                lng: place.geometry.location.lng()
-            });
+            setDestination(place.geometry.location);
         }
     };
 
@@ -239,7 +236,10 @@ function Map() {
                         onClick={() => setTravelMode('DRIVING')}>
                         <FaCar className={"travelModeIcon"}/>
                     </div>
-                    {selectedPlace && <UberRidePopup userPos={userPos} destination={userDestination}/>}
+                    {selectedPlace && <UberRidePopup userPos={userPos} destination={{
+                        lat: selectedPlace.geometry.location.lat(),
+                        lng: selectedPlace.geometry.location.lng()
+                    }}/>}
                 </div>
                 <div className={"sliderWrapper"}>
                     <h5 className={"sliderTitle"}>
