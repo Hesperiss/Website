@@ -4,8 +4,10 @@ import {mapOptions} from "./Shared/MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
 import "./Map.scss"
-import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
+import {FaWalking, FaCar, FaBusAlt, FaHome, FaUber} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
+
+const CLIENT_ID = "eaBurjKEN1ZffsS0teZ88VPllFkPZb03";
 
 function Map() {
 
@@ -68,9 +70,19 @@ function Map() {
 
     };
 
+    const requestUberRide = () => {
+
+        setTravelMode('UBER');
+        var rideRequestLink = 'https://m.uber.com/ul?client_id=' + CLIENT_ID + '&action=setPickup&pickup=' +
+            userPos.lat + '&pickup=' + userPos.lng + '&dropoff=' +
+            selectedPlace.geometry.location.lat + '&dropoff=' + selectedPlace.geometry.location.lat;
+        console.log(rideRequestLink);
+
+    };
+
     //fetch hospital information
     const requestHospitaldetails = (id, map) => {
-        console.log(id);
+
         let request = {
             placeId: id,
             fields: ['name', 'address_component', 'formatted_phone_number', 'geometry', 'rating', 'opening_hours']
@@ -149,6 +161,7 @@ function Map() {
     const renderMap = () => {
 
         let sidePanel = <div className={"directionsPanel"}> </div>;
+        let activeTravelMode = userTravelMode == "UBER" ? "DRIVING" : userTravelMode;
 
         return <React.Fragment>
             <GoogleMap
@@ -199,12 +212,11 @@ function Map() {
                 )}
 
                 {hospitalMarkers}
-
                 {userDestination && < DirectionsService
                     options={{
                         destination: userDestination,
                         origin: userPos,
-                        travelMode: userTravelMode,
+                        travelMode: activeTravelMode,
                     }}
                     callback={(response) => directionsCallback(response)}
                     panel={sidePanel}
@@ -236,6 +248,11 @@ function Map() {
                         className={userTravelMode === 'DRIVING' ? "activeTravelModeButton" : "travelModeButton"}
                         onClick={() => setTravelMode('DRIVING')}>
                         <FaCar className={"travelModeIcon"}/>
+                    </div>
+                    <div
+                        className={userTravelMode === 'UBER' ? "activeTravelModeButton" : "travelModeButton"}
+                        onClick={() => requestUberRide()}>
+                        <FaUber className={"travelModeIcon"}/>
                     </div>
                 </div>
                 <div className={"sliderWrapper"}>
