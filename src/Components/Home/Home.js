@@ -10,7 +10,7 @@ export default class HomePage extends React.Component {
     descBoxes = [
         {
             title: "Chat en ligne",
-            text: "Ce chat entre l'urgentiste et le patient, permet d'être pris en charge avant même d'être physiquement à l'hôpital.",
+            text: "Rentrez en contact avec notre CHATBOT, il vous prendra en charge avant même d'être physiquement à l'hôpital.",
             icon: <FaCommentMedical className ="icon"/>,
             path: "/chat",
         },
