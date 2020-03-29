@@ -2,6 +2,7 @@ import React from 'react';
 import '../Landing.scss';
 import { Link } from 'react-router-dom'
 import KwiliLogo from "../../../Images/logo_kwili.png"
+import ChatBotWidget from '../../Chat/ChatBotWidget';
 
 function NavBarLanding() {
     return (
@@ -47,6 +48,8 @@ function NavBarLanding() {
                     className="navBarButton"
                 />
             </Link>
+
+            <ChatBotWidget />
 
         </div></React.Fragment>
     );
