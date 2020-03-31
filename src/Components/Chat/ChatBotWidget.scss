@@ -1,9 +1,35 @@
-.chatbot-container {
-    position: fixed;
-    bottom: 50px;
-    right: 50px;
+$theme-light: #58a5f0;
+$theme-medium: #0277bd;
+$theme-dark: #004c8c;
+$theme-gray: #242f3e;
+$very-light-gray: #eeeeee;
+
+.rcw-widget-container {
+    font-weight: normal;
 }
 
-.chatbot-icon {
-    position: relative;
+.rcw-conversation-container > .rcw-header {
+    background-color: $theme-dark;
+}
+
+.quick-button {
+    border: 1px solid $theme-dark;
+}
+
+.rcw-message > .rcw-client {
+    background-color: $theme-medium;
+    color: $very-light-gray;
+}
+
+.rcw-message > .rcw-response {
+    background-color: $very-light-gray;
+    color: black;
+}
+
+.rcw-launcher {
+    background-color: $theme-dark;
+}
+
+.rcw-send-icon {
+    filter: invert(1)
 }
