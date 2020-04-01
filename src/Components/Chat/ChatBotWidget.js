@@ -12,11 +12,46 @@ export default class ChatBotWidget extends Component {
 		this.state = {
 			badge: 0,
 		};
+		this.quickButtons = [[{
+			label: "Au ventre",
+			value: "Au ventre",
+		}, {
+			label: "À la tête",
+			value: "À la tête",
+		}, {
+			label: "Au dos",
+			value: "Au dos",
+		},
+		], [{
+			label: "J'ai mal",
+			value: "J'ai mal",
+		}], [{
+			label: "Bonjour",
+			value: "Bonjour",
+		}],
+		];
+	}
+
+	refreshQuickButtons = () => {
+		if (this.quickButtons.length > 0) {
+			setQuickButtons(this.quickButtons[this.quickButtons.length - 1]);
+		}
+		else {
+			setQuickButtons([]);
+		}
+	}
+
+	iterateQuickButtons = () => {
+		if (this.quickButtons.length > 0) {
+			this.quickButtons.pop();
+			this.refreshQuickButtons();
+		}
 	}
 
 	handleQuickButton = (msg) => {
 		addUserMessage(msg);
 		this.handleNewUserMessage(msg);
+		this.iterateQuickButtons();
 	}
 
 	messageReceived = (msg) => {
@@ -31,12 +66,7 @@ export default class ChatBotWidget extends Component {
 	componentDidMount() {
 		dropMessages();
 		this.chat = new KwiliChat(this.messageReceived);
-		setQuickButtons(
-			[{
-				label: "J'ai mal",
-				value: "J'ai mal"
-			}
-		])
+		this.refreshQuickButtons();
 	}
 
 	handleNewUserMessage = (newMessage) => {
