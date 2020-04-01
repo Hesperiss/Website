@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 
-const chatEndpoint = 'http://51.83.79.250';
-//const chatEndpoint = 'http://localhost';
+const chatEndpoint = 'https://geoworker.eu';
 const port = '8084';
 
 export default class KwiliChat {
