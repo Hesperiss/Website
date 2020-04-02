@@ -1,47 +1,94 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import KwiliChat from './Api';
+import { Widget, addResponseMessage, setQuickButtons, addUserMessage, dropMessages } from 'react-chat-widget';
+import KwiliLogo from '../../Images/doctor.svg';
+
+import 'react-chat-widget/lib/styles.css';
 import '../Chat/ChatBotWidget.scss';
-import chatbotIcon from '../../Images/doctor.svg';
-import cancelButton from '../../Images/stop.svg';
 
-const dialogflowURL = 'https://console.dialogflow.com/api-client/demo/embedded/94fed26f-5471-46d5-ae5a-8ac8c32cc30f'
-
-export default class BotCard extends Component {
+export default class ChatBotWidget extends Component {
 	constructor() {
 		super();
-		this.width = 350;
-		this.height = 430;
 		this.state = {
-			shown: false
+			badge: 0,
 		};
+		this.quickButtons = [[{
+			label: "Au ventre",
+			value: "Au ventre",
+		}, {
+			label: "À la tête",
+			value: "À la tête",
+		}, {
+			label: "Au dos",
+			value: "Au dos",
+		},
+		], [{
+			label: "J'ai mal",
+			value: "J'ai mal",
+		}], [{
+			label: "Bonjour",
+			value: "Bonjour",
+		}],
+		];
 	}
 
-	changeState = () => {
+	refreshQuickButtons = () => {
+		if (this.quickButtons.length > 0) {
+			setQuickButtons(this.quickButtons[this.quickButtons.length - 1]);
+		}
+		else {
+			setQuickButtons([]);
+		}
+	}
+
+	iterateQuickButtons = () => {
+		if (this.quickButtons.length > 0) {
+			this.quickButtons.pop();
+			this.refreshQuickButtons();
+		}
+	}
+
+	handleQuickButton = (msg) => {
+		addUserMessage(msg);
+		this.handleNewUserMessage(msg);
+		this.iterateQuickButtons();
+	}
+
+	messageReceived = (msg) => {
+		addResponseMessage(msg);
+		if (msg.indexOf('?') !== -1) {
+			this.setState({
+				badge: this.state.badge + 1,
+			});
+		}
+	}
+
+	componentDidMount() {
+		dropMessages();
+		this.chat = new KwiliChat(this.messageReceived);
+		this.refreshQuickButtons();
+	}
+
+	handleNewUserMessage = (newMessage) => {
+		this.chat.send(newMessage);
 		this.setState({
-			shown: !this.state.shown
+			badge: 0,
 		});
 	}
 
 	render() {
 		return (
-			<div className='chatbot-container'>
-				<div>
-					<iframe
-						hidden={!this.state.shown}
-						title='chatbot'
-						allow='microphone;'
-						width={this.width}
-						height={this.height}
-						src={dialogflowURL}>
-					</iframe>
-				</div>
-				<img className='chatbot-icon btn'
-					width={this.state.shown ? 50 : 100}
-					height={this.state.shown ? 50 : 100}
-					src={this.state.shown ? cancelButton : chatbotIcon}
-					alt='chatbot'
-					onClick={this.changeState}>
-				</img>
-			</div >
+			<div>
+				<Widget
+					handleNewUserMessage={this.handleNewUserMessage}
+					handleQuickButtonClicked={this.handleQuickButton}
+					profileAvatar={KwiliLogo}
+					title="Chatbot Kwili"
+					subtitle="Expliquez-nous votre problême"
+					senderPlaceHolder="Aa"
+					badge={this.state.badge}
+				/>
+			</div>
 		);
 	}
 }

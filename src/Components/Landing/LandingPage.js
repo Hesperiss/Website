@@ -5,7 +5,6 @@ import PreviewSection from "./Components/PreviewSection";
 import ContactForm from "./Components/ContactForm"
 import background from "../../Images/Background.png"
 import phoneDemo from "../../Images/phone_section1.png"
-import ChatBotWidget from '../Chat/ChatBotWidget';
 
 class LandingPage extends React.Component {
 
@@ -53,7 +52,6 @@ class LandingPage extends React.Component {
 				<a href={"#knowMore"} id={"#knowMore"}> </a>
 				<PreviewSection />
 				<ContactForm />
-				<ChatBotWidget />
 			</div>
 		);
 	}

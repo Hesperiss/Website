@@ -6,6 +6,7 @@ import userIcon from "../../Images/user_marker.png"
 import "./Map.scss"
 import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
+import UberRidePopup from "./Shared/RequestUberPopup";
 
 function Map() {
 
@@ -58,19 +59,18 @@ function Map() {
     //open corresponding info box (with hospital details) on marker click
     const onMarkerClick = (event, place, id, map) => {
 
-        setInfoOpen(false);
+        setInfoOpen(true);
         requestHospitaldetails(id, map);
         setSelectedPlace(place);
+
         if (!userDestination || userDestination !== place.geometry.location) {
             setDestination(place.geometry.location);
         }
-        setInfoOpen(true);
-
     };
 
     //fetch hospital information
     const requestHospitaldetails = (id, map) => {
-        console.log(id);
+
         let request = {
             placeId: id,
             fields: ['name', 'address_component', 'formatted_phone_number', 'geometry', 'rating', 'opening_hours']
@@ -199,7 +199,6 @@ function Map() {
                 )}
 
                 {hospitalMarkers}
-
                 {userDestination && < DirectionsService
                     options={{
                         destination: userDestination,
@@ -237,6 +236,10 @@ function Map() {
                         onClick={() => setTravelMode('DRIVING')}>
                         <FaCar className={"travelModeIcon"}/>
                     </div>
+                    {selectedPlace && <UberRidePopup userPos={userPos} destination={{
+                        lat: selectedPlace.geometry.location.lat(),
+                        lng: selectedPlace.geometry.location.lng()
+                    }}/>}
                 </div>
                 <div className={"sliderWrapper"}>
                     <h5 className={"sliderTitle"}>
@@ -255,6 +258,7 @@ function Map() {
                         />
                     </div>
                 </div>
+
                 )}
 
             </GoogleMap>

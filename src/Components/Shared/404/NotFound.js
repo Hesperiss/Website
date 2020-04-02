@@ -2,15 +2,15 @@ import React from 'react';
 
 import NavBarLanding from '../../Landing/Components/Navbar';
 
-import classes from './css/style.css';
+import './css/style.css';
 
 const Error = () => {
   return (
     <div style={{ backgroundColor: 'white'}}>
       <NavBarLanding/>
-      <div id={classes.notfound}>
-        <div class={classes.notfound}>
-          <div class={classes.notfound404}>
+      <div id='notfound'>
+        <div class='notfound'>
+          <div class='notfound404'>
             <h1>Oops!</h1>
           </div>
           <h2>404 - Page not found</h2>

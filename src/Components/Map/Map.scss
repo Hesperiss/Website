@@ -1,6 +1,7 @@
 $theme-light: #58a5f0;
 $theme-medium: #0277bd;
 $theme-dark: #004c8c;
+$theme-gray: #242f3e;
 
 .hospitalPopup {
   position: fixed;
@@ -86,6 +87,7 @@ $theme-dark: #004c8c;
   z-index: 500;
   right: 0;
   top: 0;
+  color: $theme-dark;
 }
 
 .travelModeIcon {
@@ -93,7 +95,11 @@ $theme-dark: #004c8c;
   align-self: center;
   justify-self: center;
   font-size: 35px;
-  color: $theme-dark;
+}
+
+.uberIcon {
+  border-color: #4D6A7A;
+  color: $theme-gray;
 }
 
 .slider {
