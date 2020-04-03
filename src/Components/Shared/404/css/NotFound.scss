@@ -1,0 +1,74 @@
+//theme colors
+$theme-light: #58a5f0;
+$theme-medium: #0277bd;
+$theme-dark: #004c8c;
+$theme-gray: #242f3e;
+$very-light-gray: #eeeeee;
+
+.notFoundWrapper {
+  box-sizing: border-box;
+  background-color: $theme-gray;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-flow: column wrap;
+  flex-grow: 1;
+  height: 100vh;
+  align-self: stretch;
+  justify-self: stretch;
+  align-items: center;
+  align-content: center;
+  justify-items: start;
+  justify-content: flex-start;
+}
+
+.notFound {
+  padding: 20px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-self: center;
+  align-self: center;
+  place-items: center;
+  place-content: center;
+  text-align: center;
+  font-family: 'Montserrat', Arial, sans-serif;
+  color: $very-light-gray;
+
+  h1 {
+    color: $theme-light;
+    font-size: 15vw;
+    margin: 0px;
+    font-weight: 900;
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 20px;
+  }
+
+  a {
+    margin: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 15px 30px;
+    border-radius: 40px;
+    color: white;
+    font-weight: 700;
+    -webkit-box-shadow: 0px 4px 15px -5px $theme-light;
+    box-shadow: 0px 4px 15px -5px $theme-light;
+    //for the sliding animation, we use a bg twice as large as the button
+    //first half = color before hover ; second half = color on hover
+    background-size: 200% 100%;
+    background-image: linear-gradient(to left, white 50%, $theme-medium 50%);
+    transition: background-position 0.5s;
+    &:hover {
+      background-position: 100% 0%;
+      color: $theme-medium;
+      transition: all 0.5s ease-out;
+    }
+  }
+
+}
