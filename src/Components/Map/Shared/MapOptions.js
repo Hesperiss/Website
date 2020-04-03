@@ -5,6 +5,9 @@ export const mapOptions = {
     scaleControl: true,
     rotateControl: false,
     fullscreenControl: false,
+    zoomControlOptions: {
+        position: window.google.maps.ControlPosition.LEFT_BOTTOM
+    },
     styles: [
         {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
         {elementType: 'labels.text.stroke', stylers: [{visibility: "off"}]},
