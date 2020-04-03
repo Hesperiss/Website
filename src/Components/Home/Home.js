@@ -63,7 +63,7 @@ export default class HomePage extends React.Component {
             <div>
                 {this.displayFeaturesDescriptionBoxes()}
                 <div className={"introText"}>
-                    <Link to="/">
+                    <Link to="/landing">
                         <button>En savoir plus</button>
                     </Link>
                 </div>
