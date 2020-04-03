@@ -3,6 +3,21 @@ $theme-medium: #0277bd;
 $theme-dark: #004c8c;
 $theme-gray: #242f3e;
 
+#navBarWrapper {
+  @media only screen and (max-width: 768px) {
+    //hides navbar on small screens
+    //it will be replaced by home button
+    visibility: hidden;
+  }
+  width: 90%;
+  z-index: 100;
+  position: absolute;
+  display: flex;
+  place-items: center;
+  place-content: center;
+  top: 0;
+}
+
 .hospitalPopup {
   position: fixed;
   display: flex;
@@ -18,6 +33,7 @@ $theme-gray: #242f3e;
 }
 
 .mapSearchBar{
+  z-index: 500;
   position: fixed;
   left: 0;
   top: 0;
@@ -131,11 +147,11 @@ $theme-gray: #242f3e;
 
 .sliderTitle {
   flex-shrink: 1;
-  color: $theme-medium;
-  border-radius: 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-  background-color: white;
-  padding: 15px;
+  color: white;
+  border-radius: 50px;
+  //box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  //background-color: $theme-light;
+  //padding: 15px;
 }
 
 .sliderWrapper {
@@ -160,6 +176,10 @@ $theme-gray: #242f3e;
 }
 
 .homeButton {
+  @media only screen and (min-width: 768px) {
+    //hides home button on bigger screens where navbar is active
+    visibility: hidden;
+  }
   display: flex;
   position: fixed;
   top: 80px;

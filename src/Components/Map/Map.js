@@ -7,6 +7,7 @@ import "./Map.scss"
 import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
 import UberRidePopup from "./Shared/RequestUberPopup";
+import NavBar from "../Landing/Components/Navbar";
 
 function Map() {
 
@@ -165,6 +166,10 @@ function Map() {
                     justifyItems: "center",
                 }}
                 onLoad={map => loadHandler(map)}>
+
+                <div id={"navBarWrapper"}>
+                    <NavBar />
+                </div>
 
                 <Marker
                     position={userPos}
