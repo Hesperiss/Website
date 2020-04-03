@@ -3,7 +3,7 @@ $theme-medium: #0277bd;
 $theme-dark: #004c8c;
 $theme-gray: #242f3e;
 
-#navBarWrapper {
+.mapNavBarWrapper {
   @media only screen and (max-width: 768px) {
     //hides navbar on small screens
     //it will be replaced by home button

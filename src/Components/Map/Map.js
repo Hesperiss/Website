@@ -167,7 +167,7 @@ function Map() {
                 }}
                 onLoad={map => loadHandler(map)}>
 
-                <div id={"navBarWrapper"}>
+                <div className={"mapNavBarWrapper"}>
                     <NavBar />
                 </div>
 
