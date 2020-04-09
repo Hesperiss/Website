@@ -10,6 +10,7 @@ import Profile from './Components/Profile/Profile';
 import Settings from './Components/Settings/Settings';
 import Map from './Components/Map/Map';
 import NotFound from './Components/Shared/404/NotFound';
+import MobileChat from './Components/Chat/Mobile';
 
 import CheckLogin from './Components/CheckLogin.js';
 
@@ -21,6 +22,7 @@ class App extends Component {
 				<div>
 					<Switch>
 						<Route exact={true} path='/' component={LandingPage} />
+						<Route exact={true} path='/chat' component={MobileChat} />
 						<Route exact={true} path='/login' component={Login} />
 						<Route exact={true} path='/register' component={Register} />
 						<Route exact={true} path='/map' component={Map} />
