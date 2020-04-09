@@ -1,0 +1,17 @@
+import React from "react";
+import { create } from "react-test-renderer";
+import LandingPage from '../Components/Landing/LandingPage';
+
+describe("LandingPage tests", () => {
+  test("Scroll to 'En savoir plus'", () => {
+    const component = <LandingPage />;
+    const instance = component.root;
+    const input = component.root.findByType("input");
+    
+    const open = jest.fn()
+    Object.defineProperty(window, 'open', open);
+
+    input.props.onClick();
+    expect(window).toBe(document.getElementById('#knowMore'));
+  });
+});
