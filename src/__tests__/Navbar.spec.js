@@ -1,9 +1,9 @@
 import React from "react";
-import Navbar from '../Components/Shared/Navbar.js';
+import NavBarLanding from '../Components/Landing/Components/Navbar';
 
-describe("Page 404", () => {
+describe("Navbar", () => {
   test("Matches the snapshot", () => {
-    const navbar = <Navbar/>;
+    const navbar = <NavBarLanding/>;
     expect(navbar).toMatchSnapshot();
   });
 });
