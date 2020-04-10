@@ -12,8 +12,6 @@ import Map from './Components/Map/Map';
 import NotFound from './Components/Shared/404/NotFound';
 import MobileChat from './Components/Chat/Mobile';
 
-import CheckLogin from './Components/CheckLogin.js';
-
 
 class App extends Component {
 	render() {
@@ -28,7 +26,6 @@ class App extends Component {
 						<Route exact={true} path='/map' component={Map} />
 						<Route exact={true} path='/profile' component={Profile} />
 						<Route exact={true} path='/profile/settings' component={Settings} />
-						<Route exact={true} path='/test' component={() => <CheckLogin path='/login' />} />
 						<Route component={NotFound} />
 					</Switch>
 				</div>
