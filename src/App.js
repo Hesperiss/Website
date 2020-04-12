@@ -20,14 +20,14 @@ class App extends Component {
 			<BrowserRouter>
 				<div>
 					<Switch>
-						<Route exact={true} path='/' component={LandingPage} />
+						<Route exact={true} path='/' component={Home} />
 						<Route exact={true} path='/chat' component={MobileChat} />
 						<Route exact={true} path='/login' component={Login} />
 						<Route exact={true} path='/register' component={Register} />
 						<Route exact={true} path='/map' component={Map} />
 						<Route exact={true} path='/profile' component={Profile} />
 						<Route exact={true} path='/profile/settings' component={Settings} />
-						<Route exact={true} path='/home' component={Home} />
+						<Route exact={true} path='/landing' component={LandingPage} />
 						<Route component={NotFound} />
 					</Switch>
 				</div>
