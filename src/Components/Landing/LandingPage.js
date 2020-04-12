@@ -44,7 +44,7 @@ class LandingPage extends React.Component {
 					</div>
 
 					<div className={"backgroundImageWrapper"}>
-						<img src={background} alt={"doctor office"} className={"backgroundImage"} />
+						<img src={background} alt={"doctor office"} className={"backgroundImage"} style={{width:1600}} />
 					</div>
 				</div>
 
