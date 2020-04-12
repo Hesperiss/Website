@@ -1,17 +1,32 @@
 import React, { Component } from 'react'
 import KwiliChat from './Api';
-import { Widget, addResponseMessage, setQuickButtons, addUserMessage, dropMessages } from 'react-chat-widget';
+import { Widget, addResponseMessage, setQuickButtons, addUserMessage, dropMessages, toggleWidget, toggleMsgLoader } from 'react-chat-widget';
 import KwiliLogo from '../../Images/doctor.svg';
 
 import 'react-chat-widget/lib/styles.css';
 import '../Chat/ChatBotWidget.scss';
 
 export default class ChatBotWidget extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+		this.fullscreen = props.fullscreen;
+		this.waitingReply = false;
 		this.state = {
 			badge: 0,
 		};
+		this.widget = (
+			<Widget
+				handleNewUserMessage={this.handleNewUserMessage}
+				handleQuickButtonClicked={this.handleQuickButton}
+				profileAvatar={KwiliLogo}
+				showCloseButton={!this.fullscreen}
+				title="Chatbot"
+				subtitle="Expliquez-nous votre problême"
+				senderPlaceHolder="Aa"
+			/>);
+		if (this.fullscreen) {
+			toggleWidget();
+		}
 		this.quickButtons = [[{
 			label: "Au ventre",
 			value: "Au ventre",
@@ -61,6 +76,10 @@ export default class ChatBotWidget extends Component {
 				badge: this.state.badge + 1,
 			});
 		}
+		if (this.waitingReply) {
+			this.waitingReply = false;
+			toggleMsgLoader();
+		}
 	}
 
 	componentDidMount() {
@@ -70,24 +89,25 @@ export default class ChatBotWidget extends Component {
 	}
 
 	handleNewUserMessage = (newMessage) => {
+		if ((newMessage.indexOf('boss') !== -1 || newMessage.indexOf('maitre')) !== -1
+			&& (newMessage.indexOf('ultime') !== -1 || newMessage.indexOf('absolu') !== -1)) {
+			addResponseMessage('Mon maitre ultime est Leandre');
+			return;
+		}
 		this.chat.send(newMessage);
 		this.setState({
 			badge: 0,
 		});
+		if (this.waitingReply === false) {
+			this.waitingReply = true;
+			toggleMsgLoader();
+		}
 	}
 
 	render() {
 		return (
 			<div>
-				<Widget
-					handleNewUserMessage={this.handleNewUserMessage}
-					handleQuickButtonClicked={this.handleQuickButton}
-					profileAvatar={KwiliLogo}
-					title="Chatbot Kwili"
-					subtitle="Expliquez-nous votre problême"
-					senderPlaceHolder="Aa"
-					badge={this.state.badge}
-				/>
+				{this.widget}
 			</div>
 		);
 	}

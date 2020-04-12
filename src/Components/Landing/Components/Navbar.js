@@ -1,59 +1,56 @@
 import React from 'react';
 import '../Landing.scss';
-import { Link } from 'react-router-dom'
 import KwiliLogo from "../../../Images/logo_kwili.png"
 import ChatBotWidget from '../../Chat/ChatBotWidget';
 
 function NavBarLanding() {
     return (
         <React.Fragment>
-        <div className="navBar">
+            <div className="navBar">
 
-            <div className={"kwiliTagNavBar"}>
-                <Link to='/'>
-                    <img className={"kwiliLogo"} src={KwiliLogo} alt={"logo de Kwili"} href='/'/>
-                    <a style={{color: 'white'}} href='/'>KWILI</a>
-                </Link>
-            </div>
+                <div className={"kwiliTagNavBar"}>
+                    <img className={"kwiliLogo"} src={KwiliLogo} alt={"logo de Kwili"} href='/' />
+                    <a style={{ color: 'white' }} href='/'>KWILI</a>
+                </div>
 
-            <Link to='/map'>
-                <input
-                    type="submit"
-                    value="Trouver des urgences"
-                    href="/map"
-                    className="navBarButton"
+                <a href='/map'>
+                    <input
+                        type="submit"
+                        value="Trouver des urgences"
+                        href="/map"
+                        className="navBarButton"
 
-                />
-            </Link>
+                    />
+                </a>
 
-            <Link to='/chat'>
-                <input
-                    type="submit"
-                    value="Aidez-moi !"
-                    href="/chat"
-                    className="navBarButton"
-                />
-            </Link>
-            <Link to='/'>
-                <input
-                    type="submit"
-                    value="Qui sommes-nous ?"
-                    href="/"
-                    className="navBarButton"
-                />
-            </Link>
-            <Link to='/download'>
-                <input
-                    type="submit"
-                    value="Application"
-                    href="/download"
-                    className="navBarButton"
-                />
-            </Link>
+                <a href='/chat'>
+                    <input
+                        type="submit"
+                        value="Aidez-moi !"
+                        href="/chat"
+                        className="navBarButton"
+                    />
+                </a>
+                <a href='/'>
+                    <input
+                        type="submit"
+                        value="Qui sommes-nous ?"
+                        href="/"
+                        className="navBarButton"
+                    />
+                </a>
+                <a href='/download'>
+                    <input
+                        type="submit"
+                        value="Application"
+                        href="/download"
+                        className="navBarButton"
+                    />
+                </a>
 
-            <ChatBotWidget />
+                <ChatBotWidget fullscreen={false} />
 
-        </div></React.Fragment>
+            </div></React.Fragment>
     );
 }
 export default NavBarLanding;
