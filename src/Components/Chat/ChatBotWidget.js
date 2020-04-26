@@ -3,6 +3,7 @@ import KwiliChat from './Api';
 import { Widget, addResponseMessage, setQuickButtons, addUserMessage, dropMessages, toggleWidget, toggleMsgLoader } from 'react-chat-widget';
 import KwiliLogo from '../../Images/doctor.svg';
 
+import anchorme from "anchorme"
 import 'react-chat-widget/lib/styles.css';
 import '../Chat/ChatBotWidget.scss';
 
@@ -70,6 +71,10 @@ export default class ChatBotWidget extends Component {
 	}
 
 	messageReceived = (msg) => {
+		const list = anchorme.list(msg);
+		for (let i = 0; i < list.length; ++i) {
+			msg = msg.replace(list[i].string, `[${list[i].string}](${list[i].string})`)
+		}
 		addResponseMessage(msg);
 		if (msg.indexOf('?') !== -1) {
 			this.setState({
