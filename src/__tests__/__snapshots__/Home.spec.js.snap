@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home page Matches the snapshot 1`] = `
+<div>
+  <div
+    className="descriptionSection"
+  >
+    <div
+      className="textWrapper"
+    >
+      <h2
+        className="sectionTitle"
+      >
+        Kwili
+      </h2>
+      <p
+        className="sectionSubtitle"
+      >
+        Jamais aller aux urgences n'aura été aussi simple !
+      </p>
+    </div>
+    <div
+      className="descBoxWrapper"
+    >
+      <a
+        className="descBox btn btn-primary"
+        href="/chat"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+      >
+        <div
+          className="rhombus"
+        >
+          <div
+            className="rhombusContents"
+          >
+            <svg
+              className="icon"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              strokeWidth="0"
+              style={
+                Object {
+                  "color": undefined,
+                }
+              }
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 32C114.62 32 0 125.12 0 240c0 49.56 21.41 95 57 130.74C44.46 421.05 2.7 466 2.2 466.5A8 8 0 0 0 8 480c66.26 0 116-31.75 140.6-51.38A304.66 304.66 0 0 0 256 448c141.39 0 256-93.12 256-208S397.39 32 256 32zm96 232a8 8 0 0 1-8 8h-56v56a8 8 0 0 1-8 8h-48a8 8 0 0 1-8-8v-56h-56a8 8 0 0 1-8-8v-48a8 8 0 0 1 8-8h56v-56a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v56h56a8 8 0 0 1 8 8z"
+              />
+            </svg>
+          </div>
+        </div>
+        <h3>
+          Chat en ligne
+        </h3>
+        <p>
+          Rentrez en contact avec notre CHATBOT, il vous prendra en charge avant même d'être physiquement à l'hôpital.
+        </p>
+      </a>
+      <a
+        className="descBox btn btn-primary"
+        href="/map"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+      >
+        <div
+          className="rhombus"
+        >
+          <div
+            className="rhombusContents"
+          >
+            <svg
+              className="icon"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              strokeWidth="0"
+              style={
+                Object {
+                  "color": undefined,
+                }
+              }
+              viewBox="0 0 576 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M288 0c-69.59 0-126 56.41-126 126 0 56.26 82.35 158.8 113.9 196.02 6.39 7.54 17.82 7.54 24.2 0C331.65 284.8 414 182.26 414 126 414 56.41 357.59 0 288 0zm0 168c-23.2 0-42-18.8-42-42s18.8-42 42-42 42 18.8 42 42-18.8 42-42 42zM20.12 215.95A32.006 32.006 0 0 0 0 245.66v250.32c0 11.32 11.43 19.06 21.94 14.86L160 448V214.92c-8.84-15.98-16.07-31.54-21.25-46.42L20.12 215.95zM288 359.67c-14.07 0-27.38-6.18-36.51-16.96-19.66-23.2-40.57-49.62-59.49-76.72v182l192 64V266c-18.92 27.09-39.82 53.52-59.49 76.72-9.13 10.77-22.44 16.95-36.51 16.95zm266.06-198.51L416 224v288l139.88-55.95A31.996 31.996 0 0 0 576 426.34V176.02c0-11.32-11.43-19.06-21.94-14.86z"
+              />
+            </svg>
+          </div>
+        </div>
+        <h3>
+          Carte des hopitaux
+        </h3>
+        <p>
+          Grace à notre carte des hopitaux, nous vous trouvons automatiquement le meilleur itinéraire pour l'hôpital le plus proche, tout en bénéfiçiant d'informations en temps réel.
+        </p>
+      </a>
+    </div>
+  </div>
+  <div
+    className="introText"
+  >
+    <a
+      href="/landing"
+    >
+      <button>
+        En savoir plus
+      </button>
+    </a>
+  </div>
+</div>
+`;

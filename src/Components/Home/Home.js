@@ -2,7 +2,6 @@ import React from 'react';
 import './home.scss'
 import {FaCommentMedical, FaMapMarkedAlt} from "react-icons/all";
 import {Button} from 'react-bootstrap'
-import {Link} from "react-router-dom";
 
 
 
@@ -63,9 +62,9 @@ export default class HomePage extends React.Component {
             <div>
                 {this.displayFeaturesDescriptionBoxes()}
                 <div className={"introText"}>
-                    <Link to="/landing">
+                    <a href="/landing">
                         <button>En savoir plus</button>
-                    </Link>
+                    </a>
                 </div>
             </div>
         );
