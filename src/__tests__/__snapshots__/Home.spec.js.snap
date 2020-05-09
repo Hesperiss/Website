@@ -25,6 +25,7 @@ exports[`Home page Matches the snapshot 1`] = `
       <a
         className="descBox btn btn-primary"
         href="/chat"
+        id="chat"
         onClick={[Function]}
         onKeyDown={[Function]}
       >
@@ -65,6 +66,7 @@ exports[`Home page Matches the snapshot 1`] = `
       <a
         className="descBox btn btn-primary"
         href="/map"
+        id="map"
         onClick={[Function]}
         onKeyDown={[Function]}
       >

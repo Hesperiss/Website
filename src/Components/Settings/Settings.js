@@ -48,7 +48,7 @@ export default class Settings extends Component {
 		}
 	}
 
-	componentWillMount() {
+	UNSAFE_componentWillMount() {
 		if (KwiliApi.isConnected())
 			KwiliApi.getProfileInfo().then(this.refreshInfo);
 	}
