@@ -1,0 +1,58 @@
+$theme-light: #58a5f0;
+$theme-medium: #0277bd;
+$theme-dark: #004c8c;
+$theme-gray: #242f3e;
+$very-light-gray: #eeeeee;
+
+.dialogWindow {
+  border-radius: 15px !important;
+  background-color: $very-light-gray !important;
+
+  p {
+    text-align: center;
+    font-family: Poppins, Arial, sans-serif;
+  }
+}
+
+.dialogTitle {
+  h2, h3, h4 {
+    color: $theme-dark !important;
+    font-weight: bold !important;
+    font-family: Poppins, Arial, sans-serif;
+    margin: 15px;
+  }
+}
+
+.dialogActions {
+  align-self: center;
+  justify-self: center;
+  place-content: center;
+  place-items: center;
+}
+
+.uberDialogButtons {
+  color: $theme-medium !important;
+  &:hover {
+    background-color: $theme-dark !important;
+    color: $very-light-gray !important;
+  }
+}
+
+.uberIcon {
+  border-color: #4D6A7A;
+  color: $theme-gray;
+}
+
+.uberPopupIcons {
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  place-content: center;
+  place-items: center;
+  .icon {
+    font-size: 70px;
+    color: $theme-gray;
+    margin: 15px;
+  }
+}
+
