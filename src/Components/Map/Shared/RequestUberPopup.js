@@ -5,8 +5,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {FaUber} from "react-icons/all";
-import "../Map.scss"
+import {FaUber, FaCar, FaClock} from "react-icons/all";
+import "../Map.scss";
+import "./PopupDialog.scss";
 
 const CLIENT_ID = "eaBurjKEN1ZffsS0teZ88VPllFkPZb03";
 
@@ -77,23 +78,37 @@ export default function RequestUberPopup(props) {
             </div>
 
             <Dialog
+                classes={{paper: "dialogWindow"}}
                 open={open}
                 keepMounted
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle id="alert-dialog-slide-title">{"Se rendre à l'hôpital en UBER"}</DialogTitle>
+                <DialogTitle classes={{root: "dialogTitle"}}>
+                    <h3>{"Se rendre à l'hôpital en UBER"}</h3></DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        Appeler un UBER pour se rendre à l'hôpital ?
+                        <p><strong>Appeler un UBER pour se rendre à l'hôpital ?</strong><br/>
+                        Choisir cette option ouvrira une l'application ou le
+                        site UBER avec une course paramétrée entre votre position et celle de l'hôpital.</p>
                     </DialogContentText>
+                    <div className={"uberPopupIcons"}>
+                        <FaClock className={"icon"}/>
+                        <FaCar className={"icon"}/>
+                    </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button
+                        onClick={handleClose}
+                        color="primary"
+                        classes={{textPrimary: "uberDialogButtons"}}>
                         Non
                     </Button>
-                    <Button onClick={requestUberRide} color="primary">
+                    <Button
+                        onClick={requestUberRide}
+                        color="primary"
+                        classes={{textPrimary: "uberDialogButtons"}}>
                         Oui
                     </Button>
                 </DialogActions>

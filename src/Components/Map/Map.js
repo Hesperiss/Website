@@ -58,15 +58,21 @@ function Map() {
     };
 
     //open corresponding info box (with hospital details) on marker click
-    const onMarkerClick = (event, place, id, map) => {
+    const onMarkerClick = async (event, place, id, map) => {
 
-        setInfoOpen(true);
-        requestHospitaldetails(id, map);
-        setSelectedPlace(place);
-
+        //update user destination if another hospital was previously selected
         if (!userDestination || userDestination !== place.geometry.location) {
             setDestination(place.geometry.location);
         }
+
+        //if another info box is open, close it first
+        //wait for hospital info actualization before opening info box
+        await setInfoOpen(false);
+        await requestHospitaldetails(id, map);
+        await setSelectedPlace(place);
+
+        setInfoOpen(true);
+
     };
 
     //fetch hospital information
@@ -99,7 +105,7 @@ function Map() {
         let request = {
             location: position,
             radius: searchRadius,
-            types: ["hospital", "health", "point_of_interest"],
+            types: ["hospital"],
             keyword: "(emergency) AND ((medical centre) OR hospital)"
         };
         let service = new window.google.maps.places.PlacesService(map);
@@ -120,22 +126,33 @@ function Map() {
         })
     };
 
+    //update radius and reaload nearest hospitals accordingly
+    const updateRadiusReloadHospitals = async (radius) => {
+        await setRadius(radius);
+        //await setInfoOpen(false);
+        await findNearestHospitals(mapRef, userPos);
+        setDestination(hospitalMarkers[0].position);
+    };
+
     //store map reference in state and display hospitals near initial position
     const loadHandler = (map) => {
         setMapRef(map);
         //use geolocation if user allows it and set user position to geolocation
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
+            navigator.geolocation.getCurrentPosition(async function(position) {
                 let pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                map.setCenter(pos);
-                setUserPos(pos);
+                await map.setCenter(pos);
+                await setUserPos(pos);
+                //use nearest hospitals to geolocated users
+                findNearestHospitals(map, pos);
             }, function() {
             });
+        } else {
+            findNearestHospitals(map, userPos);
         }
-        findNearestHospitals(map, userPos);
     };
 
     //get directions to selected hospital
@@ -223,6 +240,8 @@ function Map() {
                             strokeWeight: 7
                         },
                         suppressMarkers: true,
+                        draggable: true,
+                        preserveViewport: true
                     }}/>)}
 
                 <div className={"travelModeButtonsWrapper"}>
@@ -256,7 +275,7 @@ function Map() {
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
                             step={5}
-                            onChange={(e, val) => setRadius(val * 100)}
+                            onChange={(e, val) => updateRadiusReloadHospitals(val * 100)}
                             min={10}
                             max={50}
                             className={"slider"}

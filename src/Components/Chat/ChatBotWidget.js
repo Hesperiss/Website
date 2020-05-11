@@ -22,7 +22,7 @@ export default class ChatBotWidget extends Component {
 				profileAvatar={KwiliLogo}
 				showCloseButton={!this.fullscreen}
 				title="Chatbot"
-				subtitle="Expliquez-nous votre problême"
+				subtitle="Expliquez-nous votre problème"
 				senderPlaceHolder="Aa"
 			/>);
 		if (this.fullscreen) {
