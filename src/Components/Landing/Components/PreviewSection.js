@@ -94,10 +94,12 @@ function PreviewSection() {
 
                         {/*kwili app download button*/}
                         <div className={"buttonsWrapper"}>
-                            <div className={"downloadButton"}>
+                            <a href="https://play.google.com/store/apps/details?id=fr.kwili.kwili" target="_blank" rel="noopener noreferrer">
+                              <div className={"downloadButton"}>
                                 <div className={"icon"}><FaGooglePlay/></div>
                                 <div className={"col"}>Télécharger sur <br/><em>Google Play</em></div>
-                            </div>
+                              </div>
+                            </a>
                             <div className={"downloadButton"}>
                                 <div className={"icon"}><FaApple/></div>
                                 <div className={"col"}>Télécharger sur <br/><em>l'App Store</em></div>
