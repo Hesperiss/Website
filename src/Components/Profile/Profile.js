@@ -23,7 +23,7 @@ export default class Login extends Component {
 			}
 		};
 	}
-	componentWillMount() {
+	UNSAFE_componentWillMount() {
 		if (KwiliApi.isConnected())
 			KwiliApi.getProfileInfo().then(this.refreshInfo);
 	}
