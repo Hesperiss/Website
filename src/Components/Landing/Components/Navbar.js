@@ -39,11 +39,11 @@ function NavBarLanding() {
                         className="navBarButton"
                     />
                 </a>
-                <a href='/download'>
+                <a href="https://play.google.com/store/apps/details?id=fr.kwili.kwili" target="_blank" rel="noopener noreferrer">
                     <input
                         type="submit"
                         value="Application"
-                        href="/download"
+                        href="https://play.google.com/store/apps/details?id=fr.kwili.kwili"
                         className="navBarButton"
                     />
                 </a>
