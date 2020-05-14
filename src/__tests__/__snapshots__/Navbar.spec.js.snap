@@ -55,11 +55,13 @@ exports[`Navbar Matches the snapshot 1`] = `
     />
   </a>
   <a
-    href="/download"
+    href="https://play.google.com/store/apps/details?id=fr.kwili.kwili"
+    rel="noopener noreferrer"
+    target="_blank"
   >
     <input
       className="navBarButton"
-      href="/download"
+      href="https://play.google.com/store/apps/details?id=fr.kwili.kwili"
       type="submit"
       value="Application"
     />
