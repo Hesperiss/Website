@@ -100,10 +100,6 @@ function PreviewSection() {
                                 <div className={"col"}>Télécharger sur <br/><em>Google Play</em></div>
                               </div>
                             </a>
-                            <div className={"downloadButton"}>
-                                <div className={"icon"}><FaApple/></div>
-                                <div className={"col"}>Télécharger sur <br/><em>l'App Store</em></div>
-                            </div>
                         </div>
                     </div>
                 </div>
