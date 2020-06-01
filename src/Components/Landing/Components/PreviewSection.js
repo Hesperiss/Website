@@ -3,7 +3,6 @@ import '../Landing.scss';
 import {FaDesktop,
     FaMobileAlt,
     FaGooglePlay,
-    FaApple,
     FaArrowLeft,
     FaArrowRight} from "react-icons/all";
 import Desktop1 from "../../../Images/desktop_1.png"
