@@ -11,7 +11,6 @@ import Settings from './Components/Settings/Settings';
 import Map from './Components/Map/Map';
 import Home from './Components/Home/Home'
 import NotFound from './Components/Shared/404/NotFound';
-import MobileChat from './Components/Chat/Mobile';
 
 
 class App extends Component {
@@ -21,7 +20,6 @@ class App extends Component {
 				<div>
 					<Switch>
 						<Route exact={true} path='/' component={Home} />
-						<Route exact={true} path='/chat' component={MobileChat} />
 						<Route exact={true} path='/login' component={Login} />
 						<Route exact={true} path='/register' component={Register} />
 						<Route exact={true} path='/map' component={Map} />
