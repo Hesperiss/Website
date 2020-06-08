@@ -16,7 +16,7 @@ describe('Test Buttons component', () => {
 
     var anchorHref = wrapper.find('#chat').prop('href');
 
-    expect(anchorHref).toEqual('/chat')
+    expect(anchorHref).toEqual('')
 
     //expect(window.location.pathname).toBe("/chat");
   })

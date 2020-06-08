@@ -3,13 +3,17 @@ import './home.scss'
 import {FaCommentMedical, FaMapMarkedAlt} from "react-icons/all";
 import {Button} from 'react-bootstrap'
 
+import ChatBotWidget from '../Chat/ChatBotWidget';
+import { toggleWidget } from 'react-chat-widget';
+
+
 export default class HomePage extends React.Component {
     descBoxes = [
         {
             title: "Chat en ligne",
             text: "Rentrez en contact avec notre CHATBOT, il vous prendra en charge avant même d'être physiquement à l'hôpital.",
             icon: <FaCommentMedical className ="icon"/>,
-            path: "/chat",
+            onClick: toggleWidget,
             id: "chat",
         },
         {
@@ -22,10 +26,10 @@ export default class HomePage extends React.Component {
     ];
 
 
-    descriptionBox(title, text, icon, path, id) {
+    descriptionBox(title, text, icon, path, id, onClick) {
 
         return (
-            <Button className="descBox" href={path} id={id}>
+            <Button key={`${title}-key-${id}`}className="descBox" href={path || ""} id={id} onClick={onClick || function(){}}>
                 <div className="rhombus">
                     <div className="rhombusContents">
                         {icon}
@@ -49,8 +53,7 @@ export default class HomePage extends React.Component {
                 </div>
 
                 <div className={"descBoxWrapper"}>
-                    {this.descriptionBox(this.descBoxes[0].title, this.descBoxes[0].text, this.descBoxes[0].icon, this.descBoxes[0].path, this.descBoxes[0].id)}
-                    {this.descriptionBox(this.descBoxes[1].title, this.descBoxes[1].text, this.descBoxes[1].icon, this.descBoxes[1].path, this.descBoxes[1].id)}
+                    {this.descBoxes.map(entry => this.descriptionBox(entry.title, entry.text, entry.icon, entry.path, entry.id, entry.onClick))}
                 </div>
             </div>
 
@@ -66,6 +69,7 @@ export default class HomePage extends React.Component {
                         <button>En savoir plus</button>
                     </a>
                 </div>
+                <ChatBotWidget fullscreen={false} />
             </div>
         );
     }
