@@ -21,7 +21,7 @@ export default class HomePage extends React.Component {
                 </div>
 
                 <div className={"descBoxWrapper"}>
-                    <Button className="descBox" hef={""} onClick={toggleWidget}>
+                    <Button className="descBox" id="chat" href={""} onClick={toggleWidget}>
                         <div className="rhombus">
                             <div className="rhombusContents">
                                 <FaCommentMedical className ="icon"/>
@@ -32,7 +32,7 @@ export default class HomePage extends React.Component {
                     </Button>
                     <div id={"docImage"}> </div>
 
-                    <Button className="descBox" href={"/map"}>
+                    <Button className="descBox" id="map" href={"/map"}>
                     <div className="rhombus">
                         <div className="rhombusContents">
                             <FaMapMarkedAlt className ="icon"/>
