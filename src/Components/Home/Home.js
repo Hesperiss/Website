@@ -21,7 +21,7 @@ export default class HomePage extends React.Component {
                 </div>
 
                 <div className={"descBoxWrapper"}>
-                    <Button className="descBox" onClick={toggleWidget}>
+                    <Button className="descBox" hef={""} onClick={toggleWidget}>
                         <div className="rhombus">
                             <div className="rhombusContents">
                                 <FaCommentMedical className ="icon"/>
