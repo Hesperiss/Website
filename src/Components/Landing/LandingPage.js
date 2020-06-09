@@ -2,9 +2,8 @@ import React from 'react';
 import NavBar from "./Components/Navbar";
 import FeaturesDescription from "./Components/FeaturesDescription";
 import PreviewSection from "./Components/PreviewSection";
-import ContactForm from "./Components/ContactForm"
-import background from "../../Images/Background.png"
-import phoneDemo from "../../Images/phone_section1.png"
+import ContactForm from "./Components/ContactForm";
+import phoneDemo from "../../Images/phone_section1.png";
 
 class LandingPage extends React.Component {
 
@@ -43,9 +42,7 @@ class LandingPage extends React.Component {
 						</svg>
 					</div>
 
-					<div className={"backgroundImageWrapper"}>
-						<img src={background} alt={"doctor office"} className={"backgroundImage"} style={{width:1600}} />
-					</div>
+					<div className={"backgroundImage"}> </div>
 				</div>
 
 				<FeaturesDescription />
