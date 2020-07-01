@@ -1,8 +1,7 @@
 import React from 'react';
-import nodemailer from "nodemailer";
+import axios from 'axios';
 import {
     FaEnvelope,
-    FaPhone,
     FaTwitter,
     FaFacebookF,
     FaGitAlt,
@@ -21,57 +20,45 @@ function isEmailValid(name, email, message) {
         return false;
 
     //checks if email is valid
-    let emailRegex = new RegExp(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-    let emailValid = emailRegex.test(email);
-    if (!emailValid)
-        return false;
-
-    return true;
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
 }
 
 /*
 ** sends an email when user submits form
 */
+
 function  sendEmail(name, email, subject, message) {
 
-    if (!isEmailValid(name, email, message))
-        return;
+console.log(email);
 
-    let mailOptions = {
-        from: email,
-        to: 'Kwili.epitech@gmail.com',
-        subject: `${subject}`,
-        html: `<p>${name}</p>
-				<p>${email}</p>
-				<p>${message}</p>`
-    };
+  if (!isEmailValid(name, email, message)) {
+    alert("Adresse mail non valide")
+    return;
+  }
 
-    let smtpTransport = nodemailer.createTransport({
-        service: 'Gmail',
-        port: 465,
-        auth: {
-            user: 'Kwili.epitech@gmail.com', //replace ! ne pas git
-            pass: '[PASSWORD]' // replace ! ne pas git
-        }
-    });
+  axios({
+     method: "POST",
+     url:"https://localhost:3000/send",
+     headers: {
+       'Content-Type': 'application/x-www-form-urlencoded',
+    },
+     data: `name=${name}&email=${email}&subject=${subject}&message=${message}`
+   }).then((response)=>{
+     if (response.data.msg === 'success'){
+         alert("Message envoyé");
+         this.resetForm()
+     }else if(response.data.msg === 'fail'){
+         alert("L'envoi du message a échoué")
+     }
+   })
 
-    smtpTransport.sendMail(mailOptions, (error, response) => {
-        if (error) {
-            console.log(error)
-        } else {
-            console.log('Success')
-        }
-        smtpTransport.close();
-    });
+   document.getElementById('contact-form').reset();
 }
-
 
 function contactForm() {
 
-    let name = "nom";
-    let email = "email@domain.com";
-    let message = "Message"
-    let subject = "Objet"
+    let name, email, message, subject  = "";
 
     return (
         <div className={"contactFormSection"}>
@@ -85,33 +72,31 @@ function contactForm() {
                 <div className={"phoneEmail"}>
                     <div className={"icon"}><FaEnvelope /></div>
                     <p>adm.kwili@gmail.com</p>
-                    <div className={"icon"}><FaPhone /></div>
-                    <p>07 81 43 00 00</p>
                 </div>
             </div>
 
             {/*contact form*/}
-            <form>
+            <form id="contact-form">
                 <div className="userInfo">
                     <input
                         className={"formField"}
                         type="text"
-                        placeholder={name}
+                        placeholder="Nom"
                         onChange={(event) => {name = event.target.value}}/>
                     <input
                         className={"formField"}
                         type="email"
-                        placeholder={email}
+                        placeholder="Courriel"
                         onChange={(event) => {email = event.target.value}}/>
                     <input
                         className={"formField"}
                         type="text"
-                        placeholder={subject}
+                        placeholder="Sujet"
                         onChange={(event) => {subject = event.target.value}}/>
                 </div>
                 <textarea
                     className={"messageField"}
-                    placeholder={message}
+                    placeholder="Message"
                     onChange={(event) => {message = event.target.value}}>
 				</textarea>
             </form>
@@ -124,9 +109,9 @@ function contactForm() {
             {/*social media button + project info*/}
             <div className={"socialMedia"}>
                 <div className={"buttonsWrapper"}>
-                    <div className={"socialMediaButton"}><FaLinkedinIn/></div>
+                    <a className={"socialMediaButton"} href="https://www.linkedin.com/company/kwili/" rel="noopener noreferrer" target="_blank"><FaLinkedinIn/></a>
                     <div className={"socialMediaButton"}><FaFacebookF/></div>
-                    <a className={"socialMediaButton"} href={"https://github.com/Kwili"}><FaGitAlt/></a>
+                    <a className={"socialMediaButton"} href="https://github.com/Kwili" rel="noopener noreferrer" target="_blank"><FaGitAlt/></a>
                     <div className={"socialMediaButton"}><FaTwitter/></div>
                 </div>
                 <p>Kwili est un projet réalisé par une équipe d'étudiants dans le cadre des <br/>
