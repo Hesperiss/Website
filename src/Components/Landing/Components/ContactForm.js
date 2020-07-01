@@ -39,7 +39,7 @@ console.log(email);
 
   axios({
      method: "POST",
-     url:"https://localhost:3000/send",
+     url:"https://www.kwili.fr:3000/send",
      headers: {
        'Content-Type': 'application/x-www-form-urlencoded',
     },
