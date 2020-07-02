@@ -30,8 +30,6 @@ function isEmailValid(name, email, message) {
 
 function  sendEmail(name, email, subject, message) {
 
-console.log(email);
-
   if (!isEmailValid(name, email, message)) {
     alert("Adresse mail non valide")
     return;
