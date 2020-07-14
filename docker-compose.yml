@@ -19,8 +19,7 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - /home/kwili2021/Kwili/mail_serv:/var/www/mail_serv
-      - /home/kwili2021/Kwili/mail_serv/node_modules:/var/www/mail_serv/node_modules
-    command: "/bin/sh -c '/var/www/mail_serv/node_modules/.bin/nodemon -r /var/www/mail_serv/node_modules/esm /var/www/mail_serv/smtp_transport.js'"
+    command: "/bin/sh -c 'cd /var/www/mail_serv && npm install && ./node_modules/.bin/nodemon -r ./node_modules/esm  smtp_transport.js'"
   certbot:
     image: certbot/certbot
     volumes:
