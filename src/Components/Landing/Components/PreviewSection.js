@@ -87,7 +87,7 @@ function PreviewSection() {
                                 <h3>Une application complémentaire</h3>
                                 <p>Retrouvez Kwili plus facilement en téléchargeant notre appli mobile, qui possède les
                                     mêmes
-                                    fonctionnalités ainsi que la possibilité de créer un compte.</p>
+                                    fonctionnalités.</p>
                             </div>
                         </div>
 
