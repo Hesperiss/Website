@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {
     FaEnvelope,
-    FaTwitter,
-    FaFacebookF,
     FaGitAlt,
     FaLinkedinIn
 } from "react-icons/fa";
