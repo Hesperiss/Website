@@ -110,9 +110,7 @@ function contactForm() {
             <div className={"socialMedia"}>
                 <div className={"buttonsWrapper"}>
                     <a className={"socialMediaButton"} href="https://www.linkedin.com/company/kwili/" rel="noopener noreferrer" target="_blank"><FaLinkedinIn/></a>
-                    <div className={"socialMediaButton"}><FaFacebookF/></div>
                     <a className={"socialMediaButton"} href="https://github.com/Kwili" rel="noopener noreferrer" target="_blank"><FaGitAlt/></a>
-                    <div className={"socialMediaButton"}><FaTwitter/></div>
                 </div>
                 <p>Kwili est un projet réalisé par une équipe d'étudiants dans le cadre des <br/>
                 Epitech Innovative Projects. © 2018</p>
