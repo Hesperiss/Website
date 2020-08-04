@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {
     FaEnvelope,
-    FaTwitter,
-    FaFacebookF,
     FaGitAlt,
     FaLinkedinIn
 } from "react-icons/fa";
@@ -29,8 +27,6 @@ function isEmailValid(name, email, message) {
 */
 
 function  sendEmail(name, email, subject, message) {
-
-console.log(email);
 
   if (!isEmailValid(name, email, message)) {
     alert("Adresse mail non valide")
@@ -110,9 +106,7 @@ function contactForm() {
             <div className={"socialMedia"}>
                 <div className={"buttonsWrapper"}>
                     <a className={"socialMediaButton"} href="https://www.linkedin.com/company/kwili/" rel="noopener noreferrer" target="_blank"><FaLinkedinIn/></a>
-                    <div className={"socialMediaButton"}><FaFacebookF/></div>
                     <a className={"socialMediaButton"} href="https://github.com/Kwili" rel="noopener noreferrer" target="_blank"><FaGitAlt/></a>
-                    <div className={"socialMediaButton"}><FaTwitter/></div>
                 </div>
                 <p>Kwili est un projet réalisé par une équipe d'étudiants dans le cadre des <br/>
                 Epitech Innovative Projects. © 2018</p>
