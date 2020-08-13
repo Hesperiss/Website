@@ -10,6 +10,10 @@ import Desktop2 from "../../../Images/desktop_2.png"
 import Phone1 from "../../../Images/phone_1.png";
 import Phone2 from "../../../Images/phone_2.png";
 
+/**
+ * This is a part of the landing page layout
+ * displays a slideshow of previews of the kwili mobile app and of the kwili website in its desktop version.
+ */
 function PreviewSection() {
 
 
@@ -17,7 +21,10 @@ function PreviewSection() {
     const [desktopDemoImages] = [[Desktop1, Desktop2]];
     const [phoneDemoImages] = [[Phone1, Phone2]];
 
-    //loop through the demo images when arrow is clicked
+    /**
+     * Updates the slideshow images when the user clicks on either arrow.
+     * @param {string} side side of the slideshow switch (left or right)
+     */
     const updateDemoImages = (side) => {
         if (side === "right") {
             if (currentDemoIndex < (phoneDemoImages.length - 1)) {
@@ -34,6 +41,9 @@ function PreviewSection() {
         }
     };
 
+    /**
+     * Renders the slideshow of the preview section.
+     */
     const renderPreviewSection = () => {
 
         return (

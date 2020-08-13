@@ -9,6 +9,15 @@ import Slider from '@material-ui/core/Slider';
 import UberRidePopup from "./Shared/RequestUberPopup";
 import NavBar from "../Landing/Components/Navbar";
 
+/**
+ * This function adds one to its input.
+ * This is the main map component. It contains the routing functions, the hospital
+ * display functions, and all other functions related to the use of the map.
+ * This component is written as a functional component. For easier reading and comprehension,
+ * the useState() calls are all placed at the very beginning of the component.
+ *
+ * The component uses the Map object of the Google Maps API to render the map.
+ */
 function Map() {
 
     //state declaration and management
@@ -28,7 +37,11 @@ function Map() {
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [userDestination, setDestination] = useState(null);
 
-    //set center and user position to searched address when using search bar
+
+    /**
+     * Sets the map center and the user position to searched address when using the search bar.
+     * The functions gets the place object from the autocomplete address bar.
+     */
     const onPlaceSearched = () => {
 
         if (autocomplete !== null) {
@@ -52,12 +65,21 @@ function Map() {
         }
     };
 
-    //set reference to autocomplete search bar
+    /**
+     * Sets a reference to autocomplete search bar once the autocomplete is loaded.
+     * @param {Object} searchBar address bar
+     */
     const onLoadAutocomplete = (searchBar) => {
         setAutocomplete(searchBar);
     };
 
-    //open corresponding info box (with hospital details) on marker click
+    /**
+     * When the user clicks on a an hospital marker, fetches hospital details and opens the corresponding info box.
+     * @param {clickEvent} event clickEvent on hospital marker
+     * @param {hospital Object} place hospital
+     * @param {integer} id hospital id from hospital list
+     * @param {Object} map parent map object reference
+     */
     const onMarkerClick = async (event, place, id, map) => {
 
         //update user destination if another hospital was previously selected
@@ -75,7 +97,11 @@ function Map() {
 
     };
 
-    //fetch hospital information
+    /**
+     * Fetches the detailed information of a given hospital using its id.
+     * @param {integer} id hospital id from hospital list
+     * @param {Object} map parent map object reference
+     */
     const requestHospitaldetails = (id, map) => {
 
         let request = {
@@ -91,16 +117,24 @@ function Map() {
         })
     };
 
-    // initialize hospital markers with google places API id
+    /**
+     * Initialize hospital markers with google places API id The id of the marker created is the same as the id of the location from the Places API
+     * @param {Google Maps API Marker Object} marker basic hospital marker component used for each hospital
+     * @param {hospital Object} place hospital
+     */
     const onMarkerLoad = (marker, place) => {
         return setMarkerMap(prevState => {
             return { ...prevState, [place.id]: marker };
         });
     };
 
-    // fetch nearest hospitals
-    // Only the 20 nearest hospitals are used in results
-    // so using a very big radius is essentially useless
+    /**
+     * This functions fetches the nearest hospital in the current radius.
+     * kwown issue: Only the 20 "most relevant" (according to the Google Places API) hospitals in this radius are used in the results.
+     * So using a very big radius can wield impredictable results. This issue will be fixed in a later version.
+     * @param {Object} map parent map object reference
+     * @param {LatLng Object} user position
+     */
     const findNearestHospitals = (map, position) => {
         let request = {
             location: position,
@@ -126,7 +160,11 @@ function Map() {
         })
     };
 
-    //update radius and reaload nearest hospitals accordingly
+    /**
+     * Update radius and reaload nearest hospitals accordingly.
+     * Has to be asynchronous.
+     * @param {number} radius new radius chosen by user
+     */
     const updateRadiusReloadHospitals = async (radius) => {
         await setRadius(radius);
         //await setInfoOpen(false);
@@ -134,7 +172,12 @@ function Map() {
         setDestination(hospitalMarkers[0].position);
     };
 
-    //store map reference in state and display hospitals near initial position
+    /**
+     * Initial map setup: Stores a map reference in the state
+     * (various Google Maps API calls require a reference to the map object)
+     * And gets a list hospitals near the initial position.
+     * @param {Object} map parent map object reference
+     */
     const loadHandler = (map) => {
         setMapRef(map);
         //use geolocation if user allows it and set user position to geolocation
@@ -155,7 +198,10 @@ function Map() {
         }
     };
 
-    //get directions to selected hospital
+    /**
+     * Directions callback to set directions when required.     *
+     * @param {Object} response
+     */
     const directionsCallback = (response) => {
         if (response !== null) {
             if (response.status === 'OK') {
@@ -164,6 +210,10 @@ function Map() {
         }
     };
 
+    /**
+     * Renders the map and its sub-components.
+     * @Returns {React.Fragment}
+     */
     const renderMap = () => {
 
         let sidePanel = <div className={"directionsPanel"}> </div>;

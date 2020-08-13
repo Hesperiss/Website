@@ -5,6 +5,14 @@ import PreviewSection from "./Components/PreviewSection";
 import ContactForm from "./Components/ContactForm";
 import phoneDemo from "../../Images/phone_section1.png";
 
+/**
+ * This is the container component for the landing page.
+ * For better readability, it is split in several sub-parts each corresponding to a separate visual and functional element on the page:
+ * ContactForm, FeaturesDescription, Navbar and PreviewSection
+ *
+ * The blue wave visual effect is produced using a html svg element. If a similar visual effect needs to be created, this generator should be useful:
+ * https://smooth.ie/blogs/news/svg-wavey-transitions-between-sections
+ */
 class LandingPage extends React.Component {
 
 	constructor(props) {
@@ -14,11 +22,17 @@ class LandingPage extends React.Component {
 		};
 	}
 
+	/**
+	 * Accesses the anchor link of the “know more” section of the page using a visual sliding effect.
+	 */
 	slideToAnchorLink() {
 		let scrollTo = document.getElementById('#knowMore');
 		scrollTo.scrollIntoView();
 	};
 
+	/**
+	 * Renders the navbar component.
+	 */
 	render() {
 
 		return (

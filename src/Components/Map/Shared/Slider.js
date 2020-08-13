@@ -6,6 +6,10 @@ function valuetext(value) {
   return `${value}`;
 }
 
+/**
+ * this function displays the radius slider for the hospital search
+ * and allows to change the radius
+ */
 function DiscreteSlider(props) {
 
   const [radius, setRadius] = useState(15);
