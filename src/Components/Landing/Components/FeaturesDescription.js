@@ -20,7 +20,12 @@ const descBoxes = [
 }
 ];
 
-
+/**
+ * Builds feature description info box
+ * @param {string} title
+ * @param {string} text feature description
+ * @param {icon Object} icon
+ */
 function descriptionBox(title, text, icon) {
 
     return (
@@ -36,6 +41,10 @@ function descriptionBox(title, text, icon) {
     );
 }
 
+/**
+ * This is a part of the landing page layout
+ * It displays info boxes prensenting the main features of Kwili
+ */
 function displayFeaturesDescriptionBoxes() {
 
     return (

@@ -11,12 +11,27 @@ import "./PopupDialog.scss";
 
 const CLIENT_ID = "eaBurjKEN1ZffsS0teZ88VPllFkPZb03";
 
+/**
+ * This is the uber popup component.
+ * It handles the display of the popup to request an Uber ride, as well as the Uber ride request to the Uber API.
+ * The Dialog component of Material UI is used as a basis for the popup window itself.
+ * https://material-ui.com/components/dialogs/
+ * This component is written as a functional component. The useState() calls are all placed at the very beginning of the component.
+ *
+ * Notes and known issues:
+ * The "request Uber ride" button is only available for mobile, therefore the delay and cost are not available.
+ * For compatibility reasons, deep links to the Uber web app were used instead of links to the mobile app (so that desktop users can use the uber ride feature as well).
+ */
 export default function RequestUberPopup(props) {
 
     const [open, setOpen] = useState(false);
     const [startAddress, setStartAddress] = useState("Moi");
     const [dropOffAddress, setDropOffAddress] = useState("Hôpital");
 
+    /**
+     * Opens the Uber ride request popup and calls reverseGeocode()
+     * to get the formatted addresses from the LatLng objects of the user position and user destination.
+     */
     const handleClickOpen = () => {
         //get formatted addresses required by API
         reverseGeocode(props.userPos, true);
@@ -24,10 +39,17 @@ export default function RequestUberPopup(props) {
         setOpen(true);
     };
 
+    /**
+     * Closes the Uber ride request popup.
+     */
     const handleClose = () => {
         setOpen(false);
     };
 
+    /**
+     * Generates ride request and link from the formatted addresses of the start
+     * and drop-off addresses, and opens the Uber ride request in a new window.
+     */
     const requestUberRide = () => {
 
         if (!props.userPos || !props.destination) {
@@ -46,8 +68,12 @@ export default function RequestUberPopup(props) {
         handleClose();
     };
 
-    //reverse geocode location
-    //because formatted addresses are required for uber ride request
+    /**
+     * Reverse geocodes location to get the formatted addresses from a LatLng,
+     * because formatted addresses are required for uber ride requests.
+     * @param {LatLng Object} pos coordinates to reverse geocode
+     * @param {bool} isStart is this address the start address ?
+     */
     const reverseGeocode = (pos, isStart) => {
         let geocoder = new window.google.maps.Geocoder();
         geocoder.geocode({'location': pos}, function(results, status) {

@@ -3,6 +3,11 @@ import '../Landing.scss';
 import KwiliLogo from "../../../Images/logo_kwili.png"
 import ChatBotWidget from '../../Chat/ChatBotWidget';
 
+/**
+ * Website NavBar.
+ * This was designed as part of the landing page layout, but the navbar is displayed on various other pages.
+ * The chatbot widget is attached to it, so when the navbar is visible, so is the chatbot.
+ */
 function NavBarLanding() {
     return (
         <React.Fragment>

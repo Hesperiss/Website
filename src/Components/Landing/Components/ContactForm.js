@@ -8,7 +8,12 @@ import {
 import '../Landing.scss';
 
 
-
+/**
+ * check validity of email address
+ * @param {string} name
+ * @param {string} email
+ * @param {string} message
+ */
 function isEmailValid(name, email, message) {
 
     //checks if fileds are set
@@ -22,10 +27,13 @@ function isEmailValid(name, email, message) {
     return re.test(String(email).toLowerCase());
 }
 
-/*
-** sends an email when user submits form
-*/
-
+/**
+ * sends an email when user submits the form
+ * @param {string} name
+ * @param {string} email
+ * @param {string} subject
+ * @param {string} message
+ */
 function  sendEmail(name, email, subject, message) {
 
   if (!isEmailValid(name, email, message)) {
@@ -44,7 +52,7 @@ function  sendEmail(name, email, subject, message) {
      if (response.data.msg === 'success'){
          alert("Message envoyé");
          this.resetForm()
-     }else if(response.data.msg === 'fail'){
+     } else if (response.data.msg === 'fail'){
          alert("L'envoi du message a échoué")
      }
    })
@@ -52,6 +60,11 @@ function  sendEmail(name, email, subject, message) {
    document.getElementById('contact-form').reset();
 }
 
+/**
+ * This is a part of the landing page layout
+ * It contains a forme to contact the Kwili team with feedback
+ * @returns {React.Fragment}
+ */
 function contactForm() {
 
     let name, email, message, subject  = "";
