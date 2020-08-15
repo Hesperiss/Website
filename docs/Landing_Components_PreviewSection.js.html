@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Landing/Components/PreviewSection.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Landing/Components/PreviewSection.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useState} from 'react';
+import '../Landing.scss';
+import {FaDesktop,
+    FaMobileAlt,
+    FaGooglePlay,
+    FaArrowLeft,
+    FaArrowRight} from "react-icons/all";
+import Desktop1 from "../../../Images/desktop_1.png"
+import Desktop2 from "../../../Images/desktop_2.png"
+import Phone1 from "../../../Images/phone_1.png";
+import Phone2 from "../../../Images/phone_2.png";
+
+/**
+ * Fait partie de l'affichage de la page d'accueil.
+ * Affiche un diaporama de différentes vues des applis web et mobile de Kwili.
+ * @returns {React.Fragment}
+ */
+function PreviewSection() {
+
+
+    const [currentDemoIndex, setCurrentDemoIndex] = useState(0);
+    const [desktopDemoImages] = [[Desktop1, Desktop2]];
+    const [phoneDemoImages] = [[Phone1, Phone2]];
+
+    /**
+     * Met à jour le diaporama quand l'utilisateur clique sur l'une ou l'autre des flèches.
+     * @param {string} side côté du diaporama cliqué (gauche ou droite)
+     */
+    const updateDemoImages = (side) => {
+        if (side === "right") {
+            if (currentDemoIndex &lt; (phoneDemoImages.length - 1)) {
+                setCurrentDemoIndex(currentDemoIndex + 1);
+            } else {
+                setCurrentDemoIndex(0);
+            }
+        } else if (side === "left") {
+            if (currentDemoIndex > 0) {
+                setCurrentDemoIndex(currentDemoIndex - 1);
+            } else {
+                setCurrentDemoIndex(phoneDemoImages.length - 1);
+            }
+        }
+    };
+
+    /**
+     * Affichage du diaporama.
+     */
+    const renderPreviewSection = () => {
+
+        return (
+
+            &lt;div className="previewSection">
+                &lt;div className={"textWrapper"}>
+                    &lt;h2 className={"sectionTitle"}>Aperçu&lt;/h2>
+                    &lt;p className={"sectionSubtitle"}>Kwili, concrètement, à quoi ça ressemble ?&lt;/p>
+                &lt;/div>
+
+                &lt;div className={"previewContents"}>
+
+                    {/*kwili demo slide show*/}
+                    &lt;div className={"demo"}>
+                        &lt;div className={"slideShow"}>
+                            &lt;div className={"desktopBg"}>
+                                &lt;img src={desktopDemoImages[currentDemoIndex]} alt={"kwili desktop demo"} />
+                            &lt;/div>
+                            &lt;div className={"phoneBg"}>
+                                &lt;img src={phoneDemoImages[currentDemoIndex]} alt={"kwili phone demo"} />
+                            &lt;/div>
+                        &lt;/div>
+                        &lt;div className={"arrowButtonsWrapper"}>
+                            &lt;div className={"arrowButton"}
+                                 onClick={() => updateDemoImages("left")}>&lt;FaArrowLeft/>&lt;/div>
+                            &lt;div className={"arrowButton"}
+                                 onClick={() => updateDemoImages("right")}>&lt;FaArrowRight/>&lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+
+                    {/*kwili demo description */}
+                    &lt;div className={"text"}>
+                        &lt;div className={"previewDescriptionItem"}>
+                            &lt;div className={"icon"}>
+                                &lt;FaDesktop/>
+                            &lt;/div>
+                            &lt;div className={"col"}>
+                                &lt;h3>Un site web&lt;/h3>
+                                &lt;p>Trouvez les urgences les plus proches de vous et l'itinéraire pour vous y rendre, et
+                                    bénéficiez d'une première prise en charge grâce à notre chat en ligne, qui pourra
+                                    également vous réorienter vers un médecin généraliste ou spécialiste. &lt;br/>
+                                    Le tout sans même avoir besoin de vous connecter !&lt;/p>
+                            &lt;/div>
+                        &lt;/div>
+
+                        &lt;div className={"previewDescriptionItem"}>
+                            &lt;div className={"icon"}>
+                                &lt;FaMobileAlt/>
+                            &lt;/div>
+                            &lt;div className={"col"}>
+                                &lt;h3>Une application complémentaire&lt;/h3>
+                                &lt;p>Retrouvez Kwili plus facilement en téléchargeant notre appli mobile, qui possède les
+                                    mêmes
+                                    fonctionnalités.&lt;/p>
+                            &lt;/div>
+                        &lt;/div>
+
+                        {/*kwili app download button*/}
+                        &lt;div className={"buttonsWrapper"}>
+                            &lt;a href="https://play.google.com/store/apps/details?id=fr.kwili.kwili" target="_blank" rel="noopener noreferrer">
+                              &lt;div className={"downloadButton"}>
+                                &lt;div className={"icon"}>&lt;FaGooglePlay/>&lt;/div>
+                                &lt;div className={"col"}>Télécharger sur &lt;br/>&lt;em>Google Play&lt;/em>&lt;/div>
+                              &lt;/div>
+                            &lt;/a>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+
+        );
+    }
+
+    return renderPreviewSection();
+
+}
+
+export default PreviewSection;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DiscreteSlider.html">DiscreteSlider</a></li><li><a href="LandingPage.html">LandingPage</a></li><li><a href="Map.html">Map</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Request%2520UberPopup.html">Request UberPopup</a></li></ul><h3>Global</h3><ul><li><a href="global.html#contactForm">contactForm</a></li><li><a href="global.html#descBoxes">descBoxes</a></li><li><a href="global.html#descriptionBox">descriptionBox</a></li><li><a href="global.html#displayFeaturesDescriptionBoxes">displayFeaturesDescriptionBoxes</a></li><li><a href="global.html#isEmailValid">isEmailValid</a></li><li><a href="global.html#mapOptions">mapOptions</a></li><li><a href="global.html#PreviewSection">PreviewSection</a></li><li><a href="global.html#sendEmail">sendEmail</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Sat Aug 15 2020 19:44:15 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

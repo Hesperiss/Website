@@ -11,8 +11,9 @@ import Phone1 from "../../../Images/phone_1.png";
 import Phone2 from "../../../Images/phone_2.png";
 
 /**
- * This is a part of the landing page layout
- * displays a slideshow of previews of the kwili mobile app and of the kwili website in its desktop version.
+ * Fait partie de l'affichage de la page d'accueil.
+ * Affiche un diaporama de différentes vues des applis web et mobile de Kwili.
+ * @returns {React.Fragment}
  */
 function PreviewSection() {
 
@@ -22,8 +23,8 @@ function PreviewSection() {
     const [phoneDemoImages] = [[Phone1, Phone2]];
 
     /**
-     * Updates the slideshow images when the user clicks on either arrow.
-     * @param {string} side side of the slideshow switch (left or right)
+     * Met à jour le diaporama quand l'utilisateur clique sur l'une ou l'autre des flèches.
+     * @param {string} side côté du diaporama cliqué (gauche ou droite)
      */
     const updateDemoImages = (side) => {
         if (side === "right") {
@@ -42,7 +43,7 @@ function PreviewSection() {
     };
 
     /**
-     * Renders the slideshow of the preview section.
+     * Affichage du diaporama.
      */
     const renderPreviewSection = () => {
 

@@ -9,10 +9,11 @@ import '../Landing.scss';
 
 
 /**
- * check validity of email address
+ * Vérifie qu'une adresse email possède un format valide.
  * @param {string} name
  * @param {string} email
  * @param {string} message
+ * @return bool
  */
 function isEmailValid(name, email, message) {
 
@@ -28,7 +29,7 @@ function isEmailValid(name, email, message) {
 }
 
 /**
- * sends an email when user submits the form
+ * Envoie un email quand l'utuilisateur soumet le formulaire.
  * @param {string} name
  * @param {string} email
  * @param {string} subject
@@ -61,8 +62,8 @@ function  sendEmail(name, email, subject, message) {
 }
 
 /**
- * This is a part of the landing page layout
- * It contains a forme to contact the Kwili team with feedback
+ * Fait partie du layout de la page d'accueil.
+ * Contient un formulaire permettant de contacter l'équipe Kwili.
  * @returns {React.Fragment}
  */
 function contactForm() {
