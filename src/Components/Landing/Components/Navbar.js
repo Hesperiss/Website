@@ -23,19 +23,11 @@ function NavBarLanding() {
                     />
                 </a>
 
-                <a href='/chat'>
-                    <input
-                        type="submit"
-                        value="Aidez-moi !"
-                        href="/chat"
-                        className="navBarButton"
-                    />
-                </a>
-                <a href='/'>
+                <a href='/landing'>
                     <input
                         type="submit"
                         value="Qui sommes-nous ?"
-                        href="/"
+                        href="/landing"
                         className="navBarButton"
                     />
                 </a>
