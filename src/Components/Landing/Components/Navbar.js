@@ -4,9 +4,11 @@ import KwiliLogo from "../../../Images/logo_kwili.png"
 import ChatBotWidget from '../../Chat/ChatBotWidget';
 
 /**
- * Website NavBar.
- * This was designed as part of the landing page layout, but the navbar is displayed on various other pages.
- * The chatbot widget is attached to it, so when the navbar is visible, so is the chatbot.
+ * Barre de navigation du site Kwili.
+ * Créée comme un élément de la page d'accueil, elle est cependant affiché sur la plupart des pages.
+ * Le widget du chatbot y est attaché, et est donc accessible sur toutes les pages où la barre de navigation est présente.
+ *
+ * @Class Navbar
  */
 function NavBarLanding() {
     return (

@@ -7,8 +7,11 @@ function valuetext(value) {
 }
 
 /**
- * this function displays the radius slider for the hospital search
- * and allows to change the radius
+ * Cette classe affiche et règle le slider pour la recherche d'hôpitaux aux alentours.
+ * Basé sur l'object {@link https://material-ui.com/api/slider/ Slider} de Material UI.
+ *
+ * @Class
+ * @see {@link https://material-ui.com/ Documentation Material UI}
  */
 function DiscreteSlider(props) {
 

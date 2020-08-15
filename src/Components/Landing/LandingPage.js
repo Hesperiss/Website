@@ -6,12 +6,11 @@ import ContactForm from "./Components/ContactForm";
 import phoneDemo from "../../Images/phone_section1.png";
 
 /**
- * This is the container component for the landing page.
- * For better readability, it is split in several sub-parts each corresponding to a separate visual and functional element on the page:
+ * Il s'agit du composant principal de la Landing page.
+ * Pour plus de clarté, les différentes sections de l'agencement de landing page sont réparties dans plusieurs fichiers :
  * ContactForm, FeaturesDescription, Navbar and PreviewSection
- *
- * The blue wave visual effect is produced using a html svg element. If a similar visual effect needs to be created, this generator should be useful:
- * https://smooth.ie/blogs/news/svg-wavey-transitions-between-sections
+ * L'effet visuel de vague bleue est produit avec un élément svg en html.
+ * @see {@link https://smooth.ie/blogs/news/svg-wavey-transitions-between-sections générateur d'élements html svg }
  */
 class LandingPage extends React.Component {
 
@@ -23,7 +22,7 @@ class LandingPage extends React.Component {
 	}
 
 	/**
-	 * Accesses the anchor link of the “know more” section of the page using a visual sliding effect.
+	 * Glisse vers le lien interne vers la section "en savoir plus' de la page.
 	 */
 	slideToAnchorLink() {
 		let scrollTo = document.getElementById('#knowMore');
@@ -31,7 +30,7 @@ class LandingPage extends React.Component {
 	};
 
 	/**
-	 * Renders the navbar component.
+	 * Affichage de la page d'accueil
 	 */
 	render() {
 

@@ -2,6 +2,10 @@ import React from 'react';
 import '../Landing.scss';
 import {FaCommentMedical, FaMapMarkedAlt, FaUserLock} from "react-icons/all";
 
+/**
+ * Contenu des carrés détaillant les fonctionnalités de Kwili.
+ * @type {{icon: *, text: string, title: string}}
+ */
 const descBoxes = [
 {
     title: "Chat en ligne",
@@ -21,10 +25,10 @@ const descBoxes = [
 ];
 
 /**
- * Builds feature description info box
- * @param {string} title
- * @param {string} text feature description
- * @param {icon Object} icon
+ * Construit les carrés contenant la description des fonctionnalités principales de Kwili.
+ * @param {string} title titre
+ * @param {string} text description d'une fonctionnalité
+ * @param {Object} icon
  */
 function descriptionBox(title, text, icon) {
 
@@ -42,8 +46,9 @@ function descriptionBox(title, text, icon) {
 }
 
 /**
- * This is a part of the landing page layout
- * It displays info boxes prensenting the main features of Kwili
+ * Fait partie de l'affichage de la page d'accueil.
+ * Affiche des carrés contenant la description des fonctionnalités principales de Kwili.
+ * @returns {React.Fragment}
  */
 function displayFeaturesDescriptionBoxes() {
 
