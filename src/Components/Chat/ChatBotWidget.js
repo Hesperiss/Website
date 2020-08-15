@@ -68,7 +68,7 @@ export default class ChatBotWidget extends Component {
 	}
 
 	/**
-	 * Refresh the display of the quick selection buttons
+	 * Rafraichis l'affichage des boutons de selection rapide
 	 */
 	refreshQuickButtons = () => {
 		if (this.quickButtons.length > 0) {
@@ -79,7 +79,7 @@ export default class ChatBotWidget extends Component {
 	};
 
 	/**
-	 * Pass from one quick button to the next one
+	 * Applique le passage d'une suite de boutons d'action rapide à l'autre
 	 */
 	iterateQuickButtons = () => {
 		if (this.quickButtons.length > 0) {
@@ -89,8 +89,8 @@ export default class ChatBotWidget extends Component {
 	};
 
 	/**
-	 * Sends the quick button message as if the user wrote it
-	 * @param {string} msg - message contained in the quick button
+	 * Envoi un message au chatbot
+	 * @param {string} msg - message à envoyer
 	 */
 	handleQuickButton = (msg) => {
 		addUserMessage(msg);
@@ -99,9 +99,9 @@ export default class ChatBotWidget extends Component {
 	};
 
 	/**
-	 * Callback triggered uppon message reception
-	 * If the message is a question, triggers the notification badge
-	 * @param {string} msg - message received from the backend
+	 * Callback executée lors de la reception d'un message
+	 * Si le message est une question, cela active le badge de notification
+	 * @param {string} msg - message reçu depuis le backend
 	 */
 	messageReceived = (msg) => {
 		const list = anchorme.list(msg);
@@ -130,9 +130,9 @@ export default class ChatBotWidget extends Component {
 	}
 
 	/**
-	 * Sends the user written message to the backend
-	 * If it's a question about "who's your boss" it answers directly
-	 * @param {string} newMessage - message written by the user
+	 * Envoi le message de l'utilisateur au backend
+	 * Si il s'agit d'une question comme "qui est ton boss ultime ?", le bot répond directement
+	 * @param {string} newMessage - message écrit par l'utilisateur
 	 */
 	handleNewUserMessage = (newMessage) => {
 		if (

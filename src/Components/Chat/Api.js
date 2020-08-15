@@ -5,8 +5,8 @@ const port = "8084";
 
 export default class KwiliChat {
 	/**
-	 * This class is a wrapper for socket.io to link the chatbot backend
-	 * @param {requestCallback} onMessageCallback - callback called each time a message is received
+	 * Cette class est un wrapper sur socket.io et relie le chatbot avec le backend.
+	 * @param {requestCallback} onMessageCallback - callback appelée lors de la réception d'un message
 	 */
 	constructor(onMessageCallback) {
 		this.address = chatEndpoint + ":" + port + "/customer";
