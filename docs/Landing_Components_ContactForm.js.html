@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Landing/Components/ContactForm.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Landing/Components/ContactForm.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import axios from 'axios';
+import {
+    FaEnvelope,
+    FaGitAlt,
+    FaLinkedinIn
+} from "react-icons/fa";
+import '../Landing.scss';
+
+
+/**
+ * Vérifie qu'une adresse email possède un format valide.
+ * @param {string} name
+ * @param {string} email
+ * @param {string} message
+ * @return bool
+ */
+function isEmailValid(name, email, message) {
+
+    //checks if fileds are set
+    if (name === "" || name === "nom" ||
+        email === "" || email === "email" ||
+        message === "" || message === "Message")
+        return false;
+
+    //checks if email is valid
+    const re = /^(([^&lt;>()[\]\\.,;:\s@"]+(\.[^&lt;>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+/**
+ * Envoie un email quand l'utuilisateur soumet le formulaire.
+ * @param {string} name
+ * @param {string} email
+ * @param {string} subject
+ * @param {string} message
+ */
+function  sendEmail(name, email, subject, message) {
+
+  if (!isEmailValid(name, email, message)) {
+    alert("Adresse mail non valide")
+    return;
+  }
+
+  axios({
+     method: "POST",
+     url:"https://www.kwili.fr:3000/send",
+     headers: {
+       'Content-Type': 'application/x-www-form-urlencoded',
+    },
+     data: `name=${name}&amp;email=${email}&amp;subject=${subject}&amp;message=${message}`
+   }).then((response)=>{
+     if (response.data.msg === 'success'){
+         alert("Message envoyé");
+         this.resetForm()
+     } else if (response.data.msg === 'fail'){
+         alert("L'envoi du message a échoué")
+     }
+   })
+
+   document.getElementById('contact-form').reset();
+}
+
+/**
+ * Fait partie du layout de la page d'accueil.
+ * Contient un formulaire permettant de contacter l'équipe Kwili.
+ * @returns {React.Fragment}
+ */
+function contactForm() {
+
+    let name, email, message, subject  = "";
+
+    return (
+        &lt;div className={"contactFormSection"}>
+
+            {/*section title and contact info*/}
+            &lt;div className={"textWrapper"}>
+                &lt;h2 className={"sectionTitle"}>Nous contacter&lt;/h2>
+                &lt;hr/>
+                &lt;p className={"sectionSubtitle"}>Une question ? Une remarque ? Une suggestion ? &lt;br/>
+                N'hésitez pas à nous en faire part.&lt;/p>
+                &lt;div className={"phoneEmail"}>
+                    &lt;div className={"icon"}>&lt;FaEnvelope />&lt;/div>
+                    &lt;p>adm.kwili@gmail.com&lt;/p>
+                &lt;/div>
+            &lt;/div>
+
+            {/*contact form*/}
+            &lt;form id="contact-form">
+                &lt;div className="userInfo">
+                    &lt;input
+                        className={"formField"}
+                        type="text"
+                        placeholder="Nom"
+                        onChange={(event) => {name = event.target.value}}/>
+                    &lt;input
+                        className={"formField"}
+                        type="email"
+                        placeholder="Courriel"
+                        onChange={(event) => {email = event.target.value}}/>
+                    &lt;input
+                        className={"formField"}
+                        type="text"
+                        placeholder="Sujet"
+                        onChange={(event) => {subject = event.target.value}}/>
+                &lt;/div>
+                &lt;textarea
+                    className={"messageField"}
+                    placeholder="Message"
+                    onChange={(event) => {message = event.target.value}}>
+				&lt;/textarea>
+            &lt;/form>
+            &lt;input
+                className={"sendButton"}
+                type="submit"
+                value="Envoyer"
+                onClick={() => sendEmail(name, email, subject, message)}/>
+
+            {/*social media button + project info*/}
+            &lt;div className={"socialMedia"}>
+                &lt;div className={"buttonsWrapper"}>
+                    &lt;a className={"socialMediaButton"} href="https://www.linkedin.com/company/kwili/" rel="noopener noreferrer" target="_blank">&lt;FaLinkedinIn/>&lt;/a>
+                    &lt;a className={"socialMediaButton"} href="https://github.com/Kwili" rel="noopener noreferrer" target="_blank">&lt;FaGitAlt/>&lt;/a>
+                &lt;/div>
+                &lt;p>Kwili est un projet réalisé par une équipe d'étudiants dans le cadre des &lt;br/>
+                Epitech Innovative Projects. © 2018&lt;/p>
+            &lt;/div>
+        &lt;/div>
+    );
+}
+
+export default contactForm;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Components_Chat_Api.html">Components/Chat/Api</a></li><li><a href="module-Components_Chat_ChatBotWidget.html">Components/Chat/ChatBotWidget</a></li><li><a href="module-Components_Map_Map.html">Components/Map/Map</a></li></ul><h3>Classes</h3><ul><li><a href="DiscreteSlider.html">DiscreteSlider</a></li><li><a href="LandingPage.html">LandingPage</a></li><li><a href="module-Components_Chat_Api.html">Components/Chat/Api</a></li><li><a href="module-Components_Chat_ChatBotWidget.html">Components/Chat/ChatBotWidget</a></li><li><a href="module-Components_Map_Map-Map.html">Map</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Request%2520UberPopup.html">Request UberPopup</a></li></ul><h3>Global</h3><ul><li><a href="global.html#contactForm">contactForm</a></li><li><a href="global.html#descBoxes">descBoxes</a></li><li><a href="global.html#descriptionBox">descriptionBox</a></li><li><a href="global.html#displayFeaturesDescriptionBoxes">displayFeaturesDescriptionBoxes</a></li><li><a href="global.html#isEmailValid">isEmailValid</a></li><li><a href="global.html#mapOptions">mapOptions</a></li><li><a href="global.html#PreviewSection">PreviewSection</a></li><li><a href="global.html#sendEmail">sendEmail</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Sun Aug 16 2020 17:36:30 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

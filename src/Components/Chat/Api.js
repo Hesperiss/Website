@@ -3,9 +3,13 @@ import io from "socket.io-client";
 const chatEndpoint = "https://geoworker.eu";
 const port = "8084";
 
+/**
+ * @module
+ */
 export default class KwiliChat {
 	/**
 	 * Cette class est un wrapper sur socket.io et relie le chatbot avec le backend.
+	 * @class
 	 * @param {requestCallback} onMessageCallback - callback appelée lors de la réception d'un message
 	 */
 	constructor(onMessageCallback) {

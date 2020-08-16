@@ -1,4 +1,32 @@
-import React, {useState} from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Map/Map.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Map/Map.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useState} from 'react';
 import {GoogleMap, Marker, Autocomplete, InfoWindow, DirectionsService, DirectionsRenderer} from '@react-google-maps/api'
 import {mapOptions} from "./Shared/MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
@@ -155,8 +183,8 @@ function Map() {
         service.nearbySearch(request, (results, status) => {
             if (status === window.google.maps.places.PlacesServiceStatus.OK) {
                 let markerList = [];
-                for (let i = 0; i < results.length; i++) {
-                    markerList.push(<Marker
+                for (let i = 0; i &lt; results.length; i++) {
+                    markerList.push(&lt;Marker
                         key={results[i].id}
                         position={results[i].geometry.location}
                         icon={hospitalIcon}
@@ -227,10 +255,10 @@ function Map() {
      */
     const renderMap = () => {
 
-        let sidePanel = <div className={"directionsPanel"}> </div>;
+        let sidePanel = &lt;div className={"directionsPanel"}> &lt;/div>;
 
-        return <React.Fragment>
-            <GoogleMap
+        return &lt;React.Fragment>
+            &lt;GoogleMap
                 options={mapOptions}
                 zoom={zoom}
                 center={center}
@@ -245,44 +273,44 @@ function Map() {
                 }}
                 onLoad={map => loadHandler(map)}>
 
-                <div className={"mapNavBarWrapper"}>
-                    <NavBar />
-                </div>
+                &lt;div className={"mapNavBarWrapper"}>
+                    &lt;NavBar />
+                &lt;/div>
 
-                <Marker
+                &lt;Marker
                     position={userPos}
                     icon={userIcon}
                     onLoad={(marker) => setUserMarker(marker)} />
 
-                <Autocomplete
+                &lt;Autocomplete
                     onLoad={(searchBar) => onLoadAutocomplete(searchBar)}
                     onPlaceChanged={() => onPlaceSearched()}>
-                    <input type="text" placeholder="Rechercher une adresse..." className={"mapSearchBar"}                  />
-                </Autocomplete>
+                    &lt;input type="text" placeholder="Rechercher une adresse..." className={"mapSearchBar"}                  />
+                &lt;/Autocomplete>
 
-                <a href={"/"} className={"homeButton"}>
-                    <FaHome className={"homeIcon"}/>
-                </a>
+                &lt;a href={"/"} className={"homeButton"}>
+                    &lt;FaHome className={"homeIcon"}/>
+                &lt;/a>
 
-                {infoOpen && selectedPlace && (
-                    <InfoWindow
+                {infoOpen &amp;&amp; selectedPlace &amp;&amp; (
+                    &lt;InfoWindow
                         anchor={markerMap[selectedPlace.id]}
                         onCloseClick={() => setInfoOpen(false)}>
-                        <div>
+                        &lt;div>
                             {placeDetails ?
-                                <div>
-                                    <h3 className={"hospitalName"}>{placeDetails.name}</h3>
-                                    <p><b>Addresse :</b> {placeDetails.address_components[0].short_name + ' ' + placeDetails.address_components[1].short_name }</p>
-                                    <p><b>Téléphone :</b> {placeDetails.formatted_phone_number}</p>
-                                    <p><b>Notation :</b> {placeDetails.rating ? placeDetails.rating : "inconnue"}</p>
-                                    {placeDetails.opening_hours && placeDetails.opening_hours.isOpen() ?<p><b>Actuellement ouvert</b></p> : null}
-                                </div> : <div>Chargement...</div>}
-                        </div>
-                    </InfoWindow>
+                                &lt;div>
+                                    &lt;h3 className={"hospitalName"}>{placeDetails.name}&lt;/h3>
+                                    &lt;p>&lt;b>Addresse :&lt;/b> {placeDetails.address_components[0].short_name + ' ' + placeDetails.address_components[1].short_name }&lt;/p>
+                                    &lt;p>&lt;b>Téléphone :&lt;/b> {placeDetails.formatted_phone_number}&lt;/p>
+                                    &lt;p>&lt;b>Notation :&lt;/b> {placeDetails.rating ? placeDetails.rating : "inconnue"}&lt;/p>
+                                    {placeDetails.opening_hours &amp;&amp; placeDetails.opening_hours.isOpen() ?&lt;p>&lt;b>Actuellement ouvert&lt;/b>&lt;/p> : null}
+                                &lt;/div> : &lt;div>Chargement...&lt;/div>}
+                        &lt;/div>
+                    &lt;/InfoWindow>
                 )}
 
                 {hospitalMarkers}
-                {userDestination && < DirectionsService
+                {userDestination &amp;&amp; &lt; DirectionsService
                     options={{
                         destination: userDestination,
                         origin: userPos,
@@ -292,7 +320,7 @@ function Map() {
                     panel={sidePanel}
                 /> }
 
-                {directionsResponse && userDestination && (<DirectionsRenderer
+                {directionsResponse &amp;&amp; userDestination &amp;&amp; (&lt;DirectionsRenderer
                     options={{
                         directions: directionsResponse,
                         polylineOptions: {
@@ -305,33 +333,33 @@ function Map() {
                         preserveViewport: true
                     }}/>)}
 
-                <div className={"travelModeButtonsWrapper"}>
-                    <div
+                &lt;div className={"travelModeButtonsWrapper"}>
+                    &lt;div
                         className={userTravelMode === 'TRANSIT' ? "activeTravelModeButton" : "travelModeButton"}
                         onClick={() => setTravelMode('TRANSIT')}>
-                        <FaBusAlt className={"travelModeIcon"}/>
-                    </div>
-                    <div
+                        &lt;FaBusAlt className={"travelModeIcon"}/>
+                    &lt;/div>
+                    &lt;div
                         className={userTravelMode === 'WALKING' ? "activeTravelModeButton" : "travelModeButton"}
                         onClick={() => setTravelMode('WALKING')}>
-                        <FaWalking className={"travelModeIcon"}/>
-                    </div>
-                    <div
+                        &lt;FaWalking className={"travelModeIcon"}/>
+                    &lt;/div>
+                    &lt;div
                         className={userTravelMode === 'DRIVING' ? "activeTravelModeButton" : "travelModeButton"}
                         onClick={() => setTravelMode('DRIVING')}>
-                        <FaCar className={"travelModeIcon"}/>
-                    </div>
-                    {selectedPlace && <UberRidePopup userPos={userPos} destination={{
+                        &lt;FaCar className={"travelModeIcon"}/>
+                    &lt;/div>
+                    {selectedPlace &amp;&amp; &lt;UberRidePopup userPos={userPos} destination={{
                         lat: selectedPlace.geometry.location.lat(),
                         lng: selectedPlace.geometry.location.lng()
                     }}/>}
-                </div>
-                <div className={"sliderWrapper"}>
-                    <h5 className={"sliderTitle"}>
+                &lt;/div>
+                &lt;div className={"sliderWrapper"}>
+                    &lt;h5 className={"sliderTitle"}>
                         {`Rayon de la recherche: ${searchRadius / 100} km`}
-                    </h5>
-                    <div className={"sliderBox"}>
-                        <Slider
+                    &lt;/h5>
+                    &lt;div className={"sliderBox"}>
+                        &lt;Slider
                             defaultValue={15}
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
@@ -341,16 +369,39 @@ function Map() {
                             max={50}
                             className={"slider"}
                         />
-                    </div>
-                </div>
+                    &lt;/div>
+                &lt;/div>
 
                 )}
 
-            </GoogleMap>
-        </React.Fragment>
+            &lt;/GoogleMap>
+        &lt;/React.Fragment>
     };
 
     return renderMap();
 }
 
 export default Map;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Components_Chat_Api.html">Components/Chat/Api</a></li><li><a href="module-Components_Chat_ChatBotWidget.html">Components/Chat/ChatBotWidget</a></li><li><a href="module-Components_Map_Map.html">Components/Map/Map</a></li></ul><h3>Classes</h3><ul><li><a href="DiscreteSlider.html">DiscreteSlider</a></li><li><a href="LandingPage.html">LandingPage</a></li><li><a href="module-Components_Chat_Api.html">Components/Chat/Api</a></li><li><a href="module-Components_Chat_ChatBotWidget.html">Components/Chat/ChatBotWidget</a></li><li><a href="module-Components_Map_Map-Map.html">Map</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Request%2520UberPopup.html">Request UberPopup</a></li></ul><h3>Global</h3><ul><li><a href="global.html#contactForm">contactForm</a></li><li><a href="global.html#descBoxes">descBoxes</a></li><li><a href="global.html#descriptionBox">descriptionBox</a></li><li><a href="global.html#displayFeaturesDescriptionBoxes">displayFeaturesDescriptionBoxes</a></li><li><a href="global.html#isEmailValid">isEmailValid</a></li><li><a href="global.html#mapOptions">mapOptions</a></li><li><a href="global.html#PreviewSection">PreviewSection</a></li><li><a href="global.html#sendEmail">sendEmail</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Sun Aug 16 2020 17:36:30 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
