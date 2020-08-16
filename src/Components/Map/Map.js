@@ -9,6 +9,16 @@ import Slider from '@material-ui/core/Slider';
 import UberRidePopup from "./Shared/RequestUberPopup";
 import NavBar from "../Landing/Components/Navbar";
 
+/**
+ * Ceci est le composant correspondant à la carte de Kwili. Il contient les focntions d'itinéraire,
+ * d'affichage des hôpitaux, et toutes les autres fonctions relatives à l'usage de la carte.
+ * Ce composant est écrit comme un composant fonctionnel.
+ * Ce composant repose sur l'utilisation de l'{@link https://developers.google.com/maps/documentation/javascript/reference/map object Map} de l'API Google Maps.
+ *
+ * @Class
+ * @requires GoogleMap
+ * @see {@link https://developers.google.com/maps/documentation/javascript/ documentation API Google Maps}
+ */
 function Map() {
 
     //state declaration and management
@@ -28,7 +38,11 @@ function Map() {
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [userDestination, setDestination] = useState(null);
 
-    //set center and user position to searched address when using search bar
+
+    /**
+     * Définit le centre de la carte et la position de l'utilisasateur à l'adresse saisie
+     * lorsque l'utilisateur utilise la barre de recherche d'adressse.
+     */
     const onPlaceSearched = () => {
 
         if (autocomplete !== null) {
@@ -52,12 +66,25 @@ function Map() {
         }
     };
 
-    //set reference to autocomplete search bar
+    /**
+     * Définit une référence à la barre d'automplétion d'adresseune fois l'autocomplétion chargée.
+     * @param {Object} searchBar barre de recherche d'addresse
+     */
     const onLoadAutocomplete = (searchBar) => {
         setAutocomplete(searchBar);
     };
 
-    //open corresponding info box (with hospital details) on marker click
+    /**
+
+     * Lorsque l'utilisateur clique sur le marqueur d'un hôpital, cette fonction en récupère les détails et ouvre
+     * la boîte d'informations correspondante
+     *
+     * @async
+     * @param {Event} event clickEvent sur le marqueur de l'hôpital
+     * @param {Object} place hôpital sélectionné
+     * @param {number} id hospital id de l'hôpital dans la liste des hôpitaux
+     * @param {Object} map référence à l'object Map parent
+     */
     const onMarkerClick = async (event, place, id, map) => {
 
         //update user destination if another hospital was previously selected
@@ -75,7 +102,11 @@ function Map() {
 
     };
 
-    //fetch hospital information
+    /**
+     * Récupère les informations détaillées sur un hôpital à partir de son ID
+     * @param {number} id hospital id de l'hôpital dans la liste des hôpitaux
+     * @param {Object} map référence à l'object Map parent
+     */
     const requestHospitaldetails = (id, map) => {
 
         let request = {
@@ -91,16 +122,24 @@ function Map() {
         })
     };
 
-    // initialize hospital markers with google places API id
+    /**
+     * Initialise les marqueurs pour tous les hôpitaux en leur associant leur ID dans l'API Google Places.
+     * (L'id du marqueur créé est le même que l'ID du lieu dans l'API.)
+     * @param {Object} marker composant basique utilisé pour le marqueur de chaque hôpital
+     * @param {Object} place hôpital
+     */
     const onMarkerLoad = (marker, place) => {
         return setMarkerMap(prevState => {
             return { ...prevState, [place.id]: marker };
         });
     };
 
-    // fetch nearest hospitals
-    // Only the 20 nearest hospitals are used in results
-    // so using a very big radius is essentially useless
+    /**
+     * Cette fonction récupère les hôpitaux les plus proches dans le rayon actuellement sélectionné
+     * @todo récupérer plus de résultats : seuls les 20 résultats "les plus pertinents" selon l'API sont récupérés, ce qui résultse actuellement en des résultats imprévisibles avec un grand rayon
+     * @param {Object} map référence à l'objet Map parent
+     * @param {Object} position position de l'utilisateur (objet LatLng)
+     */
     const findNearestHospitals = (map, position) => {
         let request = {
             location: position,
@@ -126,7 +165,12 @@ function Map() {
         })
     };
 
-    //update radius and reaload nearest hospitals accordingly
+    /**
+     * Mise à jour du rayon  puis des hôpitaux dans les environs en fonction du nouveau rayon
+     * @async
+     * @param {number} radius nouveau rayon sélectionné par l'utilisateur
+     * @todo s'assurer de ne pas avoir de virgules dans l'affichage du rayon
+     */
     const updateRadiusReloadHospitals = async (radius) => {
         await setRadius(radius);
         //await setInfoOpen(false);
@@ -134,7 +178,12 @@ function Map() {
         setDestination(hospitalMarkers[0].position);
     };
 
-    //store map reference in state and display hospitals near initial position
+    /**
+     * Mise en place initiale de la map : stockage d'une référence à l'objet map dans le state.
+     * (plusieurs appels à l'API Google Maps requièrent une référence à l'objet map)
+     * La liste des hôpitaux près de la position initiale de l'utilisateur est également récupérée.
+     * @param {Object} map référence à l'objet Map parent
+     */
     const loadHandler = (map) => {
         setMapRef(map);
         //use geolocation if user allows it and set user position to geolocation
@@ -155,7 +204,11 @@ function Map() {
         }
     };
 
-    //get directions to selected hospital
+    /**
+     * Callback pour définir l'itinéraire lorsque cela est nécéssaire.
+     * @callback
+     * @param {Object} réponse
+     */
     const directionsCallback = (response) => {
         if (response !== null) {
             if (response.status === 'OK') {
@@ -164,6 +217,10 @@ function Map() {
         }
     };
 
+    /**
+     * Rendering du composant carte et de ses sous-composants.
+     * @returns {React.Fragment}
+     */
     const renderMap = () => {
 
         let sidePanel = <div className={"directionsPanel"}> </div>;

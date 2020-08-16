@@ -1,3 +1,8 @@
+/**
+ * L'objet MapOptions définit la configuration  et les styles de la carte.
+ * @constant
+ * @see Se référer {@link https://developers.google.com/maps/documentation/javascript/style-referencep | à la documentation} pour plus d'informations sur l'object MapOptions
+ */
 export const mapOptions = {
     streetViewControl: false,
     zoomControl: true,

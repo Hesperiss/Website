@@ -1,0 +1,8 @@
+{
+  "plugins": ["plugins/markdown"],
+  "recurseDepth": 10,
+  "templates": {
+    "default": {
+    }
+  }
+}

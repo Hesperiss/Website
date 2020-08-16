@@ -11,12 +11,28 @@ import "./PopupDialog.scss";
 
 const CLIENT_ID = "eaBurjKEN1ZffsS0teZ88VPllFkPZb03";
 
+/**
+ * Il s'agit du composant de la feneêtre popup proposant une course Uber.
+ * Ce composant gère l'affichage de la popup ainsi que la requête de course à l'API Uber.
+ * Le composant {@link https://material-ui.com/components/dialogs/ Dialog} de {@link https://material-ui.com/ Material UI} est utilisé comme base pour la fenêtre popup.
+ * Notes and problèmes connus:
+ * Le bouton "demander une course Uber" est seulement disponible pour mobile, les prévisions du coût et du temps d'attente ne sont donc pas disponibles.
+ * Pour des raisons de compatabilité sur différentes plateformes des deep links vers l'application web Uber ont été utilisé plutôt que des liens vers l'appli mobile.
+ *
+ * @Class Request UberPopup
+ * @requires Dialog
+ * @see {@link https://developer.uber.com/docs documentation Uber}
+ * @see {@link https://material-ui.com/ Documentation Material UI}
+*/
 export default function RequestUberPopup(props) {
 
     const [open, setOpen] = useState(false);
     const [startAddress, setStartAddress] = useState("Moi");
     const [dropOffAddress, setDropOffAddress] = useState("Hôpital");
 
+    /**
+     * Ouvre la fenêtre popup proposant une course Uber et appelle reverseGeocode()
+     */
     const handleClickOpen = () => {
         //get formatted addresses required by API
         reverseGeocode(props.userPos, true);
@@ -24,10 +40,17 @@ export default function RequestUberPopup(props) {
         setOpen(true);
     };
 
+    /**
+     * Ferme la popup proposant une course Uber
+     */
     const handleClose = () => {
         setOpen(false);
     };
 
+    /**
+     * Generates ride request and link from the formatted addresses of the start
+     * and drop-off addresses, and opens the Uber ride request in a new window.
+     */
     const requestUberRide = () => {
 
         if (!props.userPos || !props.destination) {
@@ -46,8 +69,13 @@ export default function RequestUberPopup(props) {
         handleClose();
     };
 
-    //reverse geocode location
-    //because formatted addresses are required for uber ride request
+    /**
+     * Géocode "à l'envers" une addresse : utilise les coordonnées LatLng pour obtenir une addresse formatée.
+     * Une requête de course Uber requiert en effet une addresse formatée.
+     * @param {Object} pos coordonées LatLng
+     * @param {bool} isStart est-ce l'adresse de départ de la course ?
+     * @see {@link https://developers.google.com/maps/documentation/geocoding/overview documentation de l'API Geocode de Google Maps}
+     */
     const reverseGeocode = (pos, isStart) => {
         let geocoder = new window.google.maps.Geocoder();
         geocoder.geocode({'location': pos}, function(results, status) {
