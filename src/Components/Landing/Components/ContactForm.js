@@ -2,15 +2,19 @@ import React from 'react';
 import axios from 'axios';
 import {
     FaEnvelope,
-    FaTwitter,
-    FaFacebookF,
     FaGitAlt,
     FaLinkedinIn
 } from "react-icons/fa";
 import '../Landing.scss';
 
 
-
+/**
+ * Vérifie qu'une adresse email possède un format valide.
+ * @param {string} name
+ * @param {string} email
+ * @param {string} message
+ * @return bool
+ */
 function isEmailValid(name, email, message) {
 
     //checks if fileds are set
@@ -24,10 +28,13 @@ function isEmailValid(name, email, message) {
     return re.test(String(email).toLowerCase());
 }
 
-/*
-** sends an email when user submits form
-*/
-
+/**
+ * Envoie un email quand l'utuilisateur soumet le formulaire.
+ * @param {string} name
+ * @param {string} email
+ * @param {string} subject
+ * @param {string} message
+ */
 function  sendEmail(name, email, subject, message) {
 
   if (!isEmailValid(name, email, message)) {
@@ -46,7 +53,7 @@ function  sendEmail(name, email, subject, message) {
      if (response.data.msg === 'success'){
          alert("Message envoyé");
          this.resetForm()
-     }else if(response.data.msg === 'fail'){
+     } else if (response.data.msg === 'fail'){
          alert("L'envoi du message a échoué")
      }
    })
@@ -54,6 +61,11 @@ function  sendEmail(name, email, subject, message) {
    document.getElementById('contact-form').reset();
 }
 
+/**
+ * Fait partie du layout de la page d'accueil.
+ * Contient un formulaire permettant de contacter l'équipe Kwili.
+ * @returns {React.Fragment}
+ */
 function contactForm() {
 
     let name, email, message, subject  = "";
@@ -108,9 +120,7 @@ function contactForm() {
             <div className={"socialMedia"}>
                 <div className={"buttonsWrapper"}>
                     <a className={"socialMediaButton"} href="https://www.linkedin.com/company/kwili/" rel="noopener noreferrer" target="_blank"><FaLinkedinIn/></a>
-                    <div className={"socialMediaButton"}><FaFacebookF/></div>
                     <a className={"socialMediaButton"} href="https://github.com/Kwili" rel="noopener noreferrer" target="_blank"><FaGitAlt/></a>
-                    <div className={"socialMediaButton"}><FaTwitter/></div>
                 </div>
                 <p>Kwili est un projet réalisé par une équipe d'étudiants dans le cadre des <br/>
                 Epitech Innovative Projects. © 2018</p>

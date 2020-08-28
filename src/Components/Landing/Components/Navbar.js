@@ -3,6 +3,13 @@ import '../Landing.scss';
 import KwiliLogo from "../../../Images/logo_kwili.png"
 import ChatBotWidget from '../../Chat/ChatBotWidget';
 
+/**
+ * Barre de navigation du site Kwili.
+ * Créée comme un élément de la page d'accueil, elle est cependant affiché sur la plupart des pages.
+ * Le widget du chatbot y est attaché, et est donc accessible sur toutes les pages où la barre de navigation est présente.
+ *
+ * @Class Navbar
+ */
 function NavBarLanding() {
     return (
         <React.Fragment>
@@ -23,19 +30,11 @@ function NavBarLanding() {
                     />
                 </a>
 
-                <a href='/chat'>
-                    <input
-                        type="submit"
-                        value="Aidez-moi !"
-                        href="/chat"
-                        className="navBarButton"
-                    />
-                </a>
-                <a href='/'>
+                <a href='/landing'>
                     <input
                         type="submit"
                         value="Qui sommes-nous ?"
-                        href="/"
+                        href="/landing"
                         className="navBarButton"
                     />
                 </a>

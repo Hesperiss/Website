@@ -1,4 +1,32 @@
-import React, {useState} from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Map/Shared/RequestUberPopup.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Map/Shared/RequestUberPopup.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -59,10 +87,10 @@ export default function RequestUberPopup(props) {
         }
 
         //m.uber.com is the web app (designed mainly as a mobile web app)
-        let rideRequestLink = 'https://m.uber.com?action=setPickup&client_id=' + CLIENT_ID +
-            '&pickup[formatted_address]=' + startAddress + '&pickup[latitude]=' + props.userPos.lat +
-            '&pickup[longitude]=' + props.userPos.lng + '&dropoff[formatted_address]=' + dropOffAddress +
-            '&dropoff[latitude]=' + props.destination.lat + '&dropoff[longitude]=' + props.destination.lng;
+        let rideRequestLink = 'https://m.uber.com?action=setPickup&amp;client_id=' + CLIENT_ID +
+            '&amp;pickup[formatted_address]=' + startAddress + '&amp;pickup[latitude]=' + props.userPos.lat +
+            '&amp;pickup[longitude]=' + props.userPos.lng + '&amp;dropoff[formatted_address]=' + dropOffAddress +
+            '&amp;dropoff[latitude]=' + props.destination.lat + '&amp;dropoff[longitude]=' + props.destination.lng;
 
         //open link in new tab and close popup
         window.open(rideRequestLink, '_blank');
@@ -97,15 +125,15 @@ export default function RequestUberPopup(props) {
 
 
     return (
-        <div>
+        &lt;div>
 
-            <div
+            &lt;div
                 className={"travelModeButton uberIcon"}
                 onClick={() => handleClickOpen()}>
-                <FaUber className={"travelModeIcon"}/>
-            </div>
+                &lt;FaUber className={"travelModeIcon"}/>
+            &lt;/div>
 
-            <Dialog
+            &lt;Dialog
                 classes={{paper: "dialogWindow"}}
                 open={open}
                 keepMounted
@@ -113,34 +141,57 @@ export default function RequestUberPopup(props) {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle classes={{root: "dialogTitle"}}>
-                    <h3>{"Se rendre à l'hôpital en UBER"}</h3></DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                        <p><strong>Appeler un UBER pour se rendre à l'hôpital ?</strong><br/>
+                &lt;DialogTitle classes={{root: "dialogTitle"}}>
+                    &lt;h3>{"Se rendre à l'hôpital en UBER"}&lt;/h3>&lt;/DialogTitle>
+                &lt;DialogContent>
+                    &lt;DialogContentText id="alert-dialog-slide-description">
+                        &lt;p>&lt;strong>Appeler un UBER pour se rendre à l'hôpital ?&lt;/strong>&lt;br/>
                         Choisir cette option ouvrira une l'application ou le
-                        site UBER avec une course paramétrée entre votre position et celle de l'hôpital.</p>
-                    </DialogContentText>
-                    <div className={"uberPopupIcons"}>
-                        <FaClock className={"icon"}/>
-                        <FaCar className={"icon"}/>
-                    </div>
-                </DialogContent>
-                <DialogActions>
-                    <Button
+                        site UBER avec une course paramétrée entre votre position et celle de l'hôpital.&lt;/p>
+                    &lt;/DialogContentText>
+                    &lt;div className={"uberPopupIcons"}>
+                        &lt;FaClock className={"icon"}/>
+                        &lt;FaCar className={"icon"}/>
+                    &lt;/div>
+                &lt;/DialogContent>
+                &lt;DialogActions>
+                    &lt;Button
                         onClick={handleClose}
                         color="primary"
                         classes={{textPrimary: "uberDialogButtons"}}>
                         Non
-                    </Button>
-                    <Button
+                    &lt;/Button>
+                    &lt;Button
                         onClick={requestUberRide}
                         color="primary"
                         classes={{textPrimary: "uberDialogButtons"}}>
                         Oui
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+                    &lt;/Button>
+                &lt;/DialogActions>
+            &lt;/Dialog>
+        &lt;/div>
     );
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Components_Chat_Api.html">Components/Chat/Api</a></li><li><a href="module-Components_Chat_ChatBotWidget.html">Components/Chat/ChatBotWidget</a></li><li><a href="module-Components_Map_Map.html">Components/Map/Map</a></li></ul><h3>Classes</h3><ul><li><a href="DiscreteSlider.html">DiscreteSlider</a></li><li><a href="LandingPage.html">LandingPage</a></li><li><a href="module-Components_Chat_Api.html">Components/Chat/Api</a></li><li><a href="module-Components_Chat_ChatBotWidget.html">Components/Chat/ChatBotWidget</a></li><li><a href="module-Components_Map_Map-Map.html">Map</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Request%2520UberPopup.html">Request UberPopup</a></li></ul><h3>Global</h3><ul><li><a href="global.html#contactForm">contactForm</a></li><li><a href="global.html#descBoxes">descBoxes</a></li><li><a href="global.html#descriptionBox">descriptionBox</a></li><li><a href="global.html#displayFeaturesDescriptionBoxes">displayFeaturesDescriptionBoxes</a></li><li><a href="global.html#isEmailValid">isEmailValid</a></li><li><a href="global.html#mapOptions">mapOptions</a></li><li><a href="global.html#PreviewSection">PreviewSection</a></li><li><a href="global.html#sendEmail">sendEmail</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Sun Aug 16 2020 17:36:30 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

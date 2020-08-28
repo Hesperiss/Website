@@ -7,23 +7,28 @@
 
 # Website
 
-Pour l'instant on a uniquement la landing page à laquelle on doit apporter des changements.
+Le Website Kwili se compose actuellement de trois parties principales:
+- La landing page
+- La carte des hôpitaux les plus proches
+- Le chatbot
 
-## Landing
+Accéder au website : [Kwili](https://www.kwili.fr/)
 
-**kwili.fr**
+Le website est essentiellement écrit en Javascript, avec le framework [ReactJS](https://reactjs.org/).
 
-## App
-*Pas encore dispo*
+## Documentation
+La documentation du repository est accessible [ici](https://kwili.github.io/Website/).
 
-*app.kwili.fr*
+## Installation et lancement
 
+#### prérequis
+- installer [NodeJS](https://nodejs.org/en/)
 
-### Lancement en local
+#### Lancement en local
     npm install
     npm start
 
-### Lancement build
+#### Lancement build
     npm install
     npm run build
     serve -s build

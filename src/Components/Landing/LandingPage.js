@@ -5,6 +5,13 @@ import PreviewSection from "./Components/PreviewSection";
 import ContactForm from "./Components/ContactForm";
 import phoneDemo from "../../Images/phone_section1.png";
 
+/**
+ * Il s'agit du composant principal de la Landing page.
+ * Pour plus de clarté, les différentes sections de l'agencement de landing page sont réparties dans plusieurs fichiers :
+ * ContactForm, FeaturesDescription, Navbar and PreviewSection
+ * L'effet visuel de vague bleue est produit avec un élément svg en html.
+ * @see {@link https://smooth.ie/blogs/news/svg-wavey-transitions-between-sections générateur d'élements html svg }
+ */
 class LandingPage extends React.Component {
 
 	constructor(props) {
@@ -14,11 +21,17 @@ class LandingPage extends React.Component {
 		};
 	}
 
+	/**
+	 * Glisse vers le lien interne vers la section "en savoir plus' de la page.
+	 */
 	slideToAnchorLink() {
 		let scrollTo = document.getElementById('#knowMore');
 		scrollTo.scrollIntoView();
 	};
 
+	/**
+	 * Affichage de la page d'accueil
+	 */
 	render() {
 
 		return (

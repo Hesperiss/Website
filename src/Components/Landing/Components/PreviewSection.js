@@ -10,6 +10,11 @@ import Desktop2 from "../../../Images/desktop_2.png"
 import Phone1 from "../../../Images/phone_1.png";
 import Phone2 from "../../../Images/phone_2.png";
 
+/**
+ * Fait partie de l'affichage de la page d'accueil.
+ * Affiche un diaporama de différentes vues des applis web et mobile de Kwili.
+ * @returns {React.Fragment}
+ */
 function PreviewSection() {
 
 
@@ -17,7 +22,10 @@ function PreviewSection() {
     const [desktopDemoImages] = [[Desktop1, Desktop2]];
     const [phoneDemoImages] = [[Phone1, Phone2]];
 
-    //loop through the demo images when arrow is clicked
+    /**
+     * Met à jour le diaporama quand l'utilisateur clique sur l'une ou l'autre des flèches.
+     * @param {string} side côté du diaporama cliqué (gauche ou droite)
+     */
     const updateDemoImages = (side) => {
         if (side === "right") {
             if (currentDemoIndex < (phoneDemoImages.length - 1)) {
@@ -34,6 +42,9 @@ function PreviewSection() {
         }
     };
 
+    /**
+     * Affichage du diaporama.
+     */
     const renderPreviewSection = () => {
 
         return (
@@ -87,7 +98,7 @@ function PreviewSection() {
                                 <h3>Une application complémentaire</h3>
                                 <p>Retrouvez Kwili plus facilement en téléchargeant notre appli mobile, qui possède les
                                     mêmes
-                                    fonctionnalités ainsi que la possibilité de créer un compte.</p>
+                                    fonctionnalités.</p>
                             </div>
                         </div>
 
