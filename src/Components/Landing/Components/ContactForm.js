@@ -49,13 +49,14 @@ function  sendEmail(name, email, subject, message) {
        'Content-Type': 'application/x-www-form-urlencoded',
     },
      data: `name=${name}&email=${email}&subject=${subject}&message=${message}`
-   }).then((response)=>{
-     if (response.data.msg === 'success'){
-         alert("Message envoyé");
-         this.resetForm()
-     } else if (response.data.msg === 'fail'){
-         alert("L'envoi du message a échoué")
-     }
+   })
+   .then((response)=>{
+     if (response.status === 200){
+         alert("Votre message a bien été envoyé, merci !");
+       }
+   })
+   .catch(err => {
+     alert("L'envoi du message a échoué.");
    })
 
    document.getElementById('contact-form').reset();
