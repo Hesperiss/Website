@@ -1,7 +1,6 @@
 import io from "socket.io-client";
 
-const chatEndpoint = "https://geoworker.eu";
-const port = "8084";
+const chatEndpoint = "https://kwili-bot.herokuapp.com/";
 
 /**
  * @module
@@ -13,13 +12,13 @@ export default class KwiliChat {
 	 * @param {requestCallback} onMessageCallback - callback appelée lors de la réception d'un message
 	 */
 	constructor(onMessageCallback) {
-		this.address = chatEndpoint + ":" + port + "/customer";
+		this.address = chatEndpoint;
 		this.socket = new io.connect(this.address, {
 			reconnectionDelay: 3000,
 			reconnectionAttempts: Infinity,
 			forceNew: true,
 		});
-		this.socket.on("customer message", onMessageCallback);
+		this.socket.on("message", onMessageCallback);
 		this.socket.on("connect", () => {});
 	}
 	send(message) {
