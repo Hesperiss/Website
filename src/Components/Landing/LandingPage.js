@@ -1,4 +1,6 @@
 import React from 'react';
+import {Helmet} from "react-helmet";
+
 import NavBar from "./Components/Navbar";
 import FeaturesDescription from "./Components/FeaturesDescription";
 import PreviewSection from "./Components/PreviewSection";
@@ -36,6 +38,12 @@ class LandingPage extends React.Component {
 
 		return (
 			<div className={"root"}>
+
+      <Helmet>
+        <meta name="description" content="Découvrez Kwili, un moyen simple et rapide pour accéder aux urgences. Une première prise en charge en ligne." />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
+
 				<NavBar />
 
 				<div className={"sectionWrapper"}>

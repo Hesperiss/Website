@@ -1,4 +1,5 @@
 import React from 'react';
+import {Helmet} from "react-helmet";
 
 import NavBarLanding from '../../Landing/Components/Navbar';
 
@@ -7,6 +8,12 @@ import './css/NotFound.scss';
 const Error = () => {
     return (
         <div className={"notFoundWrapper"}>
+
+          <Helmet>
+            <meta name="description" content="Cette page n'existe pas. Rendez-vous sur https://www.kwili.fr pour plus de détails !" />
+            <meta name="robots" content="noindex, follow" />
+          </Helmet>
+
             <NavBarLanding/>
 
             <div className={"blueCurveWrapper"} >

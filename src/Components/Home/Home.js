@@ -2,6 +2,7 @@ import React from 'react';
 import './home.scss'
 import {FaCommentMedical, FaMapMarkedAlt} from "react-icons/all";
 import {Button} from 'react-bootstrap'
+import {Helmet} from "react-helmet";
 
 import ChatBotWidget from '../Chat/ChatBotWidget';
 import { toggleWidget } from 'react-chat-widget';
@@ -56,16 +57,20 @@ export default class HomePage extends React.Component {
     render() {
         return (
             <div className={"root"}>
-            <div className={"homePage"}>
-                <div className={"blueCurveWrapper"} >
-                    <svg viewBox="0 0 500 150" className={"blueCurve"} preserveAspectRatio="none">
-                        <path d="M-14.39,19.23 C172.40,147.53 320.26,189.95 509.87,12.33 L500.00,0.00 L0.00,0.00 Z"></path>
-                    </svg>
-                </div>
-                {this.displayFeaturesDescriptionBoxes()}
+              <Helmet>
+                <meta name="description" content="Jamais aller aux urgences n'aura été aussi simple ! Découvrez notre chat en ligne, ainsi que notre carte des hôpitaux qui faciliterons votre démarche." />
+                <meta name="robots" content="index, follow" />
+              </Helmet>
+              <div className={"homePage"}>
+                  <div className={"blueCurveWrapper"} >
+                      <svg viewBox="0 0 500 150" className={"blueCurve"} preserveAspectRatio="none">
+                          <path d="M-14.39,19.23 C172.40,147.53 320.26,189.95 509.87,12.33 L500.00,0.00 L0.00,0.00 Z"></path>
+                      </svg>
+                  </div>
+                  {this.displayFeaturesDescriptionBoxes()}
 
-                <ChatBotWidget fullscreen={false} />
-            </div>
+                  <ChatBotWidget fullscreen={false} />
+              </div>
             </div>
 
         );

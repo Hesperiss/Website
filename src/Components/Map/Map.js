@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {GoogleMap, Marker, Autocomplete, InfoWindow, DirectionsService, DirectionsRenderer} from '@react-google-maps/api'
+import {Helmet} from "react-helmet";
 import {mapOptions} from "./Shared/MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
@@ -248,6 +249,11 @@ function Map() {
                 <div className={"mapNavBarWrapper"}>
                     <NavBar />
                 </div>
+
+                <Helmet>
+                  <meta name="description" content="Découvrez la carte des urgences de Kwili, un moyen simple et rapide pour trouver les centres hospitaliers à proximité. Vous pourrez également voir comment vous y rendre avec différents modes de transport." />
+                  <meta name="robots" content="index, follow" />
+                </Helmet>
 
                 <Marker
                     position={userPos}
