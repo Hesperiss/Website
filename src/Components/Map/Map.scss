@@ -140,6 +140,20 @@ $theme-gray: #242f3e;
   };
 }
 
+.directionsPanel {
+  display: flex;
+  place-items: center;
+}
+
+.directionsSteps {
+  width: 350px;
+  display: flex;
+  place-items: center;
+  padding: 30px;
+  border-radius: 30px;
+  overflow-y: auto;
+}
+
 .sliderTitle {
   flex-shrink: 1;
   color: white;
