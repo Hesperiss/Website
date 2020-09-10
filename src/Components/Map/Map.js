@@ -15,6 +15,8 @@ import Slider from '@material-ui/core/Slider';
 import UberRidePopup from "./Shared/RequestUberPopup";
 import NavBar from "../Landing/Components/Navbar";
 import HospitalInfoPopup from "./Shared/HospitalInfoPopup";
+import Drawer from '@material-ui/core/Drawer';
+
 
 /**
  * @module
@@ -42,6 +44,7 @@ function Map() {
     const [hospitalMarkers, setHospitalMarkers] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoOpen, setInfoOpen] = useState(false);
+    const [directionsPanel, setDirectionsPanel] = useState(false);
     const [placeDetails, setPlaceDetails] = useState(null);
     const [autocomplete, setAutocomplete] = useState(null);
     const [userMarker, setUserMarker] = useState(null);
@@ -108,6 +111,7 @@ function Map() {
         await setInfoOpen(false);
         await requestHospitaldetails(id, map);
         await setSelectedPlace(place);
+        setDirectionsPanel(true);
 
         setInfoOpen(true);
 
@@ -232,9 +236,6 @@ function Map() {
      * @returns {React.Fragment}
      */
     const renderMap = () => {
-
-        let sidePanel = <div className={"directionsPanel"}></div>;
-
         return <React.Fragment>
             <GoogleMap
                 options={mapOptions}
@@ -278,28 +279,43 @@ function Map() {
                 )}
 
                 {hospitalMarkers}
-                {userDestination && < DirectionsService
+                {userDestination && <DirectionsService
                     options={{
                         destination: userDestination,
                         origin: userPos,
                         travelMode: userTravelMode,
                     }}
                     callback={(response) => directionsCallback(response)}
-                    panel={sidePanel}
                 />}
 
-                {directionsResponse && userDestination && (<DirectionsRenderer
-                    options={{
-                        directions: directionsResponse,
-                        polylineOptions: {
-                            strokeColor: "#ff4d4d",
-                            strokeOpacity: 0.8,
-                            strokeWeight: 7
-                        },
-                        suppressMarkers: true,
-                        draggable: true,
-                        preserveViewport: true
-                    }}/>)}
+                {directionsResponse && userDestination && (
+                    <React.Fragment>
+                        <Drawer
+                            anchor={"left"}
+                            open={directionsPanel}
+                            onClick={() => setDirectionsPanel(!directionsPanel)}
+                            hideBackdrop
+                            elevation={10}
+                            transitionDuration={{enter: 300, exit: 300}}
+                            className={"directionsPanel"}>
+                            <div id={"directions-panel"} className={"directionsSteps"}></div>
+                        </Drawer>
+                        <DirectionsRenderer
+                            directions={directionsResponse}
+                            panel={document.getElementById('directions-panel')}
+                            options={{
+                                directions: directionsResponse,
+                                polylineOptions: {
+                                    strokeColor: "#ff4d4d",
+                                    strokeOpacity: 0.8,
+                                    strokeWeight: 7
+                                },
+                                suppressMarkers: true,
+                                draggable: true,
+                                preserveViewport: true
+                            }}/>
+                    </React.Fragment>
+                )}
 
                 <div className={"travelModeButtonsWrapper"}>
                     <div
