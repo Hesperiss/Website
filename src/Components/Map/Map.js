@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
-import {GoogleMap, Marker, Autocomplete, InfoWindow, DirectionsService, DirectionsRenderer} from '@react-google-maps/api'
 import {Helmet} from "react-helmet";
+import {
+    GoogleMap,
+    Marker,
+    Autocomplete,
+    DirectionsService,
+    DirectionsRenderer
+} from '@react-google-maps/api'
 import {mapOptions} from "./Shared/MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
@@ -9,6 +15,7 @@ import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
 import UberRidePopup from "./Shared/RequestUberPopup";
 import NavBar from "../Landing/Components/Navbar";
+import HospitalInfoPopup from "./Shared/HospitalInfoPopup";
 
 /**
  * @module
@@ -27,10 +34,10 @@ import NavBar from "../Landing/Components/Navbar";
 function Map() {
 
     //state declaration and management
-    const [center] = useState({ lat: 48.8566, lng: 2.3522});
+    const [center] = useState({lat: 48.8566, lng: 2.3522});
     const [mapRef, setMapRef] = useState(null);
     const [markerMap, setMarkerMap] = useState({});
-    const [userPos, setUserPos] = useState({ lat: 48.8566, lng: 2.3522});
+    const [userPos, setUserPos] = useState({lat: 48.8566, lng: 2.3522});
     const [searchRadius, setRadius] = useState(1500);
     const [zoom] = useState(15);
     const [hospitalMarkers, setHospitalMarkers] = useState(null);
@@ -122,8 +129,7 @@ function Map() {
         service.getDetails(request, (results, status) => {
             if (status === window.google.maps.places.PlacesServiceStatus.OK) {
                 setPlaceDetails(results);
-            }
-            else setPlaceDetails(null);
+            } else setPlaceDetails(null);
         })
     };
 
@@ -135,7 +141,7 @@ function Map() {
      */
     const onMarkerLoad = (marker, place) => {
         return setMarkerMap(prevState => {
-            return { ...prevState, [place.id]: marker };
+            return {...prevState, [place.place_id]: marker};
         });
     };
 
@@ -146,7 +152,7 @@ function Map() {
      * @param {Object} position position de l'utilisateur (objet LatLng)
      */
     const findNearestHospitals = (map, position) => {
-        let request = {
+        const request = {
             location: position,
             radius: searchRadius,
             types: ["hospital"],
@@ -155,16 +161,16 @@ function Map() {
         let service = new window.google.maps.places.PlacesService(map);
         service.nearbySearch(request, (results, status) => {
             if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                let markerList = [];
-                for (let i = 0; i < results.length; i++) {
-                    markerList.push(<Marker
-                        key={results[i].id}
-                        position={results[i].geometry.location}
-                        icon={hospitalIcon}
-                        onLoad={marker => onMarkerLoad(marker, results[i])}
-                        onClick={event => onMarkerClick(event, results[i], results[i].place_id, map)}
-                    />);
-                }
+                const markerList = results.map(result => {
+                    return (
+                        <Marker
+                            key={result.place_id}
+                            position={result.geometry.location}
+                            icon={hospitalIcon}
+                            onLoad={marker => onMarkerLoad(marker, result)}
+                            onClick={event => onMarkerClick(event, result, result.place_id, map)}
+                        />);
+                });
                 setHospitalMarkers(markerList);
             }
         })
@@ -178,9 +184,9 @@ function Map() {
      */
     const updateRadiusReloadHospitals = async (radius) => {
         await setRadius(radius);
-        //await setInfoOpen(false);
+        await setInfoOpen(false);
         await findNearestHospitals(mapRef, userPos);
-        setDestination(hospitalMarkers[0].position);
+        await setDestination(hospitalMarkers[0].position);
     };
 
     /**
@@ -193,7 +199,7 @@ function Map() {
         setMapRef(map);
         //use geolocation if user allows it and set user position to geolocation
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(async function(position) {
+            navigator.geolocation.getCurrentPosition(async function (position) {
                 let pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
@@ -202,7 +208,7 @@ function Map() {
                 await setUserPos(pos);
                 //use nearest hospitals to geolocated users
                 findNearestHospitals(map, pos);
-            }, function() {
+            }, function () {
             });
         } else {
             findNearestHospitals(map, userPos);
@@ -212,7 +218,7 @@ function Map() {
     /**
      * Callback pour définir l'itinéraire lorsque cela est nécéssaire.
      * @callback
-     * @param {Object} réponse
+        * @param {Object} réponse
      */
     const directionsCallback = (response) => {
         if (response !== null) {
@@ -228,7 +234,7 @@ function Map() {
      */
     const renderMap = () => {
 
-        let sidePanel = <div className={"directionsPanel"}> </div>;
+        let sidePanel = <div className={"directionsPanel"}></div>;
 
         return <React.Fragment>
             <GoogleMap
@@ -247,7 +253,7 @@ function Map() {
                 onLoad={map => loadHandler(map)}>
 
                 <div className={"mapNavBarWrapper"}>
-                    <NavBar />
+                    <NavBar/>
                 </div>
 
                 <Helmet>
@@ -258,12 +264,12 @@ function Map() {
                 <Marker
                     position={userPos}
                     icon={userIcon}
-                    onLoad={(marker) => setUserMarker(marker)} />
+                    onLoad={(marker) => setUserMarker(marker)}/>
 
                 <Autocomplete
                     onLoad={(searchBar) => onLoadAutocomplete(searchBar)}
                     onPlaceChanged={() => onPlaceSearched()}>
-                    <input type="text" placeholder="Rechercher une adresse..." className={"mapSearchBar"}                  />
+                    <input type="text" placeholder="Rechercher une adresse..." className={"mapSearchBar"}/>
                 </Autocomplete>
 
                 <a href={"/"} className={"homeButton"}>
@@ -271,20 +277,10 @@ function Map() {
                 </a>
 
                 {infoOpen && selectedPlace && (
-                    <InfoWindow
-                        anchor={markerMap[selectedPlace.id]}
-                        onCloseClick={() => setInfoOpen(false)}>
-                        <div>
-                            {placeDetails ?
-                                <div>
-                                    <h3 className={"hospitalName"}>{placeDetails.name}</h3>
-                                    <p><b>Addresse :</b> {placeDetails.address_components[0].short_name + ' ' + placeDetails.address_components[1].short_name }</p>
-                                    <p><b>Téléphone :</b> {placeDetails.formatted_phone_number}</p>
-                                    <p><b>Notation :</b> {placeDetails.rating ? placeDetails.rating : "inconnue"}</p>
-                                    {placeDetails.opening_hours && placeDetails.opening_hours.isOpen() ?<p><b>Actuellement ouvert</b></p> : null}
-                                </div> : <div>Chargement...</div>}
-                        </div>
-                    </InfoWindow>
+                    <HospitalInfoPopup
+                        placeDetails={placeDetails}
+                        location={markerMap[selectedPlace.place_id]}
+                    />
                 )}
 
                 {hospitalMarkers}
@@ -296,7 +292,7 @@ function Map() {
                     }}
                     callback={(response) => directionsCallback(response)}
                     panel={sidePanel}
-                /> }
+                />}
 
                 {directionsResponse && userDestination && (<DirectionsRenderer
                     options={{
