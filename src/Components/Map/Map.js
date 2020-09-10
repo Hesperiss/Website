@@ -13,11 +13,12 @@ import userIcon from "../../Images/user_marker.png"
 import "./Map.scss"
 import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import UberRidePopup from "./Shared/RequestUberPopup";
 import NavBar from "../Landing/Components/Navbar";
 import HospitalInfoPopup from "./Shared/HospitalInfoPopup";
 import Drawer from '@material-ui/core/Drawer';
-
 
 /**
  * @module
@@ -156,28 +157,33 @@ function Map() {
      * @param {Object} position position de l'utilisateur (objet LatLng)
      */
     const findNearestHospitals = (map, position) => {
-        const request = {
+        let service = new window.google.maps.places.PlacesService(map);
+        let markerList = [];
+        let request = {
             location: position,
             radius: searchRadius,
+            opennow: true,
             types: ["hospital"],
             keyword: "(emergency) AND ((medical centre) OR hospital)"
         };
-        let service = new window.google.maps.places.PlacesService(map);
-        service.nearbySearch(request, (results, status) => {
-            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                const markerList = results.map(result => {
-                    return (
-                        <Marker
+        for (let i = 0; i <= 2; i++) {
+            //eslint-disable-next-line
+            service.nearbySearch(request, (results, status, next_page_token) => {
+                if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                    request.pageToken = next_page_token?.H;
+                    console.log(next_page_token, request);
+                    markerList = markerList.concat(results.map(result =>
+                        (<Marker
                             key={result.place_id}
                             position={result.geometry.location}
                             icon={hospitalIcon}
                             onLoad={marker => onMarkerLoad(marker, result)}
                             onClick={event => onMarkerClick(event, result, result.place_id, map)}
-                        />);
-                });
-                setHospitalMarkers(markerList);
-            }
-        })
+                        />)));
+                    setHospitalMarkers(markerList);
+                }
+            })
+        }
     };
 
     /**
@@ -324,6 +330,11 @@ function Map() {
                 )}
 
                 <div className={"travelModeButtonsWrapper"}>
+                    <Select  variant={"filled"} label={"Type de recherche"} placeholder={"Hôpitaux"}>
+                        <MenuItem value={"hospitals"}>Hôpitaux</MenuItem>
+                        <MenuItem value={"allDoctors"}>Médecins</MenuItem>
+                        <MenuItem value={"radiology"}>Radiologie</MenuItem>
+                    </Select>
                     <div
                         className={userTravelMode === 'TRANSIT' ? "activeTravelModeButton" : "travelModeButton"}
                         onClick={() => setTravelMode('TRANSIT')}>
@@ -346,7 +357,7 @@ function Map() {
                 </div>
                 <div className={"sliderWrapper"}>
                     <h5 className={"sliderTitle"}>
-                        {`Rayon de la recherche: ${searchRadius / 100} km`}
+                        {`Rayon de la recherche: ${searchRadius / 1000} km`}
                     </h5>
                     <div className={"sliderBox"}>
                         <Slider
@@ -354,7 +365,7 @@ function Map() {
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
                             step={5}
-                            onChange={(e, val) => updateRadiusReloadHospitals(val * 100)}
+                            onChange={(e, val) => updateRadiusReloadHospitals(val * 1000)}
                             min={10}
                             max={50}
                             className={"slider"}
