@@ -168,7 +168,7 @@ function Map() {
             keyword: researchTag.keyword,
         };
 
-        const searchCallback = (results, status, next_page_token) => {
+        const searchCallback = async (results, status, next_page_token) => {
             if (status === window.google.maps.places.PlacesServiceStatus.OK) {
                 request.pageToken = next_page_token?.H;
                 markerList = markerList.concat(results
@@ -181,7 +181,10 @@ function Map() {
                         onLoad={marker => onMarkerLoad(marker, result)}
                         onClick={event => onMarkerClick(event, result, result.place_id, map)}
                     />)));
-                setResultsMarkers(markerList);
+                await setResultsMarkers(markerList);
+                if (resultsMarkers && resultsMarkers?.length !== 0) {
+                    setDestination(resultsMarkers[0].position);
+                }
                 return markerList;
             }
         }
