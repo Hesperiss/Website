@@ -13,12 +13,13 @@ import "./Map.scss"
 import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
 import Select from '@material-ui/core/Select';
+import Tooltip from '@material-ui/core/Tooltip';
 import MenuItem from '@material-ui/core/MenuItem';
 import UberRidePopup from "./Shared/RequestUberPopup";
 import NavBar from "../Landing/Components/Navbar";
 import HospitalInfoPopup from "./Shared/HospitalInfoPopup";
 import Drawer from '@material-ui/core/Drawer';
-import {resultTypes, resultTypesIds} from './Shared/ResultTypes'
+import {resultTypes, resultTypesIds} from './Shared/ResultTypes';
 
 /**
  * @module
@@ -334,15 +335,19 @@ function Map() {
                     </React.Fragment>
                 )}
 
-                <div className={"travelModeButtonsWrapper"}>
-                    <Select variant={"filled"}
+                <div className={"actionsButtonsWrapper"}>
+                    <Tooltip title={"Type de recherche"} placement={"left"} className={"mapTooltip"} arrow>
+                        <Select
+                            variant={"outlined"}
+                            className={"mapSelectResultType"}
                             label={"Type de recherche"}
                             value={researchTag.type}
-                            placeholder={"Hôpitaux"}
+                            placeholder={"Tyep de recherche"}
                             onChange={(event) => onUpdateResearchTag(event.target.value)}>
                         {resultTypesIds.map(item => (<MenuItem key={item} value={resultTypes[item].type}>{resultTypes[item].label}</MenuItem>))}
                         )}
                     </Select>
+                    </Tooltip>
 
                     <div
                         className={userTravelMode === 'TRANSIT' ? "activeTravelModeButton" : "travelModeButton"}
