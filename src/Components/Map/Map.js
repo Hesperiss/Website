@@ -37,12 +37,12 @@ import Drawer from '@material-ui/core/Drawer';
 function Map() {
 
     //state declaration and management
+    const [zoom] = useState(15);
     const [center] = useState({lat: 48.8566, lng: 2.3522});
     const [mapRef, setMapRef] = useState(null);
     const [markerMap, setMarkerMap] = useState({});
     const [userPos, setUserPos] = useState({lat: 48.8566, lng: 2.3522});
     const [searchRadius, setRadius] = useState(1500);
-    const [zoom] = useState(15);
     const [hospitalMarkers, setHospitalMarkers] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoOpen, setInfoOpen] = useState(false);
@@ -53,7 +53,7 @@ function Map() {
     const [userTravelMode, setTravelMode] = useState('DRIVING');
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [userDestination, setDestination] = useState(null);
-
+    const [researchTag, setResearchTag] = useState("hospitals")
 
     /**
      * Définit le centre de la carte et la position de l'utilisasateur à l'adresse saisie
@@ -163,7 +163,7 @@ function Map() {
             location: position,
             radius: searchRadius,
             opennow: true,
-            types: ["hospital"],
+            types: [researchTag],
             keyword: "(emergency) AND ((medical centre) OR hospital)"
         };
         for (let i = 0; i <= 2; i++) {
@@ -171,7 +171,6 @@ function Map() {
             service.nearbySearch(request, (results, status, next_page_token) => {
                 if (status === window.google.maps.places.PlacesServiceStatus.OK) {
                     request.pageToken = next_page_token?.H;
-                    console.log(next_page_token, request);
                     markerList = markerList.concat(results.map(result =>
                         (<Marker
                             key={result.place_id}
@@ -330,10 +329,18 @@ function Map() {
                 )}
 
                 <div className={"travelModeButtonsWrapper"}>
-                    <Select  variant={"filled"} label={"Type de recherche"} placeholder={"Hôpitaux"}>
+                    <Select variant={"filled"}
+                            label={"Type de recherche"}
+                            value={researchTag}
+                            placeholder={"Hôpitaux"}
+                            onChange={(event) => {
+                                setResearchTag(event.target.value);
+                                findNearestHospitals(mapRef, userPos);
+                            }}>
                         <MenuItem value={"hospitals"}>Hôpitaux</MenuItem>
-                        <MenuItem value={"allDoctors"}>Médecins</MenuItem>
-                        <MenuItem value={"radiology"}>Radiologie</MenuItem>
+                        <MenuItem value={"doctors"}>Médecins</MenuItem>
+                        <MenuItem value={"dentists"}>Dentistes</MenuItem>
+                        <MenuItem value={"pharmacies"}>Pharmacies</MenuItem>
                     </Select>
                     <div
                         className={userTravelMode === 'TRANSIT' ? "activeTravelModeButton" : "travelModeButton"}
