@@ -45,7 +45,7 @@ function Map() {
     const [markerMap, setMarkerMap] = useState({});
     const [userPos, setUserPos] = useState({lat: 48.8566, lng: 2.3522});
     const [searchRadius, setRadius] = useState(1500);
-    const [hospitalMarkers, setHospitalMarkers] = useState(null);
+    const [resultsMarkers, setResultsMarkers] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoOpen, setInfoOpen] = useState(false);
     const [directionsPanel, setDirectionsPanel] = useState(false);
@@ -61,7 +61,7 @@ function Map() {
      * Définit le centre de la carte et la position de l'utilisasateur à l'adresse saisie
      * lorsque l'utilisateur utilise la barre de recherche d'adressse.
      */
-    const onPlaceSearched = () => {
+    const onPlaceSearched = async () => {
 
         if (autocomplete !== null) {
 
@@ -76,8 +76,8 @@ function Map() {
 
             //delete old markers and update hospitals nearby
             setInfoOpen(false);
-            setHospitalMarkers(null);
-            findNearestHospitals(mapRef, newCenter);
+            await setResultsMarkers(null);
+            await findNearestResults(mapRef, newCenter);
 
         } else {
             console.log('Autocomplete is not loaded yet!')
@@ -116,8 +116,7 @@ function Map() {
         await requestHospitaldetails(id, map);
         await setSelectedPlace(place);
         setDirectionsPanel(true);
-
-        setInfoOpen(true);
+        await setInfoOpen(true);
 
     };
 
@@ -147,7 +146,7 @@ function Map() {
      * @param {Object} place hôpital
      */
     const onMarkerLoad = (marker, place) => {
-        return setMarkerMap(prevState => {
+        setMarkerMap(prevState => {
             return {...prevState, [place.place_id]: marker};
         });
     };
@@ -158,7 +157,7 @@ function Map() {
      * @param {Object} map référence à l'objet Map parent
      * @param {Object} position position de l'utilisateur (objet LatLng)
      */
-    const findNearestHospitals = (map, position) => {
+    const findNearestResults = async (map, position) => {
         let service = new window.google.maps.places.PlacesService(map);
         let markerList = [];
         let request = {
@@ -168,22 +167,28 @@ function Map() {
             types: [researchTag.type],
             keyword: researchTag.keyword,
         };
+
+        const searchCallback = (results, status, next_page_token) => {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                request.pageToken = next_page_token?.H;
+                markerList = markerList.concat(results
+                    .filter(result => !markerList.map(item => item.key).includes(result.place_id))
+                    .map(result =>
+                    (<Marker
+                        key={result.place_id}
+                        position={result.geometry.location}
+                        icon={hospitalIcon}
+                        onLoad={marker => onMarkerLoad(marker, result)}
+                        onClick={event => onMarkerClick(event, result, result.place_id, map)}
+                    />)));
+                setResultsMarkers(markerList);
+                return markerList;
+            }
+        }
+
         for (let i = 0; i <= 2; i++) {
             //eslint-disable-next-line
-            service.nearbySearch(request, (results, status, next_page_token) => {
-                if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                    request.pageToken = next_page_token?.H;
-                    markerList = markerList.concat(results.map(result =>
-                        (<Marker
-                            key={result.place_id}
-                            position={result.geometry.location}
-                            icon={hospitalIcon}
-                            onLoad={marker => onMarkerLoad(marker, result)}
-                            onClick={event => onMarkerClick(event, result, result.place_id, map)}
-                        />)));
-                    setHospitalMarkers(markerList);
-                }
-            })
+            service.nearbySearch(request, searchCallback);
         }
     };
 
@@ -195,20 +200,21 @@ function Map() {
     const onUpdateRadius = async (radius) => {
         await setRadius(radius);
         await setInfoOpen(false);
-        await findNearestHospitals(mapRef, userPos);
-        if (hospitalMarkers && hospitalMarkers?.length !== 0)
-            await setDestination(hospitalMarkers[0].position);
+        await findNearestResults(mapRef, userPos);
+        if (resultsMarkers && resultsMarkers?.length !== 0) {
+            await setDestination(resultsMarkers[0].position);
+        }
     };
 
     /**
     * Mise à jour du type de résultats (hôpital, médecin, pharmacie) puis des résultats dans les environs
     * @async
     * @param {string} tag tag du type de recherche à effectuer
-    * @todo s'assurer de ne pas avoir de virgules dans l'affichage du rayon
     */
     const onUpdateResearchTag = async(tag) => {
         await setResearchTag(resultTypes[tag]);
-        await findNearestHospitals(mapRef, userPos);
+        await setInfoOpen(false);
+        await findNearestResults(mapRef, userPos)
     }
 
     /**
@@ -229,11 +235,11 @@ function Map() {
                 await map.setCenter(pos);
                 await setUserPos(pos);
                 //use nearest hospitals to geolocated users
-                findNearestHospitals(map, pos);
+                findNearestResults(map, pos);
             }, function () {
             });
         } else {
-            findNearestHospitals(map, userPos);
+            findNearestResults(map, userPos);
         }
     };
 
@@ -301,8 +307,7 @@ function Map() {
                         location={markerMap[selectedPlace.place_id]}
                     />
                 )}
-
-                {hospitalMarkers}
+                {resultsMarkers}
                 {userDestination && <DirectionsService
                     options={{
                         destination: userDestination,
