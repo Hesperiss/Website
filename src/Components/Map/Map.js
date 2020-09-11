@@ -19,6 +19,7 @@ import UberRidePopup from "./Shared/RequestUberPopup";
 import NavBar from "../Landing/Components/Navbar";
 import HospitalInfoPopup from "./Shared/HospitalInfoPopup";
 import Drawer from '@material-ui/core/Drawer';
+import {resultTypes, resultTypesIds} from './Shared/ResultTypes'
 
 /**
  * @module
@@ -53,7 +54,7 @@ function Map() {
     const [userTravelMode, setTravelMode] = useState('DRIVING');
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [userDestination, setDestination] = useState(null);
-    const [researchTag, setResearchTag] = useState("hospitals")
+    const [researchTag, setResearchTag] = useState(resultTypes.hospital)
 
     /**
      * Définit le centre de la carte et la position de l'utilisasateur à l'adresse saisie
@@ -163,8 +164,8 @@ function Map() {
             location: position,
             radius: searchRadius,
             opennow: true,
-            types: [researchTag],
-            keyword: "(emergency) AND ((medical centre) OR hospital)"
+            types: [researchTag.type],
+            keyword: researchTag.keyword,
         };
         for (let i = 0; i <= 2; i++) {
             //eslint-disable-next-line
@@ -186,17 +187,28 @@ function Map() {
     };
 
     /**
-     * Mise à jour du rayon  puis des hôpitaux dans les environs en fonction du nouveau rayon
+     * Mise à jour du rayon  puis des résultats dans les environs en fonction du nouveau rayon
      * @async
      * @param {number} radius nouveau rayon sélectionné par l'utilisateur
-     * @todo s'assurer de ne pas avoir de virgules dans l'affichage du rayon
      */
-    const updateRadiusReloadHospitals = async (radius) => {
+    const onUpdateRadius = async (radius) => {
         await setRadius(radius);
         await setInfoOpen(false);
         await findNearestHospitals(mapRef, userPos);
-        await setDestination(hospitalMarkers[0].position);
+        if (hospitalMarkers && hospitalMarkers?.length !== 0)
+            await setDestination(hospitalMarkers[0].position);
     };
+
+    /**
+    * Mise à jour du type de résultats (hôpital, médecin, pharmacie) puis des résultats dans les environs
+    * @async
+    * @param {string} tag tag du type de recherche à effectuer
+    * @todo s'assurer de ne pas avoir de virgules dans l'affichage du rayon
+    */
+    const onUpdateResearchTag = async(tag) => {
+        await setResearchTag(resultTypes[tag]);
+        await findNearestHospitals(mapRef, userPos);
+    }
 
     /**
      * Mise en place initiale de la map : stockage d'une référence à l'objet map dans le state.
@@ -331,17 +343,13 @@ function Map() {
                 <div className={"travelModeButtonsWrapper"}>
                     <Select variant={"filled"}
                             label={"Type de recherche"}
-                            value={researchTag}
+                            value={researchTag.type}
                             placeholder={"Hôpitaux"}
-                            onChange={(event) => {
-                                setResearchTag(event.target.value);
-                                findNearestHospitals(mapRef, userPos);
-                            }}>
-                        <MenuItem value={"hospitals"}>Hôpitaux</MenuItem>
-                        <MenuItem value={"doctors"}>Médecins</MenuItem>
-                        <MenuItem value={"dentists"}>Dentistes</MenuItem>
-                        <MenuItem value={"pharmacies"}>Pharmacies</MenuItem>
+                            onChange={(event) => onUpdateResearchTag(event.target.value)}>
+                        {resultTypesIds.map(item => (<MenuItem key={item} value={resultTypes[item].type}>{resultTypes[item].label}</MenuItem>))}
+                        )}
                     </Select>
+
                     <div
                         className={userTravelMode === 'TRANSIT' ? "activeTravelModeButton" : "travelModeButton"}
                         onClick={() => setTravelMode('TRANSIT')}>
@@ -372,7 +380,7 @@ function Map() {
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
                             step={5}
-                            onChange={(e, val) => updateRadiusReloadHospitals(val * 1000)}
+                            onChange={(e, val) => onUpdateRadius(val * 1000)}
                             min={10}
                             max={50}
                             className={"slider"}
