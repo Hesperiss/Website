@@ -393,9 +393,9 @@ function Map() {
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
                             step={5}
-                            onChange={(e, val) => onUpdateRadius(val * 1000)}
+                            onChange={(e, val) => onUpdateRadius(val * 100)}
                             min={10}
-                            max={50}
+                            max={80}
                             className={"slider"}
                         />
                     </div>
