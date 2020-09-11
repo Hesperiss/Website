@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {Helmet} from "react-helmet";
+import {
     GoogleMap,
     Marker,
     DirectionsService,
     Autocomplete,
     DirectionsRenderer
-} from '@react-google-maps/api'
+} from '@react-google-maps/api';
 import {mapOptions} from "./Shared/MapOptions";
 import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
