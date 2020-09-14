@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Helmet} from "react-helmet";
 import {
     GoogleMap,
@@ -58,27 +58,31 @@ function Map() {
     const [researchTag, setResearchTag] = useState(resultTypes.hospital)
 
     /**
+     * When the radius, the research tag or the user position is updated,
+     * Update nearby results
+     */
+    useEffect(() => {
+        setInfoOpen(false);
+        findNearestResults(mapRef, userPos);
+    }, [researchTag, searchRadius, userPos, mapRef]);
+
+    useEffect(() => {
+        if (resultsMarkers && resultsMarkers.length >= 0)
+            setDestination(resultsMarkers[0].position);
+    }, [resultsMarkers]);
+
+    /**
      * Définit le centre de la carte et la position de l'utilisasateur à l'adresse saisie
      * lorsque l'utilisateur utilise la barre de recherche d'adressse.
      */
     const onPlaceSearched = async () => {
 
         if (autocomplete !== null) {
-
             //set new map center and user position
-            let newCenter = autocomplete.getPlace().geometry.location;
+            const newCenter = autocomplete.getPlace().geometry.location;
             mapRef.setCenter(newCenter);
             setUserPos(newCenter);
             userMarker.setPosition(newCenter);
-
-            //reset destination or the directions update themselves
-            setDestination(null);
-
-            //delete old markers and update hospitals nearby
-            setInfoOpen(false);
-            await setResultsMarkers(null);
-            await findNearestResults(mapRef, newCenter);
-
         } else {
             console.log('Autocomplete is not loaded yet!')
         }
@@ -157,7 +161,7 @@ function Map() {
      * @param {Object} map référence à l'objet Map parent
      * @param {Object} position position de l'utilisateur (objet LatLng)
      */
-    const findNearestResults = async (map, position) => {
+    const findNearestResults = (map, position) => {
         let service = new window.google.maps.places.PlacesService(map);
         let markerList = [];
         let request = {
@@ -168,12 +172,10 @@ function Map() {
             keyword: researchTag.keyword,
         };
 
-        const searchCallback = async (results, status, next_page_token) => {
-            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                request.pageToken = next_page_token?.H;
-                markerList = markerList.concat(results
-                    .filter(result => !markerList.map(item => item.key).includes(result.place_id))
-                    .map(result =>
+        const searchCallback = (results, next_page_token) => {
+            let list = markerList.concat(results
+                //.filter(result => !markerList.map(item => item.key).includes(result.place_id))
+                .map(result =>
                     (<Marker
                         key={result.place_id}
                         position={result.geometry.location}
@@ -181,44 +183,27 @@ function Map() {
                         onLoad={marker => onMarkerLoad(marker, result)}
                         onClick={event => onMarkerClick(event, result, result.place_id, map)}
                     />)));
-                await setResultsMarkers(markerList);
-                if (resultsMarkers && resultsMarkers?.length !== 0) {
-                    setDestination(resultsMarkers[0].position);
+            return {list: list, nextPage: next_page_token?.H};
+        }
+
+        let asyncJob = new Promise(function (resolve) {
+            service.nearbySearch(request, function(results, status, next_page_token) {
+                if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                    return resolve(searchCallback(results, next_page_token));
                 }
-                return markerList;
-            }
-        }
+            });
+        });
 
-        for (let i = 0; i <= 2; i++) {
-            //eslint-disable-next-line
-            service.nearbySearch(request, searchCallback);
-        }
+        //fetch all (max 3) pages results
+        asyncJob.then((page1) => {
+            request.pageToken = page1?.nextPage;
+            asyncJob.then((page2) => {
+                request.pageToken = page2?.nextPage;
+                asyncJob.then((page3) => setResultsMarkers(page3.list))
+            })
+        })
+
     };
-
-    /**
-     * Mise à jour du rayon  puis des résultats dans les environs en fonction du nouveau rayon
-     * @async
-     * @param {number} radius nouveau rayon sélectionné par l'utilisateur
-     */
-    const onUpdateRadius = async (radius) => {
-        await setRadius(radius);
-        await setInfoOpen(false);
-        await findNearestResults(mapRef, userPos);
-        if (resultsMarkers && resultsMarkers?.length !== 0) {
-            await setDestination(resultsMarkers[0].position);
-        }
-    };
-
-    /**
-    * Mise à jour du type de résultats (hôpital, médecin, pharmacie) puis des résultats dans les environs
-    * @async
-    * @param {string} tag tag du type de recherche à effectuer
-    */
-    const onUpdateResearchTag = async(tag) => {
-        await setResearchTag(resultTypes[tag]);
-        await setInfoOpen(false);
-        await findNearestResults(mapRef, userPos)
-    }
 
     /**
      * Mise en place initiale de la map : stockage d'une référence à l'objet map dans le state.
@@ -230,16 +215,14 @@ function Map() {
         setMapRef(map);
         //use geolocation if user allows it and set user position to geolocation
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(async function (position) {
+            navigator.geolocation.getCurrentPosition(function (position) {
                 let pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                await map.setCenter(pos);
-                await setUserPos(pos);
-                //use nearest hospitals to geolocated users
-                findNearestResults(map, pos);
-            }, function () {
+                map.setCenter(pos);
+                setUserPos(pos);
+            }, function() {
             });
         } else {
             findNearestResults(map, userPos);
@@ -357,7 +340,7 @@ function Map() {
                             label={"Type de recherche"}
                             value={researchTag.type}
                             placeholder={"Tyep de recherche"}
-                            onChange={(event) => onUpdateResearchTag(event.target.value)}>
+                            onChange={(event) => setResearchTag(resultTypes[event.target.value])}>
                         {resultTypesIds.map(item => (<MenuItem key={item} value={resultTypes[item].type}>{resultTypes[item].label}</MenuItem>))}
                         )}
                     </Select>
@@ -393,7 +376,7 @@ function Map() {
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
                             step={5}
-                            onChange={(e, val) => onUpdateRadius(val * 100)}
+                            onChange={(e, val) => setRadius(val * 100)}
                             min={10}
                             max={80}
                             className={"slider"}
