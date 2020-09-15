@@ -22,6 +22,6 @@ export default class KwiliChat {
 		this.socket.on("connect", () => {});
 	}
 	send(message) {
-		this.socket.emit("customer message", message, () => {});
+		this.socket.emit("message", message, () => {});
 	}
 }
