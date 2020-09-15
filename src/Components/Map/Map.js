@@ -55,14 +55,17 @@ function Map() {
     const [userTravelMode, setTravelMode] = useState('DRIVING');
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [userDestination, setDestination] = useState(null);
-    const [researchTag, setResearchTag] = useState(resultTypes.hospital)
+    const [researchTag, setResearchTag] = useState(resultTypes.hospital);
+    const [nextPageToken, setNextPageToken] = useState(null);
 
     /**
+     * @TODO wrap findNearestResults() in custom hook
      * When the radius, the research tag or the user position is updated,
      * Update nearby results
      */
     useEffect(() => {
         setInfoOpen(false);
+        /* eslint-disable*/
         findNearestResults(mapRef, userPos);
     }, [researchTag, searchRadius, userPos, mapRef]);
 
@@ -70,6 +73,18 @@ function Map() {
         if (resultsMarkers && resultsMarkers.length >= 0)
             setDestination(resultsMarkers[0].position);
     }, [resultsMarkers]);
+
+    /**
+     * @TODO wrap findNearestResults() in hook
+     * if places api request has next page, do a request for the next page
+     */
+    useEffect(() => {
+        if (nextPageToken) {
+            // eslint-disable-next-line
+            findNearestResults(mapRef, userPos, true);
+        }
+        setNextPageToken(null);
+    }, [nextPageToken, mapRef, userPos]);
 
     /**
      * Définit le centre de la carte et la position de l'utilisasateur à l'adresse saisie
@@ -156,14 +171,25 @@ function Map() {
     };
 
     /**
-     * Cette fonction récupère les hôpitaux les plus proches dans le rayon actuellement sélectionné
-     * @todo récupérer plus de résultats : seuls les 20 résultats "les plus pertinents" selon l'API sont récupérés, ce qui résultse actuellement en des résultats imprévisibles avec un grand rayon
+     * concatène les résultats des différentes pages si le tag est le même
+     * @param newResults markers correspondant à la nouvelle page dé résultats
+     */
+    const concatPagesResults = (newResults) => {
+        const allResults = resultsMarkers ? resultsMarkers.concat(
+            newResults.filter(result => !resultsMarkers.includes(result))
+        ) : newResults;
+        setResultsMarkers(allResults);
+    }
+
+    /**
+     * @TODO wrap in react hook
+     * Cette fonction récupère les résultats les plus proches dans le rayon actuellement sélectionné
      * @param {Object} map référence à l'objet Map parent
      * @param {Object} position position de l'utilisateur (objet LatLng)
+     * @param {Boolean} hasNextPage
      */
-    const findNearestResults = (map, position) => {
+    const findNearestResults = (map, position, hasNextPage = false) => {
         let service = new window.google.maps.places.PlacesService(map);
-        let markerList = [];
         let request = {
             location: position,
             radius: searchRadius,
@@ -172,8 +198,12 @@ function Map() {
             keyword: researchTag.keyword,
         };
 
+        if (hasNextPage) {
+            request.pageToken = nextPageToken;
+        }
+
         const searchCallback = (results, next_page_token) => {
-            let list = markerList.concat(results
+            let list = results
                 //.filter(result => !markerList.map(item => item.key).includes(result.place_id))
                 .map(result =>
                     (<Marker
@@ -182,7 +212,7 @@ function Map() {
                         icon={hospitalIcon}
                         onLoad={marker => onMarkerLoad(marker, result)}
                         onClick={event => onMarkerClick(event, result, result.place_id, map)}
-                    />)));
+                    />));
             return {list: list, nextPage: next_page_token?.H};
         }
 
@@ -194,14 +224,10 @@ function Map() {
             });
         });
 
-        //fetch all (max 3) pages results
         asyncJob.then((page1) => {
-            request.pageToken = page1?.nextPage;
-            asyncJob.then((page2) => {
-                request.pageToken = page2?.nextPage;
-                asyncJob.then((page3) => setResultsMarkers(page3.list))
-            })
-        })
+            setNextPageToken(page1?.nextPage);
+            concatPagesResults(page1.list);
+        });
 
     };
 
@@ -241,6 +267,7 @@ function Map() {
             }
         }
     };
+
 
     /**
      * Rendering du composant carte et de ses sous-composants.
