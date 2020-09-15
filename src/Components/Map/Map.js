@@ -10,7 +10,7 @@ import {
 import {mapOptions} from "./Shared/MapOptions";
 import userIcon from "../../Images/user_marker.png"
 import "./Map.scss"
-import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
+import {FaWalking, FaCar, FaBusAlt, FaHome, FaChevronLeft} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
 import Select from '@material-ui/core/Select';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -342,7 +342,10 @@ function Map() {
                             elevation={10}
                             transitionDuration={{enter: 300, exit: 300}}
                             className={"directionsPanel"}>
-                            <div id={"directions-panel"} className={"directionsSteps"}></div>
+                            <div className={"directionsWrapper"}>
+                                <div id={"directions-panel"} className={"directionsSteps"}></div>
+                                <FaChevronLeft className={"FaChevronLeft"}/>
+                            </div>
                         </Drawer>
                         <DirectionsRenderer
                             directions={directionsResponse}

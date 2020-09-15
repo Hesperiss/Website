@@ -243,3 +243,15 @@ $theme-gray: #242f3e;
     font-size: 14px !important;
   }
 }
+
+.directionsWrapper {
+  display: flex;
+  flex-flow: row;
+  place-items: center;
+  align-self: center;
+  justify-self: center;
+}
+
+.FaChevronLeft {
+  margin-right: 10px;
+}
