@@ -114,7 +114,8 @@ export default function RequestUberPopup(props) {
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle classes={{root: "dialogTitle"}}>
-                    <h3>{"Se rendre à l'hôpital en UBER"}</h3></DialogTitle>
+                    <h3>{"Se rendre à l'hôpital en UBER"}</h3>
+                </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         <p><strong>Appeler un UBER pour se rendre à l'hôpital ?</strong><br/>
