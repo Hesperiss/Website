@@ -8,7 +8,6 @@ import {
     DirectionsRenderer
 } from '@react-google-maps/api';
 import {mapOptions} from "./Shared/MapOptions";
-import hospitalIcon from "../../Images/map_marker.png"
 import userIcon from "../../Images/user_marker.png"
 import "./Map.scss"
 import {FaWalking, FaCar, FaBusAlt, FaHome} from "react-icons/all";
@@ -59,7 +58,7 @@ function Map() {
     const [nextPageToken, setNextPageToken] = useState(null);
 
     /**
-     * @TODO wrap findNearestResults() in custom hook
+     * @TODO wrap findNearestResults in custom hook
      * When the radius, the research tag or the user position is updated,
      * Update nearby results
      */
@@ -71,11 +70,11 @@ function Map() {
 
     useEffect(() => {
         if (resultsMarkers && resultsMarkers.length >= 0)
-            setDestination(resultsMarkers[0].position);
+            setDestination(resultsMarkers[0]?.position);
     }, [resultsMarkers]);
 
     /**
-     * @TODO wrap findNearestResults() in hook
+     * @TODO wrap findNearestResults in hook
      * if places api request has next page, do a request for the next page
      */
     useEffect(() => {
@@ -174,11 +173,15 @@ function Map() {
      * concatène les résultats des différentes pages si le tag est le même
      * @param newResults markers correspondant à la nouvelle page dé résultats
      */
-    const concatPagesResults = (newResults) => {
-        const allResults = resultsMarkers ? resultsMarkers.concat(
-            newResults.filter(result => !resultsMarkers.includes(result))
-        ) : newResults;
-        setResultsMarkers(allResults);
+    const concatPagesResults = (newResults, resetResults = false) => {
+        if (!resultsMarkers || resultsMarkers === [] || resetResults) {
+            setResultsMarkers(newResults);
+        } else {
+            const allResults = resultsMarkers
+                ? resultsMarkers.concat(newResults.filter(result => !resultsMarkers.includes(result)))
+                : newResults;
+            setResultsMarkers(allResults);
+        }
     }
 
     /**
@@ -204,12 +207,11 @@ function Map() {
 
         const searchCallback = (results, next_page_token) => {
             let list = results
-                //.filter(result => !markerList.map(item => item.key).includes(result.place_id))
                 .map(result =>
                     (<Marker
                         key={result.place_id}
                         position={result.geometry.location}
-                        icon={hospitalIcon}
+                        icon={researchTag.icon}
                         onLoad={marker => onMarkerLoad(marker, result)}
                         onClick={event => onMarkerClick(event, result, result.place_id, map)}
                     />));
@@ -251,7 +253,7 @@ function Map() {
             }, function() {
             });
         } else {
-            findNearestResults(map, userPos);
+            setUserPos(userPos);
         }
     };
 
@@ -405,7 +407,7 @@ function Map() {
                             step={5}
                             onChange={(e, val) => setRadius(val * 100)}
                             min={10}
-                            max={80}
+                            max={200}
                             className={"slider"}
                         />
                     </div>
