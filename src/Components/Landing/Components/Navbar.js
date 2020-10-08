@@ -23,7 +23,7 @@ function NavBarLanding() {
 
                 <input
                     type="button"
-                    value="Chatbot"
+                    value="Chat en ligne"
                     href=""
                     border="none"
                     onClick={toggleWidget}
