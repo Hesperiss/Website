@@ -2,6 +2,7 @@ import React from 'react';
 import '../Landing.scss';
 import KwiliLogo from "../../../Images/logo_kwili.png"
 import ChatBotWidget from '../../Chat/ChatBotWidget';
+import { toggleWidget } from 'react-chat-widget';
 
 /**
  * Barre de navigation du site Kwili.
@@ -20,10 +21,19 @@ function NavBarLanding() {
                     <a style={{ color: 'white' }} href='/'>KWILI</a>
                 </div>
 
+                <input
+                    type="button"
+                    value="Chatbot"
+                    href=""
+                    border="none"
+                    onClick={toggleWidget}
+                    className="navBarButton"
+                />
+
                 <a href='/map'>
                     <input
                         type="submit"
-                        value="Trouver des urgences"
+                        value="Carte des hôpitaux"
                         href="/map"
                         className="navBarButton"
 
