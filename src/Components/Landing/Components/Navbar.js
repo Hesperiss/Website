@@ -33,7 +33,7 @@ function NavBarLanding() {
                 <a href='/map'>
                     <input
                         type="submit"
-                        value="Trouver des urgences"
+                        value="Carte des hôpitaux"
                         href="/map"
                         className="navBarButton"
 
