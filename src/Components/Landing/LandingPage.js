@@ -6,6 +6,8 @@ import FeaturesDescription from "./Components/FeaturesDescription";
 import PreviewSection from "./Components/PreviewSection";
 import ContactForm from "./Components/ContactForm";
 import phoneDemo from "../../Images/phone_section1.png";
+import { FaArrowDown } from "react-icons/fa";
+
 
 /**
  * Il s'agit du composant principal de la Landing page.
@@ -53,7 +55,9 @@ class LandingPage extends React.Component {
 							<h1>KWILI</h1>
 							<p>Un moyen simple et rapide pour accéder aux urgences.<br />
 								Une première prise en charge en ligne.</p>
-							<input type="submit" value="En savoir plus" onClick={() => this.slideToAnchorLink()} />
+							<button onClick={() => this.slideToAnchorLink()}>
+								Aperçu <FaArrowDown />
+							</button>
 						</div>
 					</div>
 
