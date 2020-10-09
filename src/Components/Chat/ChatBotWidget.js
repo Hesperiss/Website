@@ -9,7 +9,7 @@ import {
 	toggleWidget,
 	toggleMsgLoader,
 } from "react-chat-widget";
-import KwiliLogo from "../../Images/doctor.svg";
+import KwiliLogo from "../../Images/doctor.png";
 
 import anchorme from "anchorme";
 import "react-chat-widget/lib/styles.css";
