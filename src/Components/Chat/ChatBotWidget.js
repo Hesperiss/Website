@@ -8,6 +8,7 @@ import {
 	dropMessages,
 	toggleWidget,
 	toggleMsgLoader,
+	addLinkSnippet
 } from "react-chat-widget";
 import KwiliLogo from "../../Images/doctor.svg";
 
@@ -113,6 +114,12 @@ export default class ChatBotWidget extends Component {
 	 * @param {string} msg - message reçu depuis le backend
 	 */
 	messageReceived = (msg) => {
+		const cr = "Souhaitez vous que je pose des questions personnelles pour écrire un compte-rendu plus précis ?";
+		const redirect_to_map_msg = " Basé sur les informations que vous nous avez fournies, nous vous conseillons de vous rendre aux urgences les plus proches afin de vous faire examiner rapidement. Vous pouvez les trouver grâce à notre carte disponible ici:"
+		const doctolib_emergency = "Si vous souhaitez tout de même vous rendre chez le médecin, vous pouvez prendre un rendez-vous ici:";
+		let is_emer = false;
+		const redirect_to_doctolib = "Basé sur les informations que vous nous avez fournies, nous vous conseillons de vous rendre chez un médecin généraliste afin que vous puissiez vous faire examiner. Vous pouvez prendre un rendez-vous ici:";
+		const map_normal = "Si toutefois la douleur venait à s'intensifier, nous vous conseillons de vous rendre aux urgences les plus proches de chez vous. Vous pouvez les trouver grâce à notre carte disponible ici:";
 		const list = anchorme.list(msg);
 		for (let i = 0; i < list.length; ++i) {
 			msg = msg.replace(
@@ -120,7 +127,35 @@ export default class ChatBotWidget extends Component {
 				`[${list[i].string}](${list[i].string})`
 			);
 		}
-		addResponseMessage(msg);
+		if (msg === cr && is_emer) {
+			addResponseMessage(redirect_to_map_msg);
+			addLinkSnippet({
+				title: 'Carte des urgences',
+				link: 'https://www.kwili.fr/map',
+				target: '_blank'
+			});
+			addResponseMessage(doctolib_emergency);
+			addLinkSnippet({
+				title: 'Doctolib',
+				link: 'https://www.doctolib.fr/medecin-generaliste',
+				target: '_blank'
+			});
+		} else if (msg === cr) {
+			addResponseMessage(redirect_to_doctolib);
+			addLinkSnippet({
+				title: 'Doctolib',
+				link: 'https://www.doctolib.fr/medecin-generaliste',
+				target: '_blank'
+			});
+			addResponseMessage(map_normal);
+			addLinkSnippet({
+				title: 'Carte des urgences',
+				link: 'https://www.kwili.fr/map',
+				target: '_blank'
+			});
+		} else {
+			addResponseMessage(msg);
+		}
 		if (msg.indexOf("?") !== -1) {
 			this.setState({
 				badge: this.state.badge + 1,
