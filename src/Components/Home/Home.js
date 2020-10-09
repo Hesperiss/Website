@@ -18,7 +18,7 @@ export default class HomePage extends React.Component {
 
                 <div className={"textWrapper"}>
                     <h1>Kwili</h1>
-                    <h2>Jamais aller aux urgences n'aura été aussi simple !</h2>
+                    <h2>Un accompagnement personnalisé pour vous conseiller dans votre urgence</h2>
                 </div>
 
                 <div className={"descBoxWrapper"}>
@@ -29,7 +29,7 @@ export default class HomePage extends React.Component {
                             </div>
                         </div>
                         <h3>Chat en ligne</h3>
-                        <p>Rentrez en contact avec notre CHATBOT, il vous prendra en charge avant même d'être physiquement à l'hôpital.</p>
+                        <p>Rentrez en contact avec Emma, notre assistante virtuelle ! Elle vous conseillera sur votre situation et les mesures à prendre.</p>
                     </Button>
                     <div id={"docImage"}> </div>
 
@@ -40,7 +40,7 @@ export default class HomePage extends React.Component {
                         </div>
                     </div>
                     <h3>Carte des hôpitaux</h3>
-                    <p>Grâce à notre carte des hopitaux, nous vous trouvons automatiquement le meilleur itinéraire pour l'hôpital le plus proche, tout en bénéfiçiant d'informations en temps réel.</p>
+                    <p>Notre service vous redirigera automatiquement vers les services de santé les plus proches de chez vous.</p>
                 </Button>
                 </div>
 

@@ -9,12 +9,12 @@ import {FaCommentMedical, FaMapMarkedAlt, FaUserLock} from "react-icons/all";
 const descBoxes = [
 {
     title: "Chat en ligne",
-    text: "Ce chat entre l'urgentiste et le patient, permet d'être pris en charge avant même d'être physiquement à l'hôpital.",
+    text: "Rentrez en contact avec Emma, notre assistante virtuelle ! Elle vous conseillera sur votre situation et les mesures à prendre.",
     icon: <FaCommentMedical className ="icon"/>,
 },
 {
     title: "Géolocalisation",
-    text: "Grace à notre carte des hopitaux, nous vous trouvons automatiquement le meilleur itinéraire pour l'hôpital le plus proche, tout en bénéfiçiant d'informations en temps réel.",
+    text: " Grâce à notre carte, nous vous trouvons automatiquement les centres de soins les plus proches de chez vous. Du médecin à l’hôpital, en passant par la pharmacie ou le dentiste, votre itinéraire est calculé automatiquement à partir de votre mode de transport.",
     icon: <FaMapMarkedAlt className ="icon"/>,
 },
 {
@@ -58,7 +58,7 @@ function displayFeaturesDescriptionBoxes() {
 
             <div className={"textWrapper"}>
                 <h2 className={"sectionTitle"}>Notre vision</h2>
-                <p className={"sectionSubtitle"}>Jamais aller aux urgences n'aura été aussi simple !</p>
+                <p className={"sectionSubtitle"}>Un accompagnement personnalisé pour vous conseiller dans votre urgence</p>
             </div>
 
             <div className={"descBoxWrapper"}>
