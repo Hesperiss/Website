@@ -138,7 +138,6 @@ export default class ChatBotWidget extends Component {
     addResponseMessage(
       "Bonjour et bienvenue sur Kwili ! Je suis Emma, votre assistante virtuelle"
     );
-    addResponseMessage("Comment puis-je vous aider ?");
   }
 
   /**
