@@ -37,8 +37,8 @@ export default class ChatBotWidget extends Component {
 				handleNewUserMessage={this.handleNewUserMessage}
 				handleQuickButtonClicked={this.handleQuickButton}
 				profileAvatar={KwiliLogo}
-				showCloseButton={!this.fullscreen}
-				title="Chatbot"
+				showCloseBu en lignen={!this.fullscreen}
+				title="Chat en ligne"
 				subtitle="Expliquez-nous votre problème"
 				senderPlaceHolder="Aa"
 			/>
