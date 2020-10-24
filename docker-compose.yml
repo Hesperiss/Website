@@ -12,7 +12,7 @@ services:
       - ./build:/usr/share/nginx/html
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   mail_server:
-    image: node:12.18.2
+    image: node:14.14.0
     ports:
       - "3000:3000"
     volumes:
