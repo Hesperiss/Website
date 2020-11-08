@@ -45,54 +45,16 @@ export default class ChatBotWidget extends Component {
     if (this.fullscreen) {
       toggleWidget();
     }
-    this.quickButtons = [
-      [
-        {
-          label: "Au ventre",
-          value: "Au ventre",
-        },
-        {
-          label: "À la tête",
-          value: "À la tête",
-        },
-        {
-          label: "Au dos",
-          value: "Au dos",
-        },
-      ],
-      [
-        {
-          label: "J'ai mal",
-          value: "J'ai mal",
-        },
-      ],
-      [
-        {
-          label: "Bonjour",
-          value: "Bonjour",
-        },
-      ],
-    ];
   }
 
   /**
    * Rafraîchit l'affichage des boutons de selection rapide
    */
-  refreshQuickButtons = () => {
-    if (this.quickButtons.length > 0) {
-      setQuickButtons(this.quickButtons[this.quickButtons.length - 1]);
+  refreshQuickButtons = (quick_replies) => {
+    if (quick_replies) {
+      setQuickButtons(quick_replies['fr'].map(({title, value}) => ({label: title, value: value})));
     } else {
       setQuickButtons([]);
-    }
-  };
-
-  /**
-   * Applique le passage d'une suite de boutons d'action rapide à l'autre
-   */
-  iterateQuickButtons = () => {
-    if (this.quickButtons.length > 0) {
-      this.quickButtons.pop();
-      this.refreshQuickButtons();
     }
   };
 
@@ -103,7 +65,6 @@ export default class ChatBotWidget extends Component {
   handleQuickButton = (msg) => {
     addUserMessage(msg);
     this.handleNewUserMessage(msg);
-    this.iterateQuickButtons();
   };
 
   /**
@@ -111,16 +72,17 @@ export default class ChatBotWidget extends Component {
    * Si le message est une question, cela active le badge de notification
    * @param {string} msg - message reçu depuis le backend
    */
-  messageReceived = (msg) => {
-    const list = anchorme.list(msg);
+  messageReceived = ({question, quick_replies, ...res}) => {
+    const list = anchorme.list(question);
     for (let i = 0; i < list.length; ++i) {
-      msg = msg.replace(
+      question = question.replace(
         list[i].string,
         `[${list[i].string}](${list[i].string})`
       );
     }
-    addResponseMessage(msg);
-    if (msg.indexOf("?") !== -1) {
+    addResponseMessage(question);
+    this.refreshQuickButtons(quick_replies);
+    if (question.indexOf("?") !== -1) {
       this.setState({
         badge: this.state.badge + 1,
       });
