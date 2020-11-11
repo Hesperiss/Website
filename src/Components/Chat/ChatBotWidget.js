@@ -52,7 +52,7 @@ export default class ChatBotWidget extends Component {
    */
   refreshQuickButtons = (quick_replies) => {
     if (quick_replies) {
-      setQuickButtons(quick_replies['fr'].map(({title, value}) => ({label: title, value: value})));
+      setQuickButtons(quick_replies.map(({title, value}) => ({label: title, value: value})));
     } else {
       setQuickButtons([]);
     }
