@@ -1,35 +1,45 @@
 version: '3'
 services:
+# Nginx service
   nginx:
     image: nginx
     logging:
       driver: none
+#HTTP and HTTPS ports
     ports:
       - "80:80"
       - "443:443"
+#Copy files (nginx conf, certbot, ssl certs, Kwili build)
     volumes:
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - ./build:/usr/share/nginx/html
+#Reload nginx every 6 hours
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+#Mail server
   mail_server:
     image: node:14.14.0
     logging:
       driver: none
     ports:
       - "3000:3000"
+#Copy files (letsencrypt, certs, server config files with credentials)
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - /home/kwili2021/Kwili/Mail_server_config:/var/www/Mail_server
+#Start mail server
     command: "/bin/sh -c 'cd /var/www/Mail_server && npm install && ./node_modules/.bin/nodemon -r ./node_modules/esm  smtp_transport.js'"
+#Certbot
   certbot:
     image: certbot/certbot
     logging:
       driver: none
+#Copy certbot and letsencrypt files
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+#Check every 12h if certs are due to renewal
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
