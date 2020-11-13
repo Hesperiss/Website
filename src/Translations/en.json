@@ -1,1 +1,18 @@
-{}
+{
+    "Home.Tagline" : "Personalised support to advise you in your emergency",
+    "Home.ChatTitle" : "Online Chat",
+    "Home.ChatDesc" : "Get in touch with Emma, our virtual assistant! She will advise you on your situation and the measures to be taken.",
+    "Home.MapTitle" : "Hospitals map",
+    "Home.MapDesc" : "Our service will automatically redirect you to the health services closest to you.",
+    "Home.LearnMore" : "Learn more",
+
+    "Navbar.Chat" : "Online Chat",
+    "Navbar.Hospitals" : "Hospitals map",
+    "Navbar.Landing" : "Who are we ?",
+    "Navbar.App" : "Application",
+    "Navbar.Application" : "Application",
+
+
+    "NotFound.Desc" : "The page you are looking for is not available, it may have been modified or removed.",
+    "NotFound.Home" : "Home"
+}

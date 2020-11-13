@@ -1,1 +1,18 @@
-{}
+{
+    "Home.Tagline" : "Un accompagnement personnalisé pour vous conseiller dans votre urgence",
+    "Home.ChatTitle" : "Chat en ligne",
+    "Home.ChatDesc" : "Rentrez en contact avec Emma, notre assistante virtuelle ! Elle vous conseillera sur votre situation et les mesures à prendre.",
+    "Home.MapTitle" : "Carte des hôpitaux",
+    "Home.MapDesc" : "Notre service vous redirigera automatiquement vers les services de santé les plus proches de chez vous.",
+    "Home.LearnMore" : "En savoir plus",
+
+    "Navbar.Chat" : "Chat en ligne",
+    "Navbar.Hospitals" : "Carte des hôpitaux",
+    "Navbar.Landing" : "Qui sommes-nous ?",
+    "Navbar.App" : "Application",
+    "Navbar.Application" : "Application",
+
+
+    "NotFound.Desc" : "La page que vous recherchez n'est pas disponible, elle a peut-être été modifiée ou retirée.",
+    "NotFound.Home" : "Accueil"
+}
