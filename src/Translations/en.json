@@ -30,6 +30,9 @@
     "Landing.Tagline" : "A quick and easy way to access emergencies.{code}A first online treatment.",
     "Landing.Scroll": "Preview",
 
+    "Map.Search" : "Find an address...",
+    "Map.SearchRadius" : "Search radius: {value}km",
+
     "Navbar.Chat" : "Online Chat",
     "Navbar.Hospitals" : "Hospitals map",
     "Navbar.Landing" : "Who are we ?",

@@ -28,7 +28,10 @@
     "Home.LearnMore" : "En savoir plus",
 
     "Landing.Tagline" : "Un moyen simple et rapide pour accéder aux urgences.{code}Une première prise en charge en ligne.",
-    "Landing.Scroll": "Aperçu",
+    "Landing.Scroll" : "Aperçu",
+
+    "Map.Search" : "Rechercher une adresse...",
+    "Map.SearchRadius" : "Rayon de la recherche: {value}km",
 
     "Navbar.Chat" : "Chat en ligne",
     "Navbar.Hospitals" : "Carte des hôpitaux",
