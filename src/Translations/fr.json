@@ -1,4 +1,7 @@
 {
+    "Chat.Title" : "Chat en ligne",
+    "Chat.Subtitle" : "Expliquez-nous votre problème",
+
     "ContactForm.Title" : "Nous contacter",
     "ContactForm.Info" : "Une question ? Une remarque ? Une suggestion ?{code}N'hésitez pas à nous en faire part.",
     "ContactForm.Name" : "Nom",

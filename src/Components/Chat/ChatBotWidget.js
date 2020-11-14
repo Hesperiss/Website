@@ -9,6 +9,7 @@ import {
   toggleWidget,
   toggleMsgLoader,
 } from "react-chat-widget";
+import { FormattedMessage } from 'react-intl';
 import KwiliLogo from "../../Images/doctor.png";
 
 import anchorme from "anchorme";
@@ -37,8 +38,8 @@ export default class ChatBotWidget extends Component {
         handleQuickButtonClicked={this.handleQuickButton}
         profileAvatar={KwiliLogo}
         showCloseButton={!this.fullscreen}
-        title="Chat en ligne"
-        subtitle="Expliquez-nous votre problème"
+        title={<FormattedMessage id="Chat.Title" defaultMessage="Chat en ligne" />}
+        subtitle={<FormattedMessage id="Chat.Subtitle" defaultMessage="Expliquez-nous votre problème" />}
         senderPlaceHolder="Aa"
       />
     );
