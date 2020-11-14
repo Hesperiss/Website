@@ -1,4 +1,13 @@
 {
+    "ContactForm.Title" : "Contact us",
+    "ContactForm.Info" : "A question? A comment? A suggestion?{code}Do not hesitate to let us know.",
+    "ContactForm.Name" : "Name",
+    "ContactForm.Email" : "Email",
+    "ContactForm.Subject" : "Subject",
+    "ContactForm.Message" : "Message",
+    "ContactForm.Send" : "Send",
+    "ContactForm.Legal" : "Kwili is a project carried out by a team of students as part of{code}Epitech Innovative Projects. © 2018",
+
     "Home.Tagline" : "Personalised support to advise you in your emergency",
     "Home.ChatTitle" : "Online Chat",
     "Home.ChatDesc" : "Get in touch with Emma, our virtual assistant! She will advise you on your situation and the measures to be taken.",
@@ -11,7 +20,6 @@
     "Navbar.Landing" : "Who are we ?",
     "Navbar.App" : "Application",
     "Navbar.Application" : "Application",
-
 
     "NotFound.Desc" : "The page you are looking for is not available, it may have been modified or removed.",
     "NotFound.Home" : "Home"
