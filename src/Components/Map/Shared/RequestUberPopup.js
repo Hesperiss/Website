@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {FaUber, FaCar, FaClock} from "react-icons/all";
+import { FormattedMessage } from 'react-intl';
 import "../Map.scss";
 import "./PopupDialog.scss";
 
@@ -114,13 +115,15 @@ export default function RequestUberPopup(props) {
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle classes={{root: "dialogTitle"}}>
-                    <h3>{"Se rendre à l'hôpital en UBER"}</h3>
+                    <h3>
+                        <FormattedMessage id="RequestUber.Title" defaultMessage="Se rendre à l'hôpital en UBER"/>
+                    </h3>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <p><strong>Appeler un UBER pour se rendre à l'hôpital ?</strong><br/>
-                        Choisir cette option ouvrira une l'application ou le
-                        site UBER avec une course paramétrée entre votre position et celle de l'hôpital.</p>
+                        <p><strong><FormattedMessage id="RequestUber.Subtitle" defaultMessage="Appeler un UBER pour se rendre à l'hôpital ?"/></strong><br/>
+                            <FormattedMessage id="RequestUber.Desc" defaultMessage="Choisir cette option ouvrira une l'application ou le site UBER avec une course paramétrée entre votre position et celle de l'hôpital."/>
+                        </p>
                     </DialogContentText>
                     <div className={"uberPopupIcons"}>
                         <FaClock className={"icon"}/>
@@ -132,13 +135,13 @@ export default function RequestUberPopup(props) {
                         onClick={handleClose}
                         color="primary"
                         classes={{textPrimary: "uberDialogButtons"}}>
-                        Non
+                        <FormattedMessage id="RequestUber.No" defaultMessage="Non"/>
                     </Button>
                     <Button
                         onClick={requestUberRide}
                         color="primary"
                         classes={{textPrimary: "uberDialogButtons"}}>
-                        Oui
+                        <FormattedMessage id="RequestUber.Yes" defaultMessage="Oui"/>
                     </Button>
                 </DialogActions>
             </Dialog>
