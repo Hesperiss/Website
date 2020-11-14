@@ -8,12 +8,24 @@
     "ContactForm.Send" : "Send",
     "ContactForm.Legal" : "Kwili is a project carried out by a team of students as part of{code}Epitech Innovative Projects. © 2018",
 
+    "Features.Title" : "Our vision",
+    "Features.Text" : "Personalised support to advise you in your emergency",
+    "Features.ChatTitle" : "Online Chat",
+    "Features.ChatText" : "Get in touch with Emma, our virtual assistant! She will advise you on your situation and the measures to be taken.",
+    "Features.GeolocTitle" : "Geolocation",
+    "Features.GeolocText" : "Thanks to our map, we can automatically find you the nearest care centers to your home. From the doctor to the hospital, via the pharmacy or the dentist, your route is automatically calculated based on your mode of transport.",
+    "Features.GuestTitle" : "Guest mode",
+    "Features.GuestText" : "Our service does not require you to log in, ensuring that your personal and medical data are not recorded and simplifying use.",
+
     "Home.Tagline" : "Personalised support to advise you in your emergency",
     "Home.ChatTitle" : "Online Chat",
     "Home.ChatDesc" : "Get in touch with Emma, our virtual assistant! She will advise you on your situation and the measures to be taken.",
     "Home.MapTitle" : "Hospitals map",
     "Home.MapDesc" : "Our service will automatically redirect you to the health services closest to you.",
     "Home.LearnMore" : "Learn more",
+
+    "Landing.Tagline" : "A quick and easy way to access emergencies.{code}A first online treatment.",
+    "Landing.Scroll": "Preview",
 
     "Navbar.Chat" : "Online Chat",
     "Navbar.Hospitals" : "Hospitals map",
@@ -22,5 +34,14 @@
     "Navbar.Application" : "Application",
 
     "NotFound.Desc" : "The page you are looking for is not available, it may have been modified or removed.",
-    "NotFound.Home" : "Home"
+    "NotFound.Home" : "Home",
+
+    "Preview.Title" : "Preview",
+    "Preview.Tagline" : "What does Kwili looks like ?",
+    "Preview.WebTitle" : "A website",
+    "Preview.WebDesc" : "Find the nearest emergencies and the route to get there, and benefit from initial treatment thanks to our online chat, which can also redirect you to a general practitioner or specialist.{code}All this without even having to log on!",
+    "Preview.AppTitle" : "A complementary application",
+    "Preview.AppDesc" : "Find Kwili more easily by downloading our mobile app, which has the same functionalities.",
+    "Preview.PlayStore" : "Dowload from {code}{code2}"
+
 }
