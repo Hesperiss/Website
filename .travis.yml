@@ -3,6 +3,8 @@ node_js:
   - "stable"
 cache:
   npm: false
+before_script:
+  - npm install
 script:
   - yarn test
   - yarn build
