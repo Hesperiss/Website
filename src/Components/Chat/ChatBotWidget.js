@@ -15,6 +15,14 @@ import KwiliLogo from "../../Images/doctor.png";
 import anchorme from "anchorme";
 import "react-chat-widget/lib/styles.css";
 import "../Chat/ChatBotWidget.scss";
+
+import locale_en from "../../Translations/en.json";
+import locale_fr from "../../Translations/fr.json";
+
+const data = {
+    'fr': locale_fr,
+    'en': locale_en
+  };
 //import { propTypes } from "react-bootstrap/esm/Image";
 
 /**
@@ -97,17 +105,25 @@ export default class ChatBotWidget extends Component {
 
   componentDidMount() {
    // let welcomeMsg = "";
+    const language = navigator.language.split(/[-_]/)[0];
+
     dropMessages();
-    this.chat = new KwiliChat(this.messageReceived);
+    this.chat = new KwiliChat(this.messageReceived, language);
     this.refreshQuickButtons();
+
+    console.log(data[language]);
+
+    if (language === "en") {
+      addResponseMessage(data[language]["Chat.WelcomeMsg"]);
+    } else {
+      addResponseMessage(data["fr"]["Chat.WelcomeMsg"]);
+    }
   //  {
   //   <FormattedMessage id="Chat.WelcomeMsg" defaultMessage="Bonjour et bienvenue sur Kwili ! Je suis Emma, votre assistante virtuelle">
   //     { value => console.log(value)}
   //   </FormattedMessage>
   // }
-    //console.log('toto');
-    //addResponseMessage(welcomeMsg);
-    addResponseMessage("Bonjour et bienvenue sur Kwili ! Je suis Emma, votre assistante virtuelle");
+    //addResponseMessage("Bonjour et bienvenue sur Kwili ! Je suis Emma, votre assistante virtuelle");
   }
 
   /**
