@@ -15,6 +15,7 @@ import KwiliLogo from "../../Images/doctor.png";
 import anchorme from "anchorme";
 import "react-chat-widget/lib/styles.css";
 import "../Chat/ChatBotWidget.scss";
+//import { propTypes } from "react-bootstrap/esm/Image";
 
 /**
  * @module
@@ -95,12 +96,18 @@ export default class ChatBotWidget extends Component {
   };
 
   componentDidMount() {
+   // let welcomeMsg = "";
     dropMessages();
     this.chat = new KwiliChat(this.messageReceived);
     this.refreshQuickButtons();
-    addResponseMessage(
-      "Bonjour et bienvenue sur Kwili ! Je suis Emma, votre assistante virtuelle"
-    );
+  //  {
+  //   <FormattedMessage id="Chat.WelcomeMsg" defaultMessage="Bonjour et bienvenue sur Kwili ! Je suis Emma, votre assistante virtuelle">
+  //     { value => console.log(value)}
+  //   </FormattedMessage>
+  // }
+    //console.log('toto');
+    //addResponseMessage(welcomeMsg);
+    addResponseMessage("Bonjour et bienvenue sur Kwili ! Je suis Emma, votre assistante virtuelle");
   }
 
   /**
@@ -109,15 +116,6 @@ export default class ChatBotWidget extends Component {
    * @param {string} newMessage - message écrit par l'utilisateur
    */
   handleNewUserMessage = (newMessage) => {
-    if (
-      (newMessage.indexOf("boss") !== -1 || newMessage.indexOf("maitre")) !==
-        -1 &&
-      (newMessage.indexOf("ultime") !== -1 ||
-        newMessage.indexOf("absolu") !== -1)
-    ) {
-      addResponseMessage("Mon maitre ultime est Leandre");
-      return;
-    }
     this.chat.send(newMessage);
     this.setState({
       badge: 0,
