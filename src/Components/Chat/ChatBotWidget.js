@@ -118,12 +118,6 @@ export default class ChatBotWidget extends Component {
     } else {
       addResponseMessage(data["fr"]["Chat.WelcomeMsg"]);
     }
-  //  {
-  //   <FormattedMessage id="Chat.WelcomeMsg" defaultMessage="Bonjour et bienvenue sur Kwili ! Je suis Emma, votre assistante virtuelle">
-  //     { value => console.log(value)}
-  //   </FormattedMessage>
-  // }
-    //addResponseMessage("Bonjour et bienvenue sur Kwili ! Je suis Emma, votre assistante virtuelle");
   }
 
   /**
