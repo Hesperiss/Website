@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { FormattedMessage } from 'react-intl';
 import {
     FaEnvelope,
     FaGitAlt,
@@ -76,10 +77,20 @@ function contactForm() {
 
             {/*section title and contact info*/}
             <div className={"textWrapper"}>
-                <h2 className={"sectionTitle"}>Nous contacter</h2>
+                <h2 className={"sectionTitle"}>
+                    <FormattedMessage
+                        id="ContactForm.Title"
+                        defaultMessage="Nous contacter"
+                    />
+                </h2>
                 <hr/>
-                <p className={"sectionSubtitle"}>Une question ? Une remarque ? Une suggestion ? <br/>
-                N'hésitez pas à nous en faire part.</p>
+                <p className={"sectionSubtitle"}>
+                    <FormattedMessage
+                        id="ContactForm.Info"
+                        defaultMessage="Une question ? Une remarque ? Une suggestion ?{code}N'hésitez pas à nous en faire part."
+                        values={{ code: <br/>}}
+                    />
+                </p>
                 <div className={"phoneEmail"}>
                     <div className={"icon"}><FaEnvelope /></div>
                     <p>adm.kwili@gmail.com</p>
@@ -89,33 +100,57 @@ function contactForm() {
             {/*contact form*/}
             <form id="contact-form">
                 <div className="userInfo">
-                    <input
-                        className={"formField"}
-                        type="text"
-                        placeholder="Nom"
-                        onChange={(event) => {name = event.target.value}}/>
-                    <input
-                        className={"formField"}
-                        type="email"
-                        placeholder="Courriel"
-                        onChange={(event) => {email = event.target.value}}/>
-                    <input
-                        className={"formField"}
-                        type="text"
-                        placeholder="Sujet"
-                        onChange={(event) => {subject = event.target.value}}/>
+                    <FormattedMessage id="ContactForm.Name" defaultMessage="Nom">
+                        { placeholder => 
+                            <input
+                                className={"formField"}
+                                type="text"
+                                placeholder={placeholder}
+                                onChange={(event) => {name = event.target.value}}
+                            />
+                        }
+                    </FormattedMessage>
+                    <FormattedMessage id="ContactForm.Email" defaultMessage="Courriel">
+                        { placeholder => 
+                            <input
+                                className={"formField"}
+                                type="email"
+                                placeholder={placeholder}
+                                onChange={(event) => {email = event.target.value}}
+                            />
+                        }
+                    </FormattedMessage>
+                    <FormattedMessage id="ContactForm.Subject" defaultMessage="Sujet">
+                        { placeholder => 
+                            <input
+                                className={"formField"}
+                                type="text"
+                                placeholder={placeholder}
+                                onChange={(event) => {subject = event.target.value}}
+                            />
+                        }
+                    </FormattedMessage>
                 </div>
-                <textarea
-                    className={"messageField"}
-                    placeholder="Message"
-                    onChange={(event) => {message = event.target.value}}>
-				</textarea>
+                <FormattedMessage id="ContactForm.Message" defaultMessage="Message">
+                    { placeholder => 
+                        <textarea
+                            className={"messageField"}
+                            placeholder={placeholder}
+                            onChange={(event) => {message = event.target.value}}>
+                        </textarea>
+                    }
+                </FormattedMessage>
             </form>
-            <input
-                className={"sendButton"}
-                type="submit"
-                value="Envoyer"
-                onClick={() => sendEmail(name, email, subject, message)}/>
+            <FormattedMessage id="ContactForm.Send" defaultMessage="Envoyer">
+                { value => 
+                    <input
+                        className={"sendButton"}
+                        type="submit"
+                        value={value}
+                        onClick={() => sendEmail(name, email, subject, message)}
+                    />
+                }
+            </FormattedMessage>
 
             {/*social media button + project info*/}
             <div className={"socialMedia"}>
@@ -123,8 +158,13 @@ function contactForm() {
                     <a className={"socialMediaButton"} href="https://www.linkedin.com/company/kwili/" rel="noopener noreferrer" target="_blank"><FaLinkedinIn/></a>
                     <a className={"socialMediaButton"} href="https://github.com/Kwili" rel="noopener noreferrer" target="_blank"><FaGitAlt/></a>
                 </div>
-                <p>Kwili est un projet réalisé par une équipe d'étudiants dans le cadre des <br/>
-                Epitech Innovative Projects. © 2018</p>
+                <p>
+                    <FormattedMessage
+                        id="ContactForm.Legal"
+                        defaultMessage="Kwili est un projet réalisé par une équipe d'étudiants dans le cadre des{code}Epitech Innovative Projects. © 2018"
+                        values={{ code: <br/>}}
+                    />
+                </p>
             </div>
         </div>
     );

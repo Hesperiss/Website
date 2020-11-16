@@ -9,11 +9,21 @@ import {
   toggleWidget,
   toggleMsgLoader,
 } from "react-chat-widget";
+import { FormattedMessage } from 'react-intl';
 import KwiliLogo from "../../Images/doctor.png";
 
 import anchorme from "anchorme";
 import "react-chat-widget/lib/styles.css";
 import "../Chat/ChatBotWidget.scss";
+
+import locale_en from "../../Translations/en.json";
+import locale_fr from "../../Translations/fr.json";
+
+const data = {
+    'fr': locale_fr,
+    'en': locale_en
+  };
+//import { propTypes } from "react-bootstrap/esm/Image";
 
 /**
  * @module
@@ -37,8 +47,8 @@ export default class ChatBotWidget extends Component {
         handleQuickButtonClicked={this.handleQuickButton}
         profileAvatar={KwiliLogo}
         showCloseButton={!this.fullscreen}
-        title="Chat en ligne"
-        subtitle="Expliquez-nous votre problème"
+        title={<FormattedMessage id="Chat.Title" defaultMessage="Chat en ligne" />}
+        subtitle={<FormattedMessage id="Chat.Subtitle" defaultMessage="Expliquez-nous votre problème" />}
         senderPlaceHolder="Aa"
       />
     );
@@ -94,12 +104,20 @@ export default class ChatBotWidget extends Component {
   };
 
   componentDidMount() {
+   // let welcomeMsg = "";
+    const language = navigator.language.split(/[-_]/)[0];
+
     dropMessages();
-    this.chat = new KwiliChat(this.messageReceived);
+    this.chat = new KwiliChat(this.messageReceived, language);
     this.refreshQuickButtons();
-    addResponseMessage(
-      "Bonjour et bienvenue sur Kwili ! Je suis Emma, votre assistante virtuelle"
-    );
+
+    console.log(data[language]);
+
+    if (language === "en") {
+      addResponseMessage(data[language]["Chat.WelcomeMsg"]);
+    } else {
+      addResponseMessage(data["fr"]["Chat.WelcomeMsg"]);
+    }
   }
 
   /**
@@ -108,15 +126,6 @@ export default class ChatBotWidget extends Component {
    * @param {string} newMessage - message écrit par l'utilisateur
    */
   handleNewUserMessage = (newMessage) => {
-    if (
-      (newMessage.indexOf("boss") !== -1 || newMessage.indexOf("maitre")) !==
-        -1 &&
-      (newMessage.indexOf("ultime") !== -1 ||
-        newMessage.indexOf("absolu") !== -1)
-    ) {
-      addResponseMessage("Mon maitre ultime est Leandre");
-      return;
-    }
     this.chat.send(newMessage);
     this.setState({
       badge: 0,

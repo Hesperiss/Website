@@ -1,5 +1,6 @@
 import React from 'react';
 import {Helmet} from "react-helmet";
+import { FormattedMessage } from 'react-intl';
 
 import NavBar from "./Components/Navbar";
 import FeaturesDescription from "./Components/FeaturesDescription";
@@ -53,10 +54,19 @@ class LandingPage extends React.Component {
 						<img src={phoneDemo} alt={"kwili webApp demo"} />
 						<div className={"introText"}>
 							<h1>KWILI</h1>
-							<p>Un moyen simple et rapide pour accéder aux urgences.<br />
-								Une première prise en charge en ligne.</p>
+							<p>
+								<FormattedMessage
+									id="Landing.Tagline"
+									defaultMessage="Un moyen simple et rapide pour accéder aux urgences.{code}Une première prise en charge en ligne."
+									values={{ code: <br/> }}
+								/>
+							</p>
 							<button onClick={() => this.slideToAnchorLink()}>
-								Aperçu <FaArrowDown />
+								<FormattedMessage
+									id="Landing.Scroll"
+									defaultMessage="Aperçu"
+								/>
+								<FaArrowDown />
 							</button>
 						</div>
 					</div>

@@ -5,6 +5,7 @@ import {FaDesktop,
     FaGooglePlay,
     FaArrowLeft,
     FaArrowRight} from "react-icons/all";
+import { FormattedMessage } from 'react-intl';
 import Desktop1 from "../../../Images/desktop_1.png"
 import Desktop2 from "../../../Images/desktop_2.png"
 import Phone1 from "../../../Images/phone_1.png";
@@ -51,8 +52,18 @@ function PreviewSection() {
 
             <div className="previewSection">
                 <div className={"textWrapper"}>
-                    <h2 className={"sectionTitle"}>Aperçu</h2>
-                    <p className={"sectionSubtitle"}>Kwili, concrètement, à quoi ça ressemble ?</p>
+                    <h2 className={"sectionTitle"}>
+                        <FormattedMessage
+                            id="Preview.Title"
+                            defaultMessage="Aperçu"
+                        />
+                    </h2>
+                    <p className={"sectionSubtitle"}>
+                        <FormattedMessage
+                            id="Preview.Tagline"
+                            defaultMessage="Kwili, concrètement, à quoi ça ressemble ?"
+                        />
+                    </p>
                 </div>
 
                 <div className={"previewContents"}>
@@ -82,11 +93,22 @@ function PreviewSection() {
                                 <FaDesktop/>
                             </div>
                             <div className={"col"}>
-                                <h3>Un site web</h3>
-                                <p>Trouvez les urgences les plus proches de vous et l'itinéraire pour vous y rendre, et
-                                    bénéficiez d'une première prise en charge grâce à notre chat en ligne, qui pourra
-                                    également vous réorienter vers un médecin généraliste ou spécialiste. <br/>
-                                    Le tout sans même avoir besoin de vous connecter !</p>
+                                <h3>
+                                    <FormattedMessage
+                                        id="Preview.WebTitle"
+                                        defaultMessage="Un site web"
+                                    />
+                                </h3>
+                                <p>
+                                    <FormattedMessage
+                                        id="Preview.WebDesc"
+                                        defaultMessage="Trouvez les urgences les plus proches de vous et l'itinéraire pour vous y rendre, et
+                                        bénéficiez d'une première prise en charge grâce à notre chat en ligne, qui pourra
+                                        également vous réorienter vers un médecin généraliste ou spécialiste.{code}
+                                        Le tout sans même avoir besoin de vous connecter !"
+                                        values={{ code: <br/> }}
+                                    />
+                                </p>
                             </div>
                         </div>
 
@@ -95,10 +117,18 @@ function PreviewSection() {
                                 <FaMobileAlt/>
                             </div>
                             <div className={"col"}>
-                                <h3>Une application complémentaire</h3>
-                                <p>Retrouvez Kwili plus facilement en téléchargeant notre appli mobile, qui possède les
-                                    mêmes
-                                    fonctionnalités.</p>
+                                <h3>
+                                    <FormattedMessage
+                                        id="Preview.AppTitle"
+                                        defaultMessage="Une application complémentaire"
+                                    />
+                                </h3>
+                                <p>
+                                    <FormattedMessage
+                                        id="Preview.AppDesc"
+                                        defaultMessage="Retrouvez Kwili plus facilement en téléchargeant notre appli mobile, qui possède les mêmes fonctionnalités."
+                                    />
+                                </p>
                             </div>
                         </div>
 
@@ -107,7 +137,13 @@ function PreviewSection() {
                             <a href="https://play.google.com/store/apps/details?id=fr.kwili.kwili" target="_blank" rel="noopener noreferrer">
                               <div className={"downloadButton"}>
                                 <div className={"icon"}><FaGooglePlay/></div>
-                                <div className={"col"}>Télécharger sur <br/><em>Google Play</em></div>
+                                <div className={"col"}>
+                                    <FormattedMessage
+                                        id="Preview.PlayStore"
+                                        defaultMessage="Télécharger sur {code}{code2}"
+                                        values={{ code: <br/>, code2: <em>Google Play</em> }}
+                                    />
+                                </div>
                               </div>
                             </a>
                         </div>

@@ -1,8 +1,10 @@
 language: node_js
 node_js:
-  - "stable"
+  - "14"
 cache:
   npm: false
+before_script:
+  - npm install
 script:
   - yarn test
   - yarn build
