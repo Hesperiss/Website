@@ -2,7 +2,6 @@ import hospitalIcon from "../../../Images/markerHospital.png";
 import doctorIcon from "../../../Images/markerDoctor.png";
 import dentistIcon from "../../../Images/markerDentist.png";
 import pharmacyIcon from "../../../Images/markerPharmacy.png";
-import { FormattedMessage } from 'react-intl';
 
 /**
  * Types de résultats de recherche
@@ -12,25 +11,25 @@ export const resultTypes = {
     hospital: {
         type: "hospital",
         keyword: "(emergency) AND ((medical centre) OR hospital)",
-        label: <FormattedMessage id="ResultTypes.Hospital" defaultMessage="Hôpitaux"/>,
+        label: "Hôpitaux",
         icon: hospitalIcon
     },
     doctor: {
         type: "doctor",
         keyword: "doctor OR hospital",
-        label: <FormattedMessage id="ResultTypes.Doctor" defaultMessage="Docteurs"/>,
+        label: "Médecins",
         icon: doctorIcon
     },
     dentist: {
         type: "dentist",
         keyword: "dentist",
-        label: <FormattedMessage id="ResultTypes.Dentist" defaultMessage="Dentistes"/>,
+        label: "Dentistes",
         icon: dentistIcon
     },
     pharmacy: {
         type: "pharmacy",
         keyword: "pharmacy",
-        label: <FormattedMessage id="ResultTypes.Pharmacy" defaultMessage="Pharmacies"/>,
+        label: "Pharmacies",
         icon: pharmacyIcon
     }
 };

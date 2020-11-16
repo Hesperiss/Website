@@ -6,7 +6,6 @@ import {Helmet} from "react-helmet";
 
 import ChatBotWidget from '../Chat/ChatBotWidget';
 import { toggleWidget } from 'react-chat-widget';
-import { FormattedMessage } from 'react-intl';
 
 
 export default class HomePage extends React.Component {
@@ -19,13 +18,9 @@ export default class HomePage extends React.Component {
 
                 <div className={"textWrapper"}>
                     <h1>Kwili</h1>
-                    <h2>
-                        <FormattedMessage
-                            id="Home.Tagline"
-                            defaultMessage="Un accompagnement personnalisé pour vous conseiller dans votre urgence"
-                        />
-                    </h2>
+                    <h2>Un accompagnement personnalisé pour vous conseiller dans votre urgence</h2>
                 </div>
+
                 <div className={"descBoxWrapper"}>
                     <Button className="descBox" id="chat" href={""} onClick={toggleWidget}>
                         <div className="rhombus">
@@ -33,18 +28,8 @@ export default class HomePage extends React.Component {
                                 <FaCommentMedical className ="icon"/>
                             </div>
                         </div>
-                        <h3>
-                            <FormattedMessage
-                                id="Home.ChatTitle"
-                                defaultMessage="Chat en ligne"
-                            />
-                        </h3>
-                        <p>
-                            <FormattedMessage
-                                id="Home.ChatDesc"
-                                defaultMessage="Rentrez en contact avec Emma, notre assistante virtuelle ! Elle vous conseillera sur votre situation et les mesures à prendre."
-                            />
-                        </p>
+                        <h3>Chat en ligne</h3>
+                        <p>Rentrez en contact avec Emma, notre assistante virtuelle ! Elle vous conseillera sur votre situation et les mesures à prendre.</p>
                     </Button>
                     <div id={"docImage"}> </div>
 
@@ -54,31 +39,20 @@ export default class HomePage extends React.Component {
                             <FaMapMarkedAlt className ="icon"/>
                         </div>
                     </div>
-                    <h3>
-                        <FormattedMessage
-                            id="Home.MapTitle"
-                            defaultMessage="Carte des hôpitaux"
-                        />
-                    </h3>
-                    <p>
-                        <FormattedMessage
-                            id="Home.MapDesc"
-                            defaultMessage="Notre service vous redirigera automatiquement vers les services de santé les plus proches de chez vous."
-                        />
-                    </p>
+                    <h3>Carte des hôpitaux</h3>
+                    <p>Notre service vous redirigera automatiquement vers les services de santé les plus proches de chez vous.</p>
                 </Button>
                 </div>
 
                 <a href="/landing" className={"landingLink"}>
-                    <h3>
-                        <FormattedMessage
-                            id="Home.LearnMore"
-                            defaultMessage="En savoir plus"
-                        />
-                    </h3>
+                    <h3>En savoir plus</h3>
                 </a>
+
+
             </div>
+
         );
+
     }
     render() {
         return (
@@ -94,9 +68,11 @@ export default class HomePage extends React.Component {
                       </svg>
                   </div>
                   {this.displayFeaturesDescriptionBoxes()}
+
                   <ChatBotWidget fullscreen={false} />
               </div>
             </div>
+
         );
     }
 }

@@ -11,13 +11,12 @@ export default class KwiliChat {
 	 * @class
 	 * @param {requestCallback} onMessageCallback - callback appelée lors de la réception d'un message
 	 */
-	constructor(onMessageCallback, language) {
+	constructor(onMessageCallback) {
 		this.address = chatEndpoint;
 		this.socket = new io.connect(this.address, {
 			reconnectionDelay: 3000,
 			reconnectionAttempts: Infinity,
 			forceNew: true,
-			query: `lang=${language}`
 		});
 		this.socket.on("message", onMessageCallback);
 		this.socket.on("connect", () => {});

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Helmet} from "react-helmet";
-import { FormattedMessage } from 'react-intl';
 
 import NavBarLanding from '../../Landing/Components/Navbar';
 
@@ -26,18 +25,8 @@ const Error = () => {
             <div className={"notFound"}>
                 <h1>Oops!</h1>
                 <h2>404 - Page not found</h2>
-                <p>
-                    <FormattedMessage
-                        id="NotFound.Desc"
-                        defaultMessage="La page que vous recherchez n'est pas disponible, elle a peut-être été modifiée ou retirée."
-                    />
-                </p>
-                <a href="/">
-                <FormattedMessage
-                    id="NotFound.Home"
-                    defaultMessage="Accueil"
-                />
-                </a>
+                <p>La page que vous recherchez n'est pas disponible, elle a peut-être été modifiée ou retirée.</p>
+                <a href="/">Accueil</a>
             </div>
 
         </div>

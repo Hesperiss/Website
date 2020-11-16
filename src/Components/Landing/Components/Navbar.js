@@ -3,7 +3,6 @@ import '../Landing.scss';
 import KwiliLogo from "../../../Images/logo_kwili.png"
 import ChatBotWidget from '../../Chat/ChatBotWidget';
 import { toggleWidget } from 'react-chat-widget';
-import { FormattedMessage } from 'react-intl';
 
 /**
  * Barre de navigation du site Kwili.
@@ -22,56 +21,40 @@ function NavBarLanding() {
                     <a style={{ color: 'white' }} href='/'>KWILI</a>
                 </div>
 
-                <FormattedMessage id="Navbar.Chat" defaultMessage="Chat en ligne">
-                    { placeholder => 
-                        <input
-                            type="button"
-                            value={placeholder}
-                            href=""
-                            border="none"
-                            onClick={toggleWidget}
-                            className="navBarButton"
-                        />
-                    }
-                </FormattedMessage>
+                <input
+                    type="button"
+                    value="Chat en ligne"
+                    href=""
+                    border="none"
+                    onClick={toggleWidget}
+                    className="navBarButton"
+                />
 
                 <a href='/map'>
-                    <FormattedMessage id="Navbar.Hospitals" defaultMessage="Carte des hôpitaux">
-                        { placeholder => 
-                            <input
-                                type="submit"
-                                value={placeholder}
-                                href="/map"
-                                className="navBarButton"
-                            />
-                        }
-                    </FormattedMessage>
+                    <input
+                        type="submit"
+                        value="Carte des hôpitaux"
+                        href="/map"
+                        className="navBarButton"
+
+                    />
                 </a>
 
                 <a href='/landing'>
-                    <FormattedMessage id="Navbar.Landing" defaultMessage="Qui sommes-nous ?">
-                        { placeholder => 
-                            <input
-                                type="submit"
-                                value={placeholder}
-                                href="/landing"
-                                className="navBarButton"
-                            />
-                        }
-                    </FormattedMessage>
+                    <input
+                        type="submit"
+                        value="Qui sommes-nous ?"
+                        href="/landing"
+                        className="navBarButton"
+                    />
                 </a>
-
                 <a href="https://play.google.com/store/apps/details?id=fr.kwili.kwili" target="_blank" rel="noopener noreferrer">
-                    <FormattedMessage id="Navbar.App" defaultMessage="Application">
-                        { placeholder => 
-                            <input
-                                type="submit"
-                                value={placeholder}
-                                href="https://play.google.com/store/apps/details?id=fr.kwili.kwili"
-                                className="navBarButton"
-                            />
-                        }
-                    </FormattedMessage>
+                    <input
+                        type="submit"
+                        value="Application"
+                        href="https://play.google.com/store/apps/details?id=fr.kwili.kwili"
+                        className="navBarButton"
+                    />
                 </a>
 
                 <ChatBotWidget fullscreen={false} />

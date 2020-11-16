@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Helmet} from "react-helmet";
-import { FormattedMessage } from 'react-intl';
 import {
     GoogleMap,
     Marker,
@@ -310,11 +309,7 @@ function Map() {
                 <Autocomplete
                     onLoad={(searchBar) => onLoadAutocomplete(searchBar)}
                     onPlaceChanged={() => onPlaceSearched()}>
-                    <FormattedMessage id="Map.Search" defaultMessage="Courriel">
-                        { placeholder => 
-                            <input type="text" placeholder={placeholder} className={"mapSearchBar"}/>
-                        }
-                    </FormattedMessage>
+                    <input type="text" placeholder="Rechercher une adresse..." className={"mapSearchBar"}/>
                 </Autocomplete>
 
                 <a href={"/"} className={"homeButton"}>
@@ -379,6 +374,7 @@ function Map() {
                             placeholder={"Tyep de recherche"}
                             onChange={(event) => setResearchTag(resultTypes[event.target.value])}>
                         {resultTypesIds.map(item => (<MenuItem key={item} value={resultTypes[item].type}>{resultTypes[item].label}</MenuItem>))}
+                        )}
                     </Select>
                     </Tooltip>
 
@@ -404,11 +400,7 @@ function Map() {
                 </div>
                 <div className={"sliderWrapper"}>
                     <h5 className={"sliderTitle"}>
-                        <FormattedMessage
-                            id="Map.SearchRadius"
-                            defaultMessage="Rayon de la recherche: {value}km"
-                            values={{ value: searchRadius / 1000}}
-                        />
+                        {`Rayon de la recherche: ${searchRadius / 1000} km`}
                     </h5>
                     <div className={"sliderBox"}>
                         <Slider
@@ -423,6 +415,9 @@ function Map() {
                         />
                     </div>
                 </div>
+
+                )}
+
             </GoogleMap>
         </React.Fragment>
     };
