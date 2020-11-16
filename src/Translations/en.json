@@ -42,7 +42,7 @@
     "ResultTypes.Doctor" : "Doctors",
     "ResultTypes.Dentist" : "Dentists",
     "ResultTypes.Pharmacy" : "Pharmacies",
-    "RequestUber.Title" : "Getting to hospital by UBER",
+    "RequestUber.Title" : "Getting to the hospital by UBER",
     "RequestUber.Subtitle" : "Calling a UBER to go to the hospital?",
     "RequestUber.Desc" : "Choosing this option will open an application or UBER site with a set stroke between your position and that of the hospital.",
     "RequestUber.Yes" : "Yes",
