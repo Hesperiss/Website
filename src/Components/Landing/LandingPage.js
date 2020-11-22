@@ -1,7 +1,6 @@
 import React from 'react';
 import {Helmet} from "react-helmet";
 import { FormattedMessage } from 'react-intl';
-
 import NavBar from "./Components/Navbar";
 import FeaturesDescription from "./Components/FeaturesDescription";
 import PreviewSection from "./Components/PreviewSection";

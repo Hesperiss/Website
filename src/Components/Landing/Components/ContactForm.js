@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -7,7 +7,7 @@ import {
     FaLinkedinIn
 } from "react-icons/fa";
 import '../Landing.scss';
-
+import EmailModal from "./EmailModal";
 
 /**
  * Vérifie qu'une adresse email possède un format valide.
@@ -16,51 +16,31 @@ import '../Landing.scss';
  * @param {string} message
  * @return bool
  */
-function isEmailValid(name, email, message) {
+function isEmailValid(name, email, message, subject) {
 
-    //checks if fileds are set
-    if (name === "" || name === "nom" ||
-        email === "" || email === "email" ||
-        message === "" || message === "Message")
-        return false;
+    //list of invalid fields
+    let invalid = [];
+
+    console.log(message, email, name)
+
+    //checks if fields are set
+    if (name === "")
+        invalid.push("name");
+    if (email === "")
+        invalid.push("email");
+    if (message === "")
+        invalid.push("message");
+    if (subject === "")
+        invalid.push("subject");
 
     //checks if email is valid
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
-
-/**
- * Envoie un email quand l'utuilisateur soumet le formulaire.
- * @param {string} name
- * @param {string} email
- * @param {string} subject
- * @param {string} message
- */
-function  sendEmail(name, email, subject, message) {
-
-  if (!isEmailValid(name, email, message)) {
-    alert("Adresse mail non valide")
-    return;
-  }
-
-  axios({
-     method: "POST",
-     url:"https://www.kwili.fr:3000/send",
-     headers: {
-       'Content-Type': 'application/x-www-form-urlencoded',
-    },
-     data: `name=${name}&email=${email}&subject=${subject}&message=${message}`
-   })
-   .then((response)=>{
-     if (response.status === 200){
-         alert("Votre message a bien été envoyé, merci !");
-       }
-   })
-   .catch(err => {
-     alert("L'envoi du message a échoué.");
-   })
-
-   document.getElementById('contact-form').reset();
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!regex.test(String(email).toLowerCase()))
+        invalid.push("email");
+    return ({
+        isValid: invalid.length === 0,
+        invalidFields: invalid
+    });
 }
 
 /**
@@ -68,12 +48,73 @@ function  sendEmail(name, email, subject, message) {
  * Contient un formulaire permettant de contacter l'équipe Kwili.
  * @returns {React.Fragment}
  */
-function contactForm() {
+function ContactForm() {
 
-    let name, email, message, subject  = "";
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+    const [subject, setSubject] = useState("");
+    const emailSuccessMsg = "Merci pour votre retour. Votre message à bien été envoyé à l'équipe de Kwili, qui vous répondra  très vite !"
+    const emailFailureMsg = "L'envoi du message a échoué, veuillez réessayer."
+    const [emailModal, setEmailModal] = useState(false);
+    const [emailMsg, setEmailMsg] = useState(emailSuccessMsg);
+    const [invalidFields, setInvalidFields] = useState([]);
+
+    /**
+     * Envoie un email quand l'utuilisateur soumet le formulaire.
+     * @param {string} name
+     * @param {string} email
+     * @param {string} subject
+     * @param {string} message
+     */
+    const sendEmail = async (name, email, subject, message) => {
+
+        const testEmail = isEmailValid(name, email, message, subject);
+        if (testEmail.isValid === false) {
+            setInvalidFields(testEmail.invalidFields)
+            return;
+        } else {
+            setInvalidFields([]);
+            await setEmailModal(true);
+            axios({
+                method: "POST",
+                url: "https://www.kwili.fr:3000/send",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                data: `name=${name}&email=${email}&subject=${subject}&message=${message}`
+            })
+                .then((response) => {
+                    if (response.status === 200) {
+                        setEmailMsg(emailSuccessMsg)
+                        setEmailModal(true);
+                    }
+                })
+                .catch(() => {
+                    setEmailMsg(emailFailureMsg)
+                    setEmailModal(true);
+                })
+        }
+    }
+
+    /**
+     * Réinitialise les champs du formulaire de contact
+     */
+    const resetFields = () => {
+        setName("");
+        setMessage("");
+        setSubject("");
+        setEmail("");
+    }
 
     return (
         <div className={"contactFormSection"}>
+
+            {emailModal && <EmailModal
+                open={true}
+                message={emailMsg}
+                onClose={() => setEmailModal(false)}
+            />}
 
             {/*section title and contact info*/}
             <div className={"textWrapper"}>
@@ -92,7 +133,7 @@ function contactForm() {
                     />
                 </p>
                 <div className={"phoneEmail"}>
-                    <div className={"icon"}><FaEnvelope /></div>
+                    <div className={"icon"}><FaEnvelope/></div>
                     <p>adm.kwili@gmail.com</p>
                 </div>
             </div>
@@ -100,50 +141,54 @@ function contactForm() {
             {/*contact form*/}
             <form id="contact-form">
                 <div className="userInfo">
-                    <FormattedMessage id="ContactForm.Name" defaultMessage="Nom">
+                    <FormattedMessage id="ContactForm.Name" defaultMessage={invalidFields.includes("name") ? "Nom requis" : "Nom"}>
                         { placeholder => 
                             <input
                                 className={"formField"}
                                 type="text"
                                 placeholder={placeholder}
-                                onChange={(event) => {name = event.target.value}}
+                                onChange={(event) => setName(event.target.value)}
                             />
                         }
                     </FormattedMessage>
-                    <FormattedMessage id="ContactForm.Email" defaultMessage="Courriel">
+                    <FormattedMessage id="ContactForm.Email" defaultMessage={invalidFields.includes("email") ? "Email requis" : "Email"}>
                         { placeholder => 
                             <input
-                                className={"formField"}
-                                type="email"
+                                type={"email"}
                                 placeholder={placeholder}
-                                onChange={(event) => {email = event.target.value}}
+                                className={invalidFields.includes("email") ? "invalidFormField" : "formField"}
+                                onChange={(event) => setEmail(event.target.value)}
                             />
                         }
                     </FormattedMessage>
-                    <FormattedMessage id="ContactForm.Subject" defaultMessage="Sujet">
+                    <FormattedMessage id="ContactForm.Subject" defaultMessage={invalidFields.includes("subject") ? "Sujet requis" : "Sujet"}>
                         { placeholder => 
                             <input
-                                className={"formField"}
-                                type="text"
+                                type={"text"}
                                 placeholder={placeholder}
-                                onChange={(event) => {subject = event.target.value}}
+                                className={invalidFields.includes("subject") ? "invalidFormField" : "formField"}
+                                onChange={(event) => setSubject(event.target.value)}
                             />
                         }
                     </FormattedMessage>
                 </div>
-                <FormattedMessage id="ContactForm.Message" defaultMessage="Message">
+                <textarea
+                    >
+				</textarea>
+                <FormattedMessage id="ContactForm.Message" defaultMessage={invalidFields.includes("message") ? "Le message ne peut pas être vide" : "Message"}>
                     { placeholder => 
                         <textarea
-                            className={"messageField"}
                             placeholder={placeholder}
-                            onChange={(event) => {message = event.target.value}}>
+                            className={invalidFields.includes("message") ? "invalidMessageField" : "messageField"}
+                            onChange={(event) => setMessage(event.target.value)}>
                         </textarea>
                     }
                 </FormattedMessage>
             </form>
             <FormattedMessage id="ContactForm.Send" defaultMessage="Envoyer">
                 { value => 
-                    <input
+                    <button
+                        border={"none"}
                         className={"sendButton"}
                         type="submit"
                         value={value}
@@ -152,11 +197,17 @@ function contactForm() {
                 }
             </FormattedMessage>
 
+            <button className={"sendButton"} border={"none"} onClick={() => sendEmail(name, email, subject, message)}>
+                Envoyer
+            </button>
+
             {/*social media button + project info*/}
             <div className={"socialMedia"}>
                 <div className={"buttonsWrapper"}>
-                    <a className={"socialMediaButton"} href="https://www.linkedin.com/company/kwili/" rel="noopener noreferrer" target="_blank"><FaLinkedinIn/></a>
-                    <a className={"socialMediaButton"} href="https://github.com/Kwili" rel="noopener noreferrer" target="_blank"><FaGitAlt/></a>
+                    <a className={"socialMediaButton"} href="https://www.linkedin.com/company/kwili/"
+                       rel="noopener noreferrer" target="_blank"><FaLinkedinIn/></a>
+                    <a className={"socialMediaButton"} href="https://github.com/Kwili" rel="noopener noreferrer"
+                       target="_blank"><FaGitAlt/></a>
                 </div>
                 <p>
                     <FormattedMessage
@@ -170,4 +221,4 @@ function contactForm() {
     );
 }
 
-export default contactForm;
+export default ContactForm;
