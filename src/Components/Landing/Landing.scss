@@ -7,6 +7,8 @@ $theme-medium: #0277bd;
 $theme-dark: #004c8c;
 $theme-gray: #242f3e;
 $very-light-gray: #eeeeee;
+$very-light-red: #F5C5B8;
+$red: #D6625D;
 
 //default page style
 .root {
@@ -17,6 +19,33 @@ $very-light-gray: #eeeeee;
   flex-flow: column;
   font-family: Poppins, Arial, sans-serif;
   background-color: $very-light-gray;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.pageTopButton {
+  z-index: 100;
+  background-color: $theme-dark;
+  box-shadow: 0px 0px 10px 0.5px white;
+  color: white;
+  display: flex;
+  place-items: center;
+  place-content: center;
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  margin: 0;
+  border-radius: 100%;
+  border-style: none;
+  height: 60px;
+  width: 60px;
+}
+
+.pageTopIcon {
+  margin: auto;
+  font-size: 20px;
 }
 
 .col {
@@ -71,6 +100,20 @@ hr {
   place-content: center;
   place-items: center;
 }
+
+.activeNavBarButton {
+  @media only screen and (min-width: 768px) {
+    padding: 15px 20px;
+  }
+  padding: 15px 5px;
+  margin: 0 3px;
+  border-style: none;
+  border-radius: 100px;
+  font-weight: bold;
+  background-color: white;
+  color: $theme-medium;
+}
+
 
 .navBarButton {
   @media only screen and (min-width: 768px) {
@@ -565,7 +608,7 @@ hr {
       flex-direction: row;
       width: 50%;
     }
-    .messageField, .formField {
+    .invalidMessageField, .messageField, invalidFormField, .formField {
       margin: 10px;
       padding: 10px;
       border: solid 2px $theme-light;
@@ -576,7 +619,28 @@ hr {
     .formField {
       border-radius: 50px;
     }
+    .invalidFormField {
+      border-radius: 50px;
+      color: $red;
+      background-color: $very-light-red;
+      margin: 10px;
+      padding: 10px;
+      border: solid 2px $red;
+      &:focus {
+        outline: none;
+      }
+    }
     .messageField {
+      display: flex;
+      flex-grow: 1;
+      border-radius: 20px;
+      resize: none;
+      overflow-y: auto;
+    }
+    .invalidMessageField {
+      color: $red;
+      border: solid 2px $red;
+      background-color: $very-light-red;
       display: flex;
       flex-grow: 1;
       border-radius: 20px;
@@ -591,6 +655,16 @@ hr {
         max-width: 50%;
       }
     }
+  }
+
+  .invalidMessageField::-webkit-input-placeholder{
+    color: $red;
+    opacity: 1;
+  }
+
+  .invalidFormField::-webkit-input-placeholder{
+    color: $red;
+    opacity: 1;
   }
 
   .sendButton {
@@ -658,4 +732,14 @@ hr {
     }
   }
 
+}
+
+input{
+  outline:none;
+  &:focus {
+    outline: none;
+  }
+}
+input::-moz-focus-inner {
+  border: 0;
 }
