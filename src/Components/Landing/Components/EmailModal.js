@@ -23,7 +23,7 @@ export default function EmailModal(props) {
             <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
                     <p>
-                        {props.message}
+                        {props.children}
                     </p>
                 </DialogContentText>
             </DialogContent>

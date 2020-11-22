@@ -61,12 +61,12 @@ export default function LandingPage() {
 									values={{ code: <br/> }}
 								/>
 							</p>
-							<button onClick={() => this.slideToAnchorLink()}>
+							<button onClick={() => slideToAnchorLink("#knowMore")}>
 								<FormattedMessage
 									id="Landing.Scroll"
 									defaultMessage="Aperçu"
 								/>
-								<FaArrowDown />
+								<FaArrowDown className={"slideIcon"} />
 							</button>
 						</div>
 					</div>
@@ -82,7 +82,7 @@ export default function LandingPage() {
             </div>
 
             <FeaturesDescription/>
-            <a href={"#knowMore"} id={"#knowMore"}></a>
+            <a href={"#knowMore"} id={"#knowMore"}> </a>
             <PreviewSection/>
             <ContactForm/>
         </div>
