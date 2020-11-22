@@ -125,13 +125,8 @@ function ContactForm() {
                     />
                 </h2>
                 <hr/>
-                <p className={"sectionSubtitle"}>
-                    <FormattedMessage
-                        id="ContactForm.Info"
-                        defaultMessage="Une question ? Une remarque ? Une suggestion ?{code}N'hésitez pas à nous en faire part."
-                        values={{ code: <br/>}}
-                    />
-                </p>
+                <p className={"sectionSubtitle"}>Une question ? Une remarque ? Une suggestion ? <br/>
+                N'hésitez pas à nous en faire part.</p>
                 <div className={"phoneEmail"}>
                     <div className={"icon"}><FaEnvelope/></div>
                     <p>adm.kwili@gmail.com</p>
@@ -141,39 +136,26 @@ function ContactForm() {
             {/*contact form*/}
             <form id="contact-form">
                 <div className="userInfo">
-                    <FormattedMessage id="ContactForm.Name" defaultMessage={invalidFields.includes("name") ? "Nom requis" : "Nom"}>
-                        { placeholder => 
-                            <input
-                                className={"formField"}
-                                type="text"
-                                placeholder={placeholder}
-                                onChange={(event) => setName(event.target.value)}
-                            />
-                        }
-                    </FormattedMessage>
-                    <FormattedMessage id="ContactForm.Email" defaultMessage={invalidFields.includes("email") ? "Email requis" : "Email"}>
-                        { placeholder => 
-                            <input
-                                type={"email"}
-                                placeholder={placeholder}
-                                className={invalidFields.includes("email") ? "invalidFormField" : "formField"}
-                                onChange={(event) => setEmail(event.target.value)}
-                            />
-                        }
-                    </FormattedMessage>
-                    <FormattedMessage id="ContactForm.Subject" defaultMessage={invalidFields.includes("subject") ? "Sujet requis" : "Sujet"}>
-                        { placeholder => 
-                            <input
-                                type={"text"}
-                                placeholder={placeholder}
-                                className={invalidFields.includes("subject") ? "invalidFormField" : "formField"}
-                                onChange={(event) => setSubject(event.target.value)}
-                            />
-                        }
-                    </FormattedMessage>
+                    <input
+                        className={"formField"}
+                        type="text"
+                        placeholder="Nom"
+                        onChange={(event) => {name = event.target.value}}/>
+                    <input
+                        className={"formField"}
+                        type="email"
+                        placeholder="Courriel"
+                        onChange={(event) => {email = event.target.value}}/>
+                    <input
+                        className={"formField"}
+                        type="text"
+                        placeholder="Sujet"
+                        onChange={(event) => {subject = event.target.value}}/>
                 </div>
                 <textarea
-                    >
+                    className={"messageField"}
+                    placeholder="Message"
+                    onChange={(event) => {message = event.target.value}}>
 				</textarea>
                 <FormattedMessage id="ContactForm.Message" defaultMessage={invalidFields.includes("message") ? "Le message ne peut pas être vide" : "Message"}>
                     { placeholder => 
@@ -185,17 +167,11 @@ function ContactForm() {
                     }
                 </FormattedMessage>
             </form>
-            <FormattedMessage id="ContactForm.Send" defaultMessage="Envoyer">
-                { value => 
-                    <button
-                        border={"none"}
-                        className={"sendButton"}
-                        type="submit"
-                        value={value}
-                        onClick={() => sendEmail(name, email, subject, message)}
-                    />
-                }
-            </FormattedMessage>
+            <input
+                className={"sendButton"}
+                type="submit"
+                value="Envoyer"
+                onClick={() => sendEmail(name, email, subject, message)}/>
 
             <button className={"sendButton"} border={"none"} onClick={() => sendEmail(name, email, subject, message)}>
                 Envoyer
@@ -209,13 +185,8 @@ function ContactForm() {
                     <a className={"socialMediaButton"} href="https://github.com/Kwili" rel="noopener noreferrer"
                        target="_blank"><FaGitAlt/></a>
                 </div>
-                <p>
-                    <FormattedMessage
-                        id="ContactForm.Legal"
-                        defaultMessage="Kwili est un projet réalisé par une équipe d'étudiants dans le cadre des{code}Epitech Innovative Projects. © 2018"
-                        values={{ code: <br/>}}
-                    />
-                </p>
+                <p>Kwili est un projet réalisé par une équipe d'étudiants dans le cadre des <br/>
+                Epitech Innovative Projects. © 2018</p>
             </div>
         </div>
     );
