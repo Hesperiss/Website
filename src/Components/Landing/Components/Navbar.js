@@ -2,8 +2,11 @@ import React from 'react';
 import '../Landing.scss';
 import KwiliLogo from "../../../Images/logo_kwili.png"
 import ChatBotWidget from '../../Chat/ChatBotWidget';
-import { toggleWidget } from 'react-chat-widget';
-import { FormattedMessage } from 'react-intl';
+import {toggleWidget} from 'react-chat-widget';
+import {Link} from "react-router-dom";
+import matchPath from "react-router/modules/matchPath";
+import {useLocation} from "react-router";
+import {FormattedMessage} from "react-intl";
 
 /**
  * Barre de navigation du site Kwili.
@@ -13,70 +16,62 @@ import { FormattedMessage } from 'react-intl';
  * @Class Navbar
  */
 function NavBarLanding() {
+
+    const location = useLocation();
+    const activePage = matchPath(location.pathname, "/landing")
+        ? "landing" : matchPath(location.pathname, "/map")
+        ? "map" : undefined;
+
     return (
         <React.Fragment>
             <div className="navBar">
 
                 <div className={"kwiliTagNavBar"}>
-                    <img className={"kwiliLogo"} src={KwiliLogo} alt={"logo de Kwili"} href='/' />
-                    <a style={{ color: 'white' }} href='/'>KWILI</a>
+                    <Link to={"/"} style={{color: 'white'}}>
+                        <img className={"kwiliLogo"} src={KwiliLogo} alt={"logo de Kwili"}/>
+                        KWILI
+                    </Link>
                 </div>
 
-                <FormattedMessage id="Navbar.Chat" defaultMessage="Chat en ligne">
-                    { placeholder => 
-                        <input
-                            type="button"
-                            value={placeholder}
-                            href=""
-                            border="none"
-                            onClick={toggleWidget}
-                            className="navBarButton"
+                <button onClick={toggleWidget} className={"navBarButton"}>
+                    <FormattedMessage
+                        id={"Navbar.Chat"}
+                        defaultMessage={"Chat en ligne"}
+                    />
+                </button>
+
+                <Link to={"/map"}>
+                    <button className={activePage === "map" ? "activeNavBarButton" : "navBarButton"}>
+                        <FormattedMessage
+                            id={"Navbar.Hospitals"}
+                            defaultMessage={"Carte des hôpitaux"}
                         />
-                    }
-                </FormattedMessage>
+                    </button>
+                </Link>
 
-                <a href='/map'>
-                    <FormattedMessage id="Navbar.Hospitals" defaultMessage="Carte des hôpitaux">
-                        { placeholder => 
-                            <input
-                                type="submit"
-                                value={placeholder}
-                                href="/map"
-                                className="navBarButton"
-                            />
-                        }
-                    </FormattedMessage>
+                <Link to={'/landing'}>
+                    <button className={activePage === "landing" ? "activeNavBarButton" : "navBarButton"}>
+                        <FormattedMessage
+                            id={"Navbar.Landing"}
+                            defaultMessage={"Qui sommes-nous ?"}
+                        />
+                    </button>
+                </Link>
+                <a href={"https://play.google.com/store/apps/details?id=fr.kwili.kwili"} target={"_blank"}
+                   rel={"noopener noreferrer"}>
+                    <button className={"navBarButton"}>
+                        <FormattedMessage
+                            id={"Navbar.App"}
+                            defaultMessage={"Application"}
+                        />
+                    </button>
                 </a>
 
-                <a href='/landing'>
-                    <FormattedMessage id="Navbar.Landing" defaultMessage="Qui sommes-nous ?">
-                        { placeholder => 
-                            <input
-                                type="submit"
-                                value={placeholder}
-                                href="/landing"
-                                className="navBarButton"
-                            />
-                        }
-                    </FormattedMessage>
-                </a>
+                <ChatBotWidget fullscreen={false}/>
 
-                <a href="https://play.google.com/store/apps/details?id=fr.kwili.kwili" target="_blank" rel="noopener noreferrer">
-                    <FormattedMessage id="Navbar.App" defaultMessage="Application">
-                        { placeholder => 
-                            <input
-                                type="submit"
-                                value={placeholder}
-                                href="https://play.google.com/store/apps/details?id=fr.kwili.kwili"
-                                className="navBarButton"
-                            />
-                        }
-                    </FormattedMessage>
-                </a>
-
-                <ChatBotWidget fullscreen={false} />
-
-            </div></React.Fragment>
+            </div>
+        </React.Fragment>
     );
 }
+
 export default NavBarLanding;

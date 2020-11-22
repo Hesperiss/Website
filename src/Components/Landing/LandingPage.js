@@ -1,14 +1,12 @@
 import React from 'react';
 import {Helmet} from "react-helmet";
 import { FormattedMessage } from 'react-intl';
-
 import NavBar from "./Components/Navbar";
 import FeaturesDescription from "./Components/FeaturesDescription";
 import PreviewSection from "./Components/PreviewSection";
 import ContactForm from "./Components/ContactForm";
 import phoneDemo from "../../Images/phone_section1.png";
-import { FaArrowDown } from "react-icons/fa";
-
+import {FaArrowDown, FaArrowUp} from "react-icons/fa";
 
 /**
  * Il s'agit du composant principal de la Landing page.
@@ -17,37 +15,39 @@ import { FaArrowDown } from "react-icons/fa";
  * L'effet visuel de vague bleue est produit avec un élément svg en html.
  * @see {@link https://smooth.ie/blogs/news/svg-wavey-transitions-between-sections générateur d'élements html svg }
  */
-class LandingPage extends React.Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			formData: null,
-		};
-	}
+export default function LandingPage() {
 
-	/**
-	 * Glisse vers le lien interne vers la section "en savoir plus' de la page.
-	 */
-	slideToAnchorLink() {
-		let scrollTo = document.getElementById('#knowMore');
-		scrollTo.scrollIntoView();
-	};
+    /**
+     * Glisse vers le lien interne vers la section "en savoir plus' de la page.
+     */
+    const slideToAnchorLink = (anchorId) => {
+        let scrollTo = document.getElementById(anchorId);
+        scrollTo.scrollIntoView({behavior: 'smooth'});
+    };
 
-	/**
-	 * Affichage de la page d'accueil
-	 */
-	render() {
+    /**
+     * Affichage de la page d'accueil
+     */
+    return (
+        <div className={"root"}>
 
-		return (
-			<div className={"root"}>
+            <a href={"#pageTop"} id={"#pageTop"}>
+                <Helmet>
+                    <meta name="description"
+                          content="Découvrez Kwili, un moyen simple et rapide pour accéder aux urgences. Une première prise en charge en ligne."/>
+                    <meta name="robots" content="index, follow"/>
+                </Helmet>
+            </a>
 
-      <Helmet>
-        <meta name="description" content="Découvrez Kwili, un moyen simple et rapide pour accéder aux urgences. Une première prise en charge en ligne." />
-        <meta name="robots" content="index, follow" />
-      </Helmet>
+            <NavBar/>
 
-				<NavBar />
+            <button
+                border={"none"}
+                className={"pageTopButton"}
+                onClick={() => slideToAnchorLink("#pageTop")}>
+                <FaArrowUp className={"pageTopIcon"}/>
+            </button>
 
 				<div className={"sectionWrapper"}>
 					<div className={"introSection"}>
@@ -61,33 +61,32 @@ class LandingPage extends React.Component {
 									values={{ code: <br/> }}
 								/>
 							</p>
-							<button onClick={() => this.slideToAnchorLink()}>
+							<button onClick={() => slideToAnchorLink("#knowMore")}>
 								<FormattedMessage
 									id="Landing.Scroll"
 									defaultMessage="Aperçu"
 								/>
-								<FaArrowDown />
+								<FaArrowDown className={"slideIcon"} />
 							</button>
 						</div>
 					</div>
 
-					<div className={"blueCurveWrapper"} >
-						<svg viewBox="0 0 500 150" className={"blueCurve"} preserveAspectRatio="none">
-							<path d="M-92.83,-15.28 C328.72,179.11 425.22,145.55 507.62,22.20 L500.00,0.00 L27.93,-63.64 Z"></path>
-						</svg>
-					</div>
+                <div className={"blueCurveWrapper"}>
+                    <svg viewBox="0 0 500 150" className={"blueCurve"} preserveAspectRatio="none">
+                        <path
+                            d="M-92.83,-15.28 C328.72,179.11 425.22,145.55 507.62,22.20 L500.00,0.00 L27.93,-63.64 Z"/>
+                    </svg>
+                </div>
 
-					<div className={"backgroundImage"}> </div>
-				</div>
+                <div className={"backgroundImage"}/>
+            </div>
 
-				<FeaturesDescription />
-				<a href={"#knowMore"} id={"#knowMore"}> </a>
-				<PreviewSection />
-				<ContactForm />
-			</div>
-		);
-	}
+            <FeaturesDescription/>
+            <a href={"#knowMore"} id={"#knowMore"}> </a>
+            <PreviewSection/>
+            <ContactForm/>
+        </div>
+    );
+
 
 }
-
-export default LandingPage;

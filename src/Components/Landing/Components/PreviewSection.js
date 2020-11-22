@@ -8,8 +8,10 @@ import {FaDesktop,
 import { FormattedMessage } from 'react-intl';
 import Desktop1 from "../../../Images/desktop_1.png"
 import Desktop2 from "../../../Images/desktop_2.png"
+import Desktop3 from "../../../Images/desktop_3.png"
 import Phone1 from "../../../Images/phone_1.png";
 import Phone2 from "../../../Images/phone_2.png";
+import Phone3 from "../../../Images/phone_3.png";
 
 /**
  * Fait partie de l'affichage de la page d'accueil.
@@ -20,8 +22,8 @@ function PreviewSection() {
 
 
     const [currentDemoIndex, setCurrentDemoIndex] = useState(0);
-    const [desktopDemoImages] = [[Desktop1, Desktop2]];
-    const [phoneDemoImages] = [[Phone1, Phone2]];
+    const [desktopDemoImages] = [[Desktop1, Desktop2, Desktop3]];
+    const [phoneDemoImages] = [[Phone1, Phone2, Phone3]];
 
     /**
      * Met à jour le diaporama quand l'utilisateur clique sur l'une ou l'autre des flèches.

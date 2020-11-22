@@ -105,6 +105,8 @@ $very-light-gray: #eeeeee;
     background-color: $theme-light;
     box-shadow: 0px 0px 12px 3px rgba(0, 0, 0,.3);
     overflow-x: auto;
+    border-radius: 10px;
+    color: $theme-dark;
 
     .rhombus, .rhombusWrapper {
       background-color: white;
@@ -113,6 +115,7 @@ $very-light-gray: #eeeeee;
     &:hover {
       transition: all 0.1s ease-in;
       box-shadow: 0px 0px 12px 3px rgba(0, 0, 0,.5);
+      text-decoration: none;
       p {
         color: $theme-gray;
       }
