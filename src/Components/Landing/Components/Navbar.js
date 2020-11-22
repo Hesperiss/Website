@@ -6,6 +6,7 @@ import {toggleWidget} from 'react-chat-widget';
 import {Link} from "react-router-dom";
 import matchPath from "react-router/modules/matchPath";
 import {useLocation} from "react-router";
+import {FormattedMessage} from "react-intl";
 
 /**
  * Barre de navigation du site Kwili.
@@ -33,24 +34,36 @@ function NavBarLanding() {
                 </div>
 
                 <button onClick={toggleWidget} className={"navBarButton"}>
-                    Chat en ligne
+                    <FormattedMessage
+                        id={"Navbar.Chat"}
+                        defaultMessage={"Chat en ligne"}
+                    />
                 </button>
 
                 <Link to={"/map"}>
                     <button className={activePage === "map" ? "activeNavBarButton" : "navBarButton"}>
-                        Carte des hôpitaux
+                        <FormattedMessage
+                            id={"Navbar.Hospitals"}
+                            defaultMessage={"Carte des hôpitaux"}
+                        />
                     </button>
                 </Link>
 
                 <Link to={'/landing'}>
                     <button className={activePage === "landing" ? "activeNavBarButton" : "navBarButton"}>
-                        Qui sommes-nous ?
+                        <FormattedMessage
+                            id={"Navbar.Landing"}
+                            defaultMessage={"Qui sommes-nous ?"}
+                        />
                     </button>
                 </Link>
                 <a href={"https://play.google.com/store/apps/details?id=fr.kwili.kwili"} target={"_blank"}
                    rel={"noopener noreferrer"}>
                     <button className={"navBarButton"}>
-                        Application
+                        <FormattedMessage
+                            id={"Navbar.App"}
+                            defaultMessage={"Application"}
+                        />
                     </button>
                 </a>
 

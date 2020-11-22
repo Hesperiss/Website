@@ -5,6 +5,7 @@ import {Helmet} from "react-helmet";
 import ChatBotWidget from '../Chat/ChatBotWidget';
 import {toggleWidget} from 'react-chat-widget';
 import {Link} from "react-router-dom";
+import {FormattedMessage} from "react-intl";
 
 
 export default function HomePage() {
@@ -16,7 +17,12 @@ export default function HomePage() {
 
                 <div className={"textWrapper"}>
                     <h1>Kwili</h1>
-                    <h2>Un accompagnement personnalisé pour vous conseiller dans votre urgence</h2>
+                    <h2>
+                        <FormattedMessage
+                            id={"Home.Tagline"}
+                            defaultMessage={"Un accompagnement personnalisé pour vous conseiller dans votre urgence"}
+                        />
+                    </h2>
                 </div>
 
                 <div className={"descBoxWrapper"}>
@@ -26,10 +32,18 @@ export default function HomePage() {
                                 <FaCommentMedical className="icon"/>
                             </div>
                         </div>
-                        <h3>Chat en ligne</h3>
-                        <p>Rentrez en contact avec Emma, notre assistante virtuelle ! Elle vous conseillera sur votre
-                            situation et
-                            les mesures à prendre.</p>
+                        <h3>
+                            <FormattedMessage
+                                id={"Home.ChatTitle"}
+                                defaultMessage={"Chat en ligne"}
+                            />
+                        </h3>
+                        <p>
+                            <FormattedMessage
+                                id={"Home.ChatDesc"}
+                                defaultMessage={"Rentrez en contact avec Emma, notre assistante virtuelle ! Elle vous conseillera sur votre situation et les mesures à prendre."}
+                            />
+                        </p>
                     </div>
 
                     <div id={"docImage"}/>
@@ -40,15 +54,28 @@ export default function HomePage() {
                                 <FaMapMarkedAlt className="icon"/>
                             </div>
                         </div>
-                        <h3>Carte des hôpitaux</h3>
-                        <p>Notre service vous redirigera automatiquement vers les services de santé les plus proches
-                            de chez
-                            vous.</p>
+                        <h3>
+                            <FormattedMessage
+                                id={"Home.MapTitle"}
+                                defaultMessage={"Carte des hôpitaux"}
+                            />
+                        </h3>
+                        <p>
+                            <FormattedMessage
+                                id={"Home.MapDesc"}
+                                defaultMessage={"Notre service vous redirigera automatiquement vers les services de santé les plus proches de chez vous."}
+                            />
+                        </p>
                     </Link>
                 </div>
 
                 <Link to={"/landing"} className={"landingLink"}>
-                    <h3>En savoir plus</h3>
+                    <h3>
+                        <FormattedMessage
+                            id={"Home.LearnMore"}
+                            defaultMessage={"En savoir plus"}
+                        />
+                    </h3>
                 </Link>
             </div>
 
