@@ -18,14 +18,25 @@ $very-light-gray: #eeeeee;
 }
 
 .rcw-message > .rcw-client {
+    background-color: white;
+    color: black;
+}
+
+.rcw-message > .rcw-client > .rcw-message-text{
     background-color: $theme-medium;
     color: $very-light-gray;
 }
 
 .rcw-message > .rcw-response {
+    background-color: white;
+    color: black;
+}
+
+.rcw-message > .rcw-response > .rcw-message-text{
     background-color: $very-light-gray;
     color: black;
 }
+
 
 .rcw-launcher {
     background-color: $theme-dark;
