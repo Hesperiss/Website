@@ -45,3 +45,20 @@ $very-light-gray: #eeeeee;
 .rcw-send-icon {
     filter: invert(1)
 }
+
+@media only screen and (max-width: 800px) {
+    .rcw-widget-container {
+        height: fit-content;
+    }
+    .rcw-conversation-container .rcw-title {
+        padding: 15px 0 15px;
+    }
+
+    .rcw-conversation-container{
+        height: 0%;
+    }
+
+    .rcw-conversation-container.active{
+        height: 100vh;
+    }
+}
