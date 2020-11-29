@@ -38,10 +38,15 @@ export default function PrivacyPolicy(props){
             </button>
 
             <div className={"policyText"}>
-                <h1>Politique d'utilisation des données</h1>
+                <h1>
+                    <FormattedMessage
+                        id={"Privacy.Title"}
+                        defaultMessage={"Politique d'utilisation des données"}
+                    />
+                </h1>
                 <h2><FormattedMessage
                     id={"Privacy.Def.Title"}
-                    defaultMessage={" Définitions"}
+                    defaultMessage={"Définitions"}
                 />
                 </h2>
                 <p><FormattedMessage
