@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import '../Landing.scss';
 import EmailModal from "./EmailModal";
+import {Link} from "react-router-dom";
 
 /**
  * Vérifie qu'une adresse email possède un format valide.
@@ -214,6 +215,14 @@ function ContactForm() {
                         defaultMessage={"Kwili est un projet réalisé par une équipe d'étudiants dans le cadre des{code}Epitech Innovative Projects. © 2018"}
                         values={{code: <br/>}}
                     />
+                </p>
+                <p>
+                    <Link to={"/privacy-policy"}>
+                        <FormattedMessage
+                            id={"ContactForm.Legal.Privacy"}
+                            defaultMessage={"Mentions légales & Politique d'utilisation des données"}
+                        />
+                    </Link>
                 </p>
             </div>
         </div>
