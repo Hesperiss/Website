@@ -94,6 +94,7 @@ function Map() {
 
         if (autocomplete !== null) {
             //set new map center and user position
+            if (autocomplete.getPlace().geometry == null) return;
             const newCenter = autocomplete.getPlace().geometry.location;
             mapRef.setCenter(newCenter);
             setUserPos(newCenter);
@@ -193,6 +194,7 @@ function Map() {
      * @param {Boolean} hasNextPage
      */
     const findNearestResults = (map, position, hasNextPage = false) => {
+        if (map == null) return;
         let service = new window.google.maps.places.PlacesService(map);
         let request = {
             location: position,
@@ -221,7 +223,7 @@ function Map() {
 
         let asyncJob = new Promise(function (resolve) {
             service.nearbySearch(request, function(results, status, next_page_token) {
-                if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                if (status !== null && status === window.google.maps.places.PlacesServiceStatus.OK) {
                     return resolve(searchCallback(results, next_page_token));
                 }
             });

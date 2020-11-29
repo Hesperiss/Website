@@ -24,7 +24,7 @@ export default function PrivacyPolicy(props){
             <a href={"#pageTop"} id={"#pageTop"}>
                 <Helmet>
                     <meta name="description" content="Politique d'utilisation des données" />
-                    <meta name="robots" content="noindex, follow" />
+                    <meta name="robots" content="index, follow" />
                 </Helmet>
             </a>
 
@@ -38,10 +38,15 @@ export default function PrivacyPolicy(props){
             </button>
 
             <div className={"policyText"}>
-                <h1>Politique d'utilisation des données</h1>
+                <h1>
+                    <FormattedMessage
+                        id={"Privacy.Title"}
+                        defaultMessage={"Politique d'utilisation des données"}
+                    />
+                </h1>
                 <h2><FormattedMessage
                     id={"Privacy.Def.Title"}
-                    defaultMessage={" Définitions"}
+                    defaultMessage={"Définitions"}
                 />
                 </h2>
                 <p><FormattedMessage
@@ -125,13 +130,13 @@ export default function PrivacyPolicy(props){
 
                 <h2>
                     <FormattedMessage
-                        id={"Privacy.Nature.Title"}
+                        id={"Privacy.Data.Nature.Title"}
                         defaultMessage={"Nature et finalité des données collectées"}
                     />
                 </h2>
                 <p>
                     <FormattedMessage
-                        id={"Privacy.Nature.Text.1"}
+                        id={"Privacy.Data.Nature.Text.1"}
                         defaultMessage={"Kwili est susceptible de traiter tout ou partie des données suivantes:"}
                     />
                 </p>
@@ -139,26 +144,26 @@ export default function PrivacyPolicy(props){
                 <ul>
                     <li>
                         <FormattedMessage
-                            id={"Privacy.Nature.Text.2"}
+                            id={"Privacy.Data.Nature.Text.2"}
                             defaultMessage={"Pour mener des enquêtes de satisfaction et améliorer l’expérience utilisateur : Nom et adresse email des utilisateurs en cas d’envoie de message par le formulaire de contact. Ces données sont conservées un maximum de 12 mois."}
                         />
                     </li>
                     <li>
                         <FormattedMessage
-                            id={"Privacy.Nature.Text.3"}
+                            id={"Privacy.Data.Nature.Text.3"}
                             defaultMessage={"Pour améliorer les performances de notre carte et l’expérience utilisateur : géolocalisation (optionnelle). Ces données ne sont jamais conservées."}
                         />
                     </li>
                     <li>
                         <FormattedMessage
-                            id={"Privacy.Nature.Title.4"}
+                            id={"Privacy.Data.Nature.Text.4"}
                             defaultMessage={"Pour améliorer les performances de notre aide à la décision : données de santé (optionnelles). Ces données sont traitées uniquement le temps de la conversation avec le chatbot et ne sont pas conservées."}
                         />
                     </li>
                 </ul>
                 <p>
                     <FormattedMessage
-                        id={"Privacy.Nature.Text.5"}
+                        id={"Privacy.Data.Nature.Text.5"}
                         defaultMessage={"Ces données sont collectées selon la base légale du consentement de l'utilisateur. Kwili ne commercialise pas vos données personnelles qui sont donc uniquement utilisées par nécessité."}
                     />
                 </p>

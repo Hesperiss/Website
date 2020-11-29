@@ -50,7 +50,7 @@
     "ResultTypes.Dentist" : "Dentistes",
     "ResultTypes.Pharmacy" : "Pharmacies",
     "RequestUber.Title" : "Se rendre à l'hôpital en UBER",
-    "RequestUber.Subitle" : "Appeler un UBER pour se rendre à l'hôpital ?",
+    "RequestUber.Subtitle" : "Appeler un UBER pour se rendre à l'hôpital ?",
     "RequestUber.Desc" : "Choisir cette option ouvrira une l'application ou le site UBER avec une course paramétrée entre votre position et celle de l'hôpital.",
     "RequestUber.Yes" : "Oui",
     "RequestUber.No" : "Non",
