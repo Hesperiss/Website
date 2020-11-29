@@ -7,6 +7,7 @@ import LandingPage from './Components/Landing/LandingPage';
 import Map from './Components/Map/Map';
 import Home from './Components/Home/Home'
 import NotFound from './Components/Shared/404/NotFound';
+import PrivacyPolicy from "./Components/PrivacyPolicy/PrivacyPolicy";
 
 
 class App extends Component {
@@ -18,7 +19,8 @@ class App extends Component {
 						<Route exact={true} path='/' component={Home} />
 						<Route exact={true} path='/map' component={Map} />
 						<Route exact={true} path='/landing' component={LandingPage} />
-						<Route component={NotFound} />
+						<Route exact={true} path='/privacy-policy' component={PrivacyPolicy}/>
+						<Route component={NotFound}/>
 					</Switch>
 				</div>
 			</BrowserRouter>
