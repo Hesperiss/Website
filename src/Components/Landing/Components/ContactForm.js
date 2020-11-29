@@ -21,8 +21,6 @@ function isEmailValid(name, email, message, subject) {
     //list of invalid fields
     let invalid = [];
 
-    console.log(message, email, name)
-
     //checks if fields are set
     if (name === "")
         invalid.push("name");
