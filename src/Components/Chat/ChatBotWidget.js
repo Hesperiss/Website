@@ -8,6 +8,7 @@ import {
   dropMessages,
   toggleWidget,
   toggleMsgLoader,
+  setBadgeCount,
 } from "react-chat-widget";
 import { FormattedMessage } from 'react-intl';
 import KwiliLogo from "../../Images/doctor.png";
@@ -22,8 +23,7 @@ import locale_fr from "../../Translations/fr.json";
 const data = {
     'fr': locale_fr,
     'en': locale_en
-  };
-//import { propTypes } from "react-bootstrap/esm/Image";
+};
 
 /**
  * @module
@@ -104,14 +104,15 @@ export default class ChatBotWidget extends Component {
   };
 
   componentDidMount() {
-   // let welcomeMsg = "";
     const language = navigator.language.split(/[-_]/)[0];
 
     dropMessages();
+    this.setState({
+      badge: 0
+    });
+    setBadgeCount(this.state.badge);
     this.chat = new KwiliChat(this.messageReceived, language);
     this.refreshQuickButtons();
-
-    console.log(data[language]);
 
     if (language === "en") {
       addResponseMessage(data[language]["Chat.WelcomeMsg"]);
@@ -137,6 +138,6 @@ export default class ChatBotWidget extends Component {
   };
 
   render() {
-    return <div>{this.widget}</div>;
+    return <>{this.widget}</>;
   }
 }
