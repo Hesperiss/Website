@@ -45,7 +45,8 @@ function Map() {
     const [markerMap, setMarkerMap] = useState({});
     const [userPos, setUserPos] = useState({lat: 48.8566, lng: 2.3522});
     const [searchRadius, setRadius] = useState(1500);
-    const [resultsMarkers, setResultsMarkers] = useState(null);
+    //const [resultsMarkers, setResultsMarkers] = useState(null);
+    var [resultsMarkers, setResultsMarkers] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoOpen, setInfoOpen] = useState(false);
     const [directionsPanel, setDirectionsPanel] = useState(false);
@@ -179,7 +180,15 @@ function Map() {
         if (!resultsMarkers || resultsMarkers === [] || resetResults) {
             setResultsMarkers(newResults);
         } else {
-            const allResults = resultsMarkers
+            // var allResults = resultsMarkers;
+            // if (newResults != null && newResults != []) {
+
+            // }
+            // // console.log(allResults);
+            // setResultsMarkers(allResults);
+
+            // setResultsMarkers(newResults);
+            var allResults = resultsMarkers
                 ? resultsMarkers.concat(newResults.filter(result => !resultsMarkers.includes(result)))
                 : newResults;
             setResultsMarkers(allResults);
@@ -195,6 +204,9 @@ function Map() {
      */
     const findNearestResults = (map, position, hasNextPage = false) => {
         if (map == null) return;
+
+        resultsMarkers = null;
+
         let service = new window.google.maps.places.PlacesService(map);
         let request = {
             location: position,
@@ -418,7 +430,7 @@ function Map() {
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
                             step={5}
-                            onChange={(e, val) => setRadius(val * 100)}
+                            onChangeCommitted={(e, val) => setRadius(val * 100)}
                             min={10}
                             max={200}
                             className={"slider"}
