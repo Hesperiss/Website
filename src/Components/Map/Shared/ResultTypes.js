@@ -11,13 +11,13 @@ import { FormattedMessage } from 'react-intl';
 export const resultTypes = {
     hospital: {
         type: "hospital",
-        keyword: "(emergency) AND ((medical centre) OR hospital)",
+        keyword: "hospital",
         label: <FormattedMessage id="ResultTypes.Hospital" defaultMessage="Hôpitaux"/>,
         icon: hospitalIcon
     },
     doctor: {
         type: "doctor",
-        keyword: "doctor OR hospital",
+        keyword: "doctor",
         label: <FormattedMessage id="ResultTypes.Doctor" defaultMessage="Docteurs"/>,
         icon: doctorIcon
     },
