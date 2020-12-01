@@ -464,7 +464,7 @@ function Map() {
                         <FormattedMessage
                             id="Map.SearchRadius"
                             defaultMessage="Rayon de la recherche: {value}km"
-                            values={{ value: searchRadius / 100}}
+                            values={{ value: searchRadius / 1000}}
                         />
                     </h5>
                     <div className={"sliderBox"}>
