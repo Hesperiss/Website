@@ -283,7 +283,7 @@ function Map() {
      */
     const handleResultTypeCheckOrUncheck = (clickedResultType) => {
         if (researchTags.some(tag => tag.type === clickedResultType)) {
-            setResearchTags(researchTags.filter(tag => tag !== clickedResultType))
+            setResearchTags(researchTags.filter(tag => tag.type !== clickedResultType))
         } else {
             setResearchTags([...researchTags, resultTypes[clickedResultType]])
         }
