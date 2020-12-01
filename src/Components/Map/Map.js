@@ -449,11 +449,10 @@ function Map() {
 
                     <Menu open={openResultTypeMenu} onClose={handleCloseResultTypeMenu} anchorEl={resultTypeMenuAnchor}>
                         {resultTypesIds.map(item => (
-                            <MenuItem key={item} value={resultTypes[item].type}>
+                            <MenuItem key={item} value={resultTypes[item].type} onClick={() => handleResultTypeCheckOrUncheck(item)}>
                                 <Checkbox
                                     color={"primary"}
                                     checked={researchTags.some(tag => tag.type === item)}
-                                    onChange={(event) => handleResultTypeCheckOrUncheck(item)}
                                 />
                                 {resultTypes[item].label}
                             </MenuItem>))}
