@@ -45,7 +45,6 @@ function Map() {
     const [markerMap, setMarkerMap] = useState({});
     const [userPos, setUserPos] = useState({lat: 48.8566, lng: 2.3522});
     const [searchRadius, setRadius] = useState(1500);
-    //const [resultsMarkers, setResultsMarkers] = useState(null);
     var [resultsMarkers, setResultsMarkers] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [infoOpen, setInfoOpen] = useState(false);
@@ -180,14 +179,6 @@ function Map() {
         if (!resultsMarkers || resultsMarkers === [] || resetResults) {
             setResultsMarkers(newResults);
         } else {
-            // var allResults = resultsMarkers;
-            // if (newResults != null && newResults != []) {
-
-            // }
-            // // console.log(allResults);
-            // setResultsMarkers(allResults);
-
-            // setResultsMarkers(newResults);
             var allResults = resultsMarkers
                 ? resultsMarkers.concat(newResults.filter(result => !resultsMarkers.includes(result)))
                 : newResults;
