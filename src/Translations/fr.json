@@ -40,6 +40,10 @@
 
     "Map.Search" : "Rechercher une adresse...",
     "Map.SearchRadius" : "Rayon de la recherche: {value}km",
+    "Map.Tooltip.Car" : "Voiture",
+    "Map.Tooltip.Walk" : "Marche",
+    "Map.Tooltip.Transportation" : "Transports en communs",
+    "Map.Tooltip.Settings" : "Types de résultats",
     "HospitallInfoPopup.Address" : "Addresse: ",
     "HospitallInfoPopup.Phone" : "Téléphone: ",
     "HospitallInfoPopup.Rating" : "Note: ",

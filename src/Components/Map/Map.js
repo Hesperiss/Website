@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Helmet} from "react-helmet";
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {
     GoogleMap,
     Marker,
@@ -11,9 +11,8 @@ import {
 import {mapOptions} from "./Shared/MapOptions";
 import userIcon from "../../Images/user_marker.png"
 import "./Map.scss"
-import {FaWalking, FaCar, FaBusAlt, FaHome, FaChevronLeft} from "react-icons/all";
+import {FaWalking, FaCar, FaBusAlt, FaHome, FaChevronLeft, FaCog} from "react-icons/all";
 import Slider from '@material-ui/core/Slider';
-import Select from '@material-ui/core/Select';
 import Tooltip from '@material-ui/core/Tooltip';
 import MenuItem from '@material-ui/core/MenuItem';
 import UberRidePopup from "./Shared/RequestUberPopup";
@@ -21,6 +20,7 @@ import NavBar from "../Landing/Components/Navbar";
 import HospitalInfoPopup from "./Shared/HospitalInfoPopup";
 import Drawer from '@material-ui/core/Drawer';
 import {resultTypes, resultTypesIds} from './Shared/ResultTypes';
+import {Checkbox, Menu} from "@material-ui/core";
 
 /**
  * @module
@@ -37,6 +37,8 @@ import {resultTypes, resultTypesIds} from './Shared/ResultTypes';
  * @see {@link https://developers.google.com/maps/documentation/javascript/ documentation API Google Maps}
  */
 function Map() {
+
+    const intl = useIntl();
 
     //state declaration and management
     const [zoom] = useState(15);
@@ -55,8 +57,10 @@ function Map() {
     const [userTravelMode, setTravelMode] = useState('DRIVING');
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [userDestination, setDestination] = useState(null);
-    const [researchTag, setResearchTag] = useState(resultTypes.hospital);
+    const [researchTags, setResearchTags] = useState([resultTypes.hospital]);
     const [nextPageToken, setNextPageToken] = useState(null);
+    const [openResultTypeMenu, setOpenResultTypeMenu] = useState(false);
+    const [resultTypeMenuAnchor, setResultTypeMenuAnchor] = useState(null)
 
     /**
      * @TODO wrap findNearestResults in custom hook
@@ -67,7 +71,7 @@ function Map() {
         setInfoOpen(false);
         /* eslint-disable*/
         findNearestResults(mapRef, userPos);
-    }, [researchTag, searchRadius, userPos, mapRef]);
+    }, [researchTags, searchRadius, userPos, mapRef]);
 
     useEffect(() => {
         if (resultsMarkers && resultsMarkers.length >= 0)
@@ -174,17 +178,12 @@ function Map() {
     /**
      * concatène les résultats des différentes pages si le tag est le même
      * @param newResults markers correspondant à la nouvelle page dé résultats
+     * @param markers markers existants
      */
-    const concatPagesResults = (newResults, resetResults = false) => {
-        if (!resultsMarkers || resultsMarkers === [] || resetResults) {
-            setResultsMarkers(newResults);
-        } else {
-            const allResults = resultsMarkers
-                ? resultsMarkers.concat(newResults.filter(result => !resultsMarkers.includes(result)))
-                : newResults;
-            setResultsMarkers(allResults);
-        }
+    const concatPagesResults = (newResults, markers,) => {
+        return ([...markers, newResults.filter(result => !markers.includes(marker => marker === result))]);
     }
+
 
     /**
      * @TODO wrap in react hook
@@ -195,45 +194,50 @@ function Map() {
      */
     const findNearestResults = (map, position, hasNextPage = false) => {
         if (map == null) return;
+
         let service = new window.google.maps.places.PlacesService(map);
-        let request = {
-            location: position,
-            radius: searchRadius,
-            opennow: true,
-            types: [researchTag.type],
-            keyword: researchTag.keyword,
-        };
+        let newMarkers = [];
 
-        if (hasNextPage) {
-            request.pageToken = nextPageToken;
-        }
+        researchTags.forEach(tag => {
 
-        const searchCallback = (results, next_page_token) => {
-            let list = results
-                .map(result =>
-                    (<Marker
-                        key={result.place_id}
-                        position={result.geometry.location}
-                        icon={researchTag.icon}
-                        onLoad={marker => onMarkerLoad(marker, result)}
-                        onClick={event => onMarkerClick(event, result, result.place_id, map)}
-                    />));
-            return {list: list, nextPage: next_page_token?.H};
-        }
+            let request = {
+                location: position,
+                radius: searchRadius,
+                opennow: true,
+                types: tag.type,
+                keyword: tag.keyword,
+            };
 
-        let asyncJob = new Promise(function (resolve) {
-            service.nearbySearch(request, function(results, status, next_page_token) {
-                if (status !== null && status === window.google.maps.places.PlacesServiceStatus.OK) {
-                    return resolve(searchCallback(results, next_page_token));
-                }
+            if (hasNextPage) {
+                request.pageToken = nextPageToken;
+            }
+
+            const searchCallback = (results, next_page_token) => {
+                let list = results
+                    .map(result =>
+                        (<Marker
+                            key={result.place_id}
+                            position={result.geometry.location}
+                            icon={tag.icon}
+                            onLoad={marker => onMarkerLoad(marker, result)}
+                            onClick={event => onMarkerClick(event, result, result.place_id, map)}
+                        />));
+                return {list: list, nextPage: next_page_token?.H};
+            }
+
+            let asyncJob = new Promise(function (resolve) {
+                service.nearbySearch(request, function(results, status, next_page_token) {
+                    if (status !== null && status === window.google.maps.places.PlacesServiceStatus.OK) {
+                        return resolve(searchCallback(results, next_page_token));
+                    }
+                });
+            });
+
+            asyncJob.then((page1) => {
+                newMarkers = concatPagesResults(page1.list, newMarkers);
+                setResultsMarkers(newMarkers);
             });
         });
-
-        asyncJob.then((page1) => {
-            setNextPageToken(page1?.nextPage);
-            concatPagesResults(page1.list);
-        });
-
     };
 
     /**
@@ -263,7 +267,7 @@ function Map() {
     /**
      * Callback pour définir l'itinéraire lorsque cela est nécéssaire.
      * @callback
-        * @param {Object} réponse
+     * @param {Object} response réponse
      */
     const directionsCallback = (response) => {
         if (response !== null) {
@@ -273,6 +277,34 @@ function Map() {
         }
     };
 
+    /**
+     * Sélectionne ou désélectionne un type de résultat
+     * @param clickedResultType type de résultat correspondant à la checkbox cliquée
+     */
+    const handleResultTypeCheckOrUncheck = (clickedResultType) => {
+        if (researchTags.some(tag => tag.type === clickedResultType)) {
+            setResearchTags(researchTags.filter(tag => tag.type !== clickedResultType))
+        } else {
+            setResearchTags([...researchTags, resultTypes[clickedResultType]])
+        }
+        setOpenResultTypeMenu(false);
+    }
+
+    /**
+     * Ouvre le menu du type de résultats
+     * @param event
+     */
+    const handleOpenResultTypeMenu = (event) => {
+        setResultTypeMenuAnchor(event.currentTarget);
+        setOpenResultTypeMenu(true);
+    };
+
+    /**
+     * Ferme le menu du type de résultats
+     */
+    const handleCloseResultTypeMenu = () => {
+        setOpenResultTypeMenu(false);
+    }
 
     /**
      * Rendering du composant carte et de ses sous-composants.
@@ -350,7 +382,7 @@ function Map() {
                             transitionDuration={{enter: 300, exit: 300}}
                             className={"directionsPanel"}>
                             <div className={"directionsWrapper"}>
-                                <div id={"directions-panel"} className={"directionsSteps"}></div>
+                                <div id={"directions-panel"} className={"directionsSteps"}/>
                                 <FaChevronLeft className={"FaChevronLeft"}/>
                             </div>
                         </Drawer>
@@ -372,37 +404,60 @@ function Map() {
                 )}
 
                 <div className={"actionsButtonsWrapper"}>
-                    <Tooltip title={"Type de recherche"} placement={"left"} className={"mapTooltip"} arrow>
-                        <Select
-                            variant={"outlined"}
-                            className={"mapSelectResultType"}
-                            label={"Type de recherche"}
-                            value={researchTag.type}
-                            placeholder={"Tyep de recherche"}
-                            onChange={(event) => setResearchTag(resultTypes[event.target.value])}>
-                        {resultTypesIds.map(item => (<MenuItem key={item} value={resultTypes[item].type}>{resultTypes[item].label}</MenuItem>))}
-                    </Select>
+                    <Tooltip title={intl.formatMessage({id: "Map.Tooltip.Transportation", defaultMessage: "Transports en commun"})}
+                        placement={"left"} className={"mapTooltip"} arrow>
+                        <div
+                            className={userTravelMode === 'TRANSIT' ? "activeTravelModeButton" : "actionButton"}
+                            onClick={() => setTravelMode('TRANSIT')}>
+                            <FaBusAlt className={"actionIcon"}/>
+                        </div>
+                    </Tooltip>
+                    <Tooltip title={intl.formatMessage({id: "Map.Tooltip.Walk", defaultMessage: "Marche"})}
+                        placement={"left"} className={"mapTooltip"} arrow>
+                        <div
+                            className={userTravelMode === 'WALKING' ? "activeTravelModeButton" : "actionButton"}
+                            onClick={() => setTravelMode('WALKING')}>
+                            <FaWalking className={"actionIcon"}/>
+                        </div>
+                    </Tooltip>
+                    <Tooltip title={intl.formatMessage({id: "Map.Tooltip.Voiture", defaultMessage: "Voiture"})}
+                        placement={"left"} className={"mapTooltip"} arrow>
+                        <div
+                            className={userTravelMode === 'DRIVING' ? "activeTravelModeButton" : "actionButton"}
+                            onClick={() => setTravelMode('DRIVING')}>
+                            <FaCar className={"actionIcon"}/>
+                        </div>
                     </Tooltip>
 
-                    <div
-                        className={userTravelMode === 'TRANSIT' ? "activeTravelModeButton" : "travelModeButton"}
-                        onClick={() => setTravelMode('TRANSIT')}>
-                        <FaBusAlt className={"travelModeIcon"}/>
-                    </div>
-                    <div
-                        className={userTravelMode === 'WALKING' ? "activeTravelModeButton" : "travelModeButton"}
-                        onClick={() => setTravelMode('WALKING')}>
-                        <FaWalking className={"travelModeIcon"}/>
-                    </div>
-                    <div
-                        className={userTravelMode === 'DRIVING' ? "activeTravelModeButton" : "travelModeButton"}
-                        onClick={() => setTravelMode('DRIVING')}>
-                        <FaCar className={"travelModeIcon"}/>
-                    </div>
-                    {selectedPlace && <UberRidePopup userPos={userPos} destination={{
-                        lat: selectedPlace.geometry.location.lat(),
-                        lng: selectedPlace.geometry.location.lng()
-                    }}/>}
+                    {selectedPlace &&
+                        <Tooltip title={"Uber"} placement={"left"} arrow>
+                            <UberRidePopup
+                                userPos={userPos}
+                                destination={{
+                                    lat: selectedPlace.geometry.location.lat(),
+                                    lng: selectedPlace.geometry.location.lng()
+                                }}
+                            />
+                        </Tooltip>
+                    }
+
+                    <Tooltip title={"Types de résultats"} placement={"left"} className={"mapTooltip"} arrow>
+                        <div className={"actionButton"} onClick={event => handleOpenResultTypeMenu(event)}>
+                            <FaCog className={"actionIcon"}/>
+                        </div>
+                    </Tooltip>
+
+                    <Menu open={openResultTypeMenu} onClose={handleCloseResultTypeMenu} anchorEl={resultTypeMenuAnchor}>
+                        {resultTypesIds.map(item => (
+                            <MenuItem key={item} value={resultTypes[item].type}>
+                                <Checkbox
+                                    color={"primary"}
+                                    checked={researchTags.some(tag => tag.type === item)}
+                                    onChange={(event) => handleResultTypeCheckOrUncheck(item)}
+                                />
+                                {resultTypes[item].label}
+                            </MenuItem>))}
+                    </Menu>
                 </div>
                 <div className={"sliderWrapper"}>
                     <h5 className={"sliderTitle"}>
@@ -418,7 +473,7 @@ function Map() {
                             aria-labelledby="discrete-slider"
                             valueLabelDisplay="auto"
                             step={5}
-                            onChange={(e, val) => setRadius(val * 100)}
+                            onChangeCommitted={(e, val) => setRadius(val * 100)}
                             min={10}
                             max={200}
                             className={"slider"}
