@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Helmet} from "react-helmet";
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {
     GoogleMap,
     Marker,
@@ -37,6 +37,8 @@ import {Checkbox, Menu} from "@material-ui/core";
  * @see {@link https://developers.google.com/maps/documentation/javascript/ documentation API Google Maps}
  */
 function Map() {
+
+    const intl = useIntl();
 
     //state declaration and management
     const [zoom] = useState(15);
@@ -402,31 +404,42 @@ function Map() {
                 )}
 
                 <div className={"actionsButtonsWrapper"}>
-                    <Tooltip title={"Transports en commun"} placement={"left"} className={"mapTooltip"} arrow>
+                    <Tooltip title={intl.formatMessage({id: "Map.Tooltip.Transportation", defaultMessage: "Transports en commun"})}
+                        placement={"left"} className={"mapTooltip"} arrow>
                         <div
                             className={userTravelMode === 'TRANSIT' ? "activeTravelModeButton" : "actionButton"}
                             onClick={() => setTravelMode('TRANSIT')}>
                             <FaBusAlt className={"actionIcon"}/>
                         </div>
                     </Tooltip>
-                    <Tooltip title={"Marche"} placement={"left"} className={"mapTooltip"} arrow>
+                    <Tooltip title={intl.formatMessage({id: "Map.Tooltip.Walk", defaultMessage: "Marche"})}
+                        placement={"left"} className={"mapTooltip"} arrow>
                         <div
                             className={userTravelMode === 'WALKING' ? "activeTravelModeButton" : "actionButton"}
                             onClick={() => setTravelMode('WALKING')}>
                             <FaWalking className={"actionIcon"}/>
                         </div>
                     </Tooltip>
-                    <Tooltip title={"Voiture"} placement={"left"} className={"mapTooltip"} arrow>
+                    <Tooltip title={intl.formatMessage({id: "Map.Tooltip.Voiture", defaultMessage: "Voiture"})}
+                        placement={"left"} className={"mapTooltip"} arrow>
                         <div
                             className={userTravelMode === 'DRIVING' ? "activeTravelModeButton" : "actionButton"}
                             onClick={() => setTravelMode('DRIVING')}>
                             <FaCar className={"actionIcon"}/>
                         </div>
                     </Tooltip>
-                    {selectedPlace && <UberRidePopup userPos={userPos} destination={{
-                        lat: selectedPlace.geometry.location.lat(),
-                        lng: selectedPlace.geometry.location.lng()
-                    }}/>}
+
+                    {selectedPlace &&
+                        <Tooltip title={"Uber"} placement={"left"} arrow>
+                            <UberRidePopup
+                                userPos={userPos}
+                                destination={{
+                                    lat: selectedPlace.geometry.location.lat(),
+                                    lng: selectedPlace.geometry.location.lng()
+                                }}
+                            />
+                        </Tooltip>
+                    }
 
                     <Tooltip title={"Types de résultats"} placement={"left"} className={"mapTooltip"} arrow>
                         <div className={"actionButton"} onClick={event => handleOpenResultTypeMenu(event)}>
