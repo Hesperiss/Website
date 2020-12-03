@@ -101,7 +101,7 @@ export default function RequestUberPopup(props) {
         <div>
 
             <div
-                className={"travelModeButton uberIcon"}
+                className={"actionButton uberIcon"}
                 onClick={() => handleClickOpen()}>
                 <FaUber className={"travelModeIcon"}/>
             </div>
