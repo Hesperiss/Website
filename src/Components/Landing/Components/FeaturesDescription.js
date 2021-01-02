@@ -53,12 +53,12 @@ export default function FeaturesDescriptionBoxes() {
             <div className={"descBoxWrapper"}>
                 <DescriptionBox
                     title={<FormattedMessage id={"Features.ChatTitle"} defaultMessage={"Chat en ligne"}/>}
-                    text={<FormattedMessage id={"Features.ChatText"} defaultMessage={"\"Rentrez en contact avec Emma, notre assistante virtuelle ! Elle vous conseillera sur votre situation et les mesures à prendre."}/> }
+                    text={<FormattedMessage id={"Features.ChatText"} defaultMessage={"Entrez en contact avec Emma, notre assistante virtuelle ! Elle vous conseillera sur votre situation et les mesures à prendre."}/> }
                     icon={<FaCommentMedical className="icon"/>}
                 />
                 <DescriptionBox
                     title={<FormattedMessage id={"Features.GeolocTitle"} defaultMessage={"Géolocalisation"}/>}
-                    text={<FormattedMessage id={"Features.GeolocText"} defaultMessage={"Grâce à notre carte, nous vous trouvons automatiquement les centres de soins les plus proches de chez vous. u médecin à l’hôpital, en passant par la pharmacie ou le dentiste, votre itinéraire est calculé automatiquement à partir de votre mode de transport."}/>}
+                    text={<FormattedMessage id={"Features.GeolocText"} defaultMessage={"Grâce à notre carte, nous trouvons automatiquement pour vous les centres de soins les plus proches de chez vous. Du médecin à l’hôpital, en passant par la pharmacie ou le dentiste, votre itinéraire est calculé automatiquement à partir de votre mode de transport."}/>}
                     icon={<FaMapMarkedAlt className="icon"/>}
                 />
                 <DescriptionBox

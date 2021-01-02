@@ -104,8 +104,8 @@ function PreviewSection() {
                                 <p>
                                     <FormattedMessage
                                         id="Preview.WebDesc"
-                                        defaultMessage="Trouvez les urgences les plus proches de vous et l'itinéraire pour vous y rendre, et
-                                        bénéficiez d'une première prise en charge grâce à notre chat en ligne, qui pourra
+                                        defaultMessage="Trouvez les urgences les plus proches de vous et l'itinéraire pour vous y rendre.
+                                        Bénéficiez d'une première prise en charge grâce à notre chat en ligne, qui pourra
                                         également vous réorienter vers un médecin généraliste ou spécialiste.{code}
                                         Le tout sans même avoir besoin de vous connecter !"
                                         values={{ code: <br/> }}
